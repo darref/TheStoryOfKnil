@@ -1,7 +1,7 @@
 extends SceneTree
 ## LE BANC D'OUVERTURE DANS MB — l'appli MarchingBlocks (son écran, `app/editor.tscn`) ouvre un projet comme au
 ## lancement, et on mesure : le temps, la mémoire, et si elle tient. Lancé DANS le projet MB, avec fenêtre :
-##   godot --path D:/MarchingBlocks --script D:/Knil/Knil_MB_project/outils/banc_ouverture_mb.gd -- --projet=<.mbproj>
+##   godot --path D:/MarchingBlocks --script D:/TheStoryOfKnil/Knil_MB_project/outils/banc_ouverture_mb.gd -- --projet=<.mbproj>
 ##         [--grilles-sans-physique]
 ## ⚠ L'appli rouvre au lancement le projet de ses réglages (`user://reglages.cfg`, « monde ») : le banc le fait pointer
 ## sur le projet à mesurer, puis REMET le fichier de réglages tel qu'il était (copie gardée à côté).

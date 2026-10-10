@@ -127,11 +127,11 @@ réécrit), `outils/banc_ouverture_mb.gd` (ouvre un projet dans la fenêtre de M
 monde@300`, `--sans-feuillage`, `--octant=n`, `--sans-physique`, `--chronos` ; remet les réglages de MB) :
 
 ```
-"$GODOT" --headless --path D:/MarchingBlocks --script D:/Knil/Knil_MB_project/outils/fabriquer_val.gd [-- --taille=784]
-"$GODOT" --path D:/MarchingBlocks --script D:/Knil/Knil_MB_project/outils/banc_ouverture_mb.gd -- --projet=<.mbproj>
-"$GODOT" --headless --path D:/Knil --import
-"$GODOT" --headless --path D:/Knil res://tools/cuisson/cuire.tscn -- --monde=res://mondes/monde_knil.mbworld/world.json
-"$GODOT" --headless --path D:/Knil res://tests/sonde_collision.tscn -- --monde=res://cuit/monde_knil
+"$GODOT" --headless --path D:/MarchingBlocks --script D:/TheStoryOfKnil/Knil_MB_project/outils/fabriquer_val.gd [-- --taille=784]
+"$GODOT" --path D:/MarchingBlocks --script D:/TheStoryOfKnil/Knil_MB_project/outils/banc_ouverture_mb.gd -- --projet=<.mbproj>
+"$GODOT" --headless --path D:/TheStoryOfKnil --import
+"$GODOT" --headless --path D:/TheStoryOfKnil res://tools/cuisson/cuire.tscn -- --monde=res://mondes/monde_knil.mbworld/world.json
+"$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_collision.tscn -- --monde=res://cuit/monde_knil
 ```
 
 - ⚠ **MB PLANTAIT SUR LE VAL — RÉPARÉ DANS MB (9 octobre 2026, Jordan : « il ne doit pas planter »)**, deux fichiers et
@@ -228,9 +228,9 @@ monde@300`, `--sans-feuillage`, `--octant=n`, `--sans-physique`, `--chronos` ; r
   plus rien ne se charge (vu : « Cannot call method 'instantiate' on a null value »). On recuit dans le bon dossier.
 - **LE WORKFLOW — PEINDRE DANS MB, JOUER DANS GODOT (Jordan, 9 octobre 2026 : « le plus simplement possible »)** :
   1. MB : ouvrir `Knil_MB_project/monde_knil.mbproj`, peindre, enregistrer (Ctrl+S) ;
-  2. MB : World → « Export the world… » → le dossier `D:\Knil\mondes` (l'export s'appelle comme le projet :
+  2. MB : World → « Export the world… » → le dossier `D:\TheStoryOfKnil\mondes` (l'export s'appelle comme le projet :
      `mondes/monde_knil.mbworld`, réécrit sur place) ;
-  3. **double-clic sur `D:\Knil\recuire.bat`** (le jeu fermé ; l'éditeur Godot peut rester ouvert) : l'import, la
+  3. **double-clic sur `D:\TheStoryOfKnil\recuire.bat`** (le jeu fermé ; l'éditeur Godot peut rester ouvert) : l'import, la
      cuisson (~8 min), la sonde de collision ; il dit « C'EST PRÊT » ou ce qui ne va pas (`cuit/derniere_cuisson.txt`) ;
   4. lancer le jeu. Oublié l'étape 3 ? Le jeu le DIT (`ChunkStreamer._warn_if_stale` : l'export plus récent que la
      cuisson → un message à l'écran et un avertissement).
@@ -285,8 +285,8 @@ commande. Tombé à plus de 30 m sous le dernier sol touché : retour à ce sol.
 sous `mondes/` → **cuit** → `cuit/<nom>/` → chargé en jeu par `ChunkStreamer` (le nœud `Monde` de `main.tscn`).
 
 ```
-"$GODOT" --headless --path D:/Knil --import      # après avoir copié un .mbworld (ses .glb s'importent)
-"$GODOT" --headless --path D:/Knil res://tools/cuisson/cuire.tscn -- --monde=res://mondes/<nom>.mbworld/world.json
+"$GODOT" --headless --path D:/TheStoryOfKnil --import      # après avoir copié un .mbworld (ses .glb s'importent)
+"$GODOT" --headless --path D:/TheStoryOfKnil res://tools/cuisson/cuire.tscn -- --monde=res://mondes/<nom>.mbworld/world.json
          [--sortie=res://cuit/<nom>] [--morceau=32] [--sans-lod] [--compression] [--sans-collision]
 ```
 
@@ -391,23 +391,23 @@ Les troncs d'arbre sont sur la couche physique 5 (valeur 16) : le joueur les heu
 
 ```
 GODOT=/c/Users/jorda/Desktop/Godot_v4.7-stable_win64.exe/Godot_v4.7-stable_win64_console.exe
-"$GODOT" --headless --path D:/Knil --import                          # la première fois
-"$GODOT" --headless --path D:/Knil res://tests/fabriquer_monde_essai.tscn   # le monde d'essai (.mbworld)
-"$GODOT" --headless --path D:/Knil res://tests/test_cuisson.tscn     # la cuisson par couches et fenêtres, le chargement, le sous-sol : 94
-"$GODOT" --headless --path D:/Knil res://tests/sonde_scene.tscn      # la scène : morceaux, sol, région, caméra, dialogue, saut, galerie
-"$GODOT" --path D:/Knil --windowed res://tests/banc_marche.tscn       # la traversée du grand monde : à-coups
-"$GODOT" --path D:/Knil --windowed res://tests/capture_nuit.tscn      # la nuit : lune, ambiante, torche (user://captures)
-"$GODOT" --path D:/Knil --windowed res://tests/capture_couches.tscn   # la place et ses massifs, le volcan, une galerie
-"$GODOT" --path D:/Knil --windowed res://tests/capture_monde.tscn -- --monde=res://cuit/monde_knil [--lieux=x,y,z;…]
-"$GODOT" --headless --path D:/Knil res://tests/sonde_collision.tscn -- --monde=…  # collision cuite = rendu ?
-"$GODOT" --headless --path D:/Knil res://tests/sonde_galerie.tscn -- --monde=… [--escalier=x,z]  # la galerie se parcourt ?
-"$GODOT" --path D:/Knil --windowed res://tests/capture_zoom.tscn       # molette, Ctrl + molette, ce qui se charge
-"$GODOT" --headless --path D:/Knil res://tests/sonde_manette.tscn     # la manette (faux événements) : 13 vérifications
-"$GODOT" --headless --path D:/Knil res://tests/sonde_triche_limites.tscn   # la triche et les limites : 11 vérifications
-"$GODOT" --path D:/Knil --windowed res://tests/capture_reference.tscn -- --monde=… --lieu=x,y,z  # le GREFFON, pour comparer
-"$GODOT" --headless --path D:/Knil res://tests/banc_taille.tscn      # le temps de pose selon la taille du monde
-"$GODOT" --path D:/Knil res://tests/capture_scene.tscn                # des captures (user://captures)
-"$GODOT" --path D:/Knil res://tests/banc_rendu.tscn --disable-vsync [-- --cuit]   # le rendu, GridMap ou cuit
+"$GODOT" --headless --path D:/TheStoryOfKnil --import                          # la première fois
+"$GODOT" --headless --path D:/TheStoryOfKnil res://tests/fabriquer_monde_essai.tscn   # le monde d'essai (.mbworld)
+"$GODOT" --headless --path D:/TheStoryOfKnil res://tests/test_cuisson.tscn     # la cuisson par couches et fenêtres, le chargement, le sous-sol : 94
+"$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_scene.tscn      # la scène : morceaux, sol, région, caméra, dialogue, saut, galerie
+"$GODOT" --path D:/TheStoryOfKnil --windowed res://tests/banc_marche.tscn       # la traversée du grand monde : à-coups
+"$GODOT" --path D:/TheStoryOfKnil --windowed res://tests/capture_nuit.tscn      # la nuit : lune, ambiante, torche (user://captures)
+"$GODOT" --path D:/TheStoryOfKnil --windowed res://tests/capture_couches.tscn   # la place et ses massifs, le volcan, une galerie
+"$GODOT" --path D:/TheStoryOfKnil --windowed res://tests/capture_monde.tscn -- --monde=res://cuit/monde_knil [--lieux=x,y,z;…]
+"$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_collision.tscn -- --monde=…  # collision cuite = rendu ?
+"$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_galerie.tscn -- --monde=… [--escalier=x,z]  # la galerie se parcourt ?
+"$GODOT" --path D:/TheStoryOfKnil --windowed res://tests/capture_zoom.tscn       # molette, Ctrl + molette, ce qui se charge
+"$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_manette.tscn     # la manette (faux événements) : 13 vérifications
+"$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_triche_limites.tscn   # la triche et les limites : 11 vérifications
+"$GODOT" --path D:/TheStoryOfKnil --windowed res://tests/capture_reference.tscn -- --monde=… --lieu=x,y,z  # le GREFFON, pour comparer
+"$GODOT" --headless --path D:/TheStoryOfKnil res://tests/banc_taille.tscn      # le temps de pose selon la taille du monde
+"$GODOT" --path D:/TheStoryOfKnil res://tests/capture_scene.tscn                # des captures (user://captures)
+"$GODOT" --path D:/TheStoryOfKnil res://tests/banc_rendu.tscn --disable-vsync [-- --cuit]   # le rendu, GridMap ou cuit
 ```
 
 **MESURÉ le 10 octobre 2026, après le passage à Knil** : `sonde_manette` 13 / 13 (le stick avance, A saute, X fait

@@ -2,7 +2,7 @@ extends Node3D
 ## BANC DES VUES — avec fenêtre, sur un monde cuit : au même endroit, ce que coûte chaque vue — de dessus, troisième
 ## personne EN SURFACE face à l'horizon (le pire : la vue porte loin), troisième personne dans une GALERIE — et la
 ## pire image PENDANT chaque bascule (entrée, sortie).
-##   Godot --path D:/Knil --windowed res://tests/banc_vues.tscn [-- --monde=res://cuit/grand]
+##   Godot --path D:/TheStoryOfKnil --windowed res://tests/banc_vues.tscn [-- --monde=res://cuit/grand]
 
 const SURFACE := Vector3(40.5, 3.0, 8.5)
 const GALLERY := Vector3(16.5, -4.25, 40.5)

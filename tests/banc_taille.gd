@@ -1,6 +1,6 @@
 extends Node
 ## BANC — le temps que met le greffon (GDScript) à poser un monde de N × N colonnes, au chargement.
-##   Godot --headless --path D:/Knil res://tests/banc_taille.tscn
+##   Godot --headless --path D:/TheStoryOfKnil res://tests/banc_taille.tscn
 
 const MBWorld := preload("res://addons/marchingblocks_paint/mb_world.gd")
 

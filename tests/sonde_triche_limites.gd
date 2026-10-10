@@ -2,7 +2,7 @@ extends Node
 ## LA TRICHE ET LES LIMITES — headless, sur la scène principale (le monde cuit doit porter ses limites) :
 ## un joueur jeté hors de la zone jouable y revient ; les murs invisibles sont là ; F1 fait voler (Espace monte),
 ## F2 traverse — mais pas les limites ; F3 change la vitesse.
-##   Godot --headless --path D:/Knil res://tests/sonde_triche_limites.tscn
+##   Godot --headless --path D:/TheStoryOfKnil res://tests/sonde_triche_limites.tscn
 ## Sort avec 0 si tout est vert.
 const Triche := preload("res://core/triche.gd")
 

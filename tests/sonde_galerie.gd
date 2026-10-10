@@ -2,7 +2,7 @@ extends Node
 ## LES GALERIES SE PARCOURENT-ELLES ? — headless : autour d'un escalier de galerie d'un monde cuit, la COUPE de la
 ## galerie (sol, plafond, largeur libre) mesurée à la collision chargée, puis un corps à la capsule du JOUEUR qui
 ## descend l'escalier, suit le couloir, et remonte (en sautant les marches).
-##   Godot --headless --path D:/Knil res://tests/sonde_galerie.tscn -- --monde=res://cuit/monde_knil
+##   Godot --headless --path D:/TheStoryOfKnil res://tests/sonde_galerie.tscn -- --monde=res://cuit/monde_knil
 ##         [--escalier=8,0]   (le coin de l'escalier : x, z — le couloir court le long de x, de z à z + 3)
 ## Sort avec 0 si le joueur descend, longe le couloir et remonte.
 

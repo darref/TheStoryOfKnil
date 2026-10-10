@@ -7,7 +7,7 @@ extends Node
 ##   Sol            le relief (collines, plateau plat au centre — dessus à y = 1 —, cuvette du lac), une ARCHE sur le
 ##                  plateau, et des GALERIES sous presque toute la carte (un quadrillage, deux cases de haut, enfoui)
 ## plus un LAC (sa nappe cuite comme MB la cuit : un .glb dans water/) et des ARBRES (un modèle fait ici, en .glb).
-##   Godot --headless --path D:/Knil res://tests/fabriquer_monde_essai.tscn [-- --taille=128 --nom=essai]
+##   Godot --headless --path D:/TheStoryOfKnil res://tests/fabriquer_monde_essai.tscn [-- --taille=128 --nom=essai]
 ## Puis `--import` (les .glb du monde), puis la cuisson.
 
 const WorldFile := preload("res://addons/marchingblocks_paint/mb_world_file.gd")

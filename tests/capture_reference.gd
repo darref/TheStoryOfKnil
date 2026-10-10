@@ -1,7 +1,7 @@
 extends Node3D
 ## LA RÉFÉRENCE À L'IMAGE — avec fenêtre : un .mbworld bâti par le GREFFON lui-même (ses GridMap, son nœud de
 ## transitions), vu par la caméra de jeu en un lieu. Pour comparer à la même vue du monde CUIT (`capture_monde`).
-##   Godot --path D:/Knil --windowed res://tests/capture_reference.tscn -- --monde=res://mondes/essai.mbworld/world.json
+##   Godot --path D:/TheStoryOfKnil --windowed res://tests/capture_reference.tscn -- --monde=res://mondes/essai.mbworld/world.json
 ##         --lieu=x,y,z [--nom=ref]
 const WorldFile := preload("res://addons/marchingblocks_paint/mb_world_file.gd")
 

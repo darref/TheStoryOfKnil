@@ -1,6 +1,6 @@
 extends Node
 ## SONDE DE LA SCÈNE PRINCIPALE — headless : les morceaux cuits chargés, le joueur dessus, la région, la caméra.
-##   Godot --headless --path D:/Knil res://tests/sonde_scene.tscn
+##   Godot --headless --path D:/TheStoryOfKnil res://tests/sonde_scene.tscn
 
 func _ready() -> void:
 	var main: Node = load("res://scenes/main.tscn").instantiate()

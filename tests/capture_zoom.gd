@@ -2,7 +2,7 @@ extends Node
 ## LES ZOOMS À L'IMAGE — avec fenêtre, sur le monde de la scène principale : la vue normale, la molette (cinq crans vers
 ## le bas), Ctrl + molette (la vue haute), puis le retour (Ctrl + molette vers le haut). Ce que le streamer charge à
 ## chaque fois. Images dans user://captures/zoom_*.png.
-##   Godot --path D:/Knil --windowed res://tests/capture_zoom.tscn
+##   Godot --path D:/TheStoryOfKnil --windowed res://tests/capture_zoom.tscn
 const OUT := "user://captures"
 
 

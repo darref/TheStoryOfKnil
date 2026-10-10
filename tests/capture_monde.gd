@@ -1,7 +1,7 @@
 extends Node
 ## UN MONDE CUIT À L'IMAGE — avec fenêtre : la scène principale sur le monde demandé, la caméra de jeu en quelques
 ## lieux. Images dans user://captures/<monde>_<lieu>.png.
-##   Godot --path D:/Knil --windowed res://tests/capture_monde.tscn -- --monde=res://cuit/monde_knil
+##   Godot --path D:/TheStoryOfKnil --windowed res://tests/capture_monde.tscn -- --monde=res://cuit/monde_knil
 ##         [--lieux=x,y,z;x,y,z…] [--heure=10]
 const OUT := "user://captures"
 

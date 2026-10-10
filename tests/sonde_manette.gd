@@ -2,7 +2,7 @@ extends Node
 ## LA MANETTE — headless : la scène principale menée par de faux événements de manette (ceux qu'une vraie enverrait) :
 ## le stick gauche déplace, A saute, X fait parler (et on ne bouge pas pendant le dialogue), B ferme, le stick droit
 ## zoome, Back bascule la vue haute ; et les textes à l'écran passent à la manette.
-##   Godot --headless --path D:/Knil res://tests/sonde_manette.tscn
+##   Godot --headless --path D:/TheStoryOfKnil res://tests/sonde_manette.tscn
 ## Sort avec 0 si tout est vert.
 const Inputs := preload("res://core/inputs.gd")
 

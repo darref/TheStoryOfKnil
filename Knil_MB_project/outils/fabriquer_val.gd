@@ -2,8 +2,8 @@ extends SceneTree
 ## LE MONDE DE KNIL (l'ancien Val de Résolve) — le premier monde du jeu, fait PAR LE LOGICIEL MARCHINGBLOCKS (son code, sans fenêtre) :
 ## un vrai projet `.mbproj` (à rouvrir et retoucher dans MB) et son export `.mbworld` (« Export the world… »).
 ##
-##   godot --headless --path D:/MarchingBlocks --script D:/Knil/Knil_MB_project/outils/fabriquer_val.gd
-##         [-- --taille=784 --racine=D:/Knil/Knil_MB_project --export=D:/Knil/mondes] [--ecraser]
+##   godot --headless --path D:/MarchingBlocks --script D:/TheStoryOfKnil/Knil_MB_project/outils/fabriquer_val.gd
+##         [-- --taille=784 --racine=D:/TheStoryOfKnil/Knil_MB_project --export=D:/TheStoryOfKnil/mondes] [--ecraser]
 ## ⚠ N'ÉCRASE PAS un `monde_knil.mbproj` existant (la carte se peint à la main dans MB) sans `--ecraser`.
 ##
 ## ⚠ Ce script tourne DANS le projet MarchingBlocks (ses `res://` sont ceux de MB) ; il n'écrit QUE dans `--racine`
@@ -50,8 +50,8 @@ const TEX := 512
 const CAPITAL_R := 30.0            # la place pavée ; les remparts juste derrière
 
 var N := 784
-var RACINE := "D:/Knil/Knil_MB_project"
-var EXPORT := "D:/Knil/mondes"
+var RACINE := "D:/TheStoryOfKnil/Knil_MB_project"
+var EXPORT := "D:/TheStoryOfKnil/mondes"
 var NOM := "monde_knil"
 
 var _n_base := FastNoiseLite.new()
