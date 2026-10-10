@@ -1,0 +1,68 @@
+{
+  "_doc": "LES COUCHES DU MONDE ET LEUR RÔLE DANS LE JEU. Dans le logiciel MarchingBlocks, le monde de Resolve est UN .mbworld à plusieurs couches (la règle de pose les lit ENSEMBLE : pas de mur où un massif touche le sol). Ordre conseillé des couches dans MB (la première l'emporte où elles se touchent) : Batiments, puis les gros obstacles (Neige, Volcan, Montagnes), les obstacles (Massifs), puis les sols (Paves, Chemins, SousBois, Marais, Desert, Prairie, Profondeurs). Une MATIÈRE est une couche MB ; un RÔLE regroupe plusieurs matières. Chaque couche est reconnue ici par son NOM (sans tenir compte de la casse ni des espaces) et reçoit un rôle : sa piste de chargement et sa distance d'affichage en jeu. souterrain : les tuiles enfouies sous au moins profondeur_souterrain cases pleines (les galeries) vont à part, montrées seulement quand le joueur est sous terre.",
+  "profondeur_souterrain": 2,
+  "fenetre_morceaux": 8,
+  "roles": [
+    {
+      "id": "batiments",
+      "noms": [
+        "batiments",
+        "bâtiments",
+        "buildings",
+        "houses",
+        "maisons"
+      ],
+      "distance": 64,
+      "_note": "pour l'atelier Houses de MB 1.0.0 — rien à peindre avant"
+    },
+    {
+      "id": "gros",
+      "noms": [
+        "gros obstacles",
+        "grosobstacle",
+        "grosobstacles",
+        "montagnes",
+        "neige",
+        "volcan",
+        "volcans"
+      ],
+      "distance": 200,
+      "_note": "un volcan, une chaîne de montagnes : chargés plus loin que le sol (200 m), leurs LOD font le reste — 400 m chargeait 114 morceaux de la chaîne du nord dès le départ, pour une vue de dessus qui n'y voit pas"
+    },
+    {
+      "id": "obstacles",
+      "noms": [
+        "massifs",
+        "obstacles",
+        "remparts"
+      ],
+      "distance": 72,
+      "_note": "les massifs qui bordent chemins et places"
+    },
+    {
+      "id": "sol",
+      "noms": [
+        "chemins",
+        "desert",
+        "désert",
+        "ground",
+        "marais",
+        "paves",
+        "pavés",
+        "prairie",
+        "profondeurs",
+        "sol",
+        "sousbois",
+        "terrain"
+      ],
+      "distance": 56,
+      "souterrain": true,
+      "_note": "le relief (pas tout à fait une carte de hauteur : arches comprises) et les galeries sous presque toute la carte ; porte aussi l'eau et le feuillage"
+    }
+  ],
+  "defaut": "sol",
+  "collision": {
+    "distance": 20,
+    "ratio": 0.25
+  }
+}

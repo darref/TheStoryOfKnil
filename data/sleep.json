@@ -1,0 +1,41 @@
+{
+  "_doc": "Le sommeil. limit_hours : au-delà, le joueur s'effondre où qu'il soit. spots : les sortes de couchage (normal = un lieu fait pour dormir, ce qui est préconisé). wake_rules : lues dans l'ordre, la première dont les conditions tiennent ET dont le tirage (chance) passe décide du réveil. Contexte = celui d'une rencontre + sleep.* (spot, quality, normal, forced, awake_hours). wake : same | home | nearest:<sorte de couchage> | tag:<étiquette d'un couchage>.",
+  "limit_hours": 72,
+  "warnings": [48, 60, 68],
+  "min_awake_hours": 10,
+  "wake_hour": 7,
+  "sleep_hours": 8,
+  "forced_sleep_hours": 12,
+  "real_seconds": 8,
+  "spots": {
+    "lit_maison":  {"label": "son lit",            "quality": 3, "normal": true},
+    "lit_auberge": {"label": "un lit d'auberge",   "quality": 2, "normal": true},
+    "lit_autre":   {"label": "le lit d'un autre",  "quality": 2, "normal": true},
+    "camp":        {"label": "un campement",        "quality": 1, "normal": false},
+    "sol":         {"label": "le sol",              "quality": 0, "normal": false}
+  },
+  "wake_rules": [
+    {"id": "arrete", "chance": 0.7, "wake": "tag:prison",
+     "message": "La garde t'a ramassé pendant ton sommeil.",
+     "when": [{"path": "karma.categories.mal", "op": ">=", "value": 3}, {"path": "place.region_type", "op": "in", "value": ["ville", "capitale"]}, {"path": "sleep.normal", "op": "==", "value": false}],
+     "effects": []},
+    {"id": "detrousse", "chance": 0.5, "wake": "same",
+     "message": "Ta bourse est plus légère au réveil.",
+     "when": [{"path": "sleep.normal", "op": "==", "value": false}, {"path": "player.identity.reputation", "op": "<", "value": 0}],
+     "effects": [{"op": "set", "path": "player.wealth.gold", "value": 0}]},
+    {"id": "recueilli", "chance": 0.8, "wake": "nearest:lit_auberge",
+     "message": "Quelqu'un t'a trouvé et porté jusqu'à l'auberge.",
+     "when": [{"path": "sleep.forced", "op": "==", "value": true}, {"path": "player.identity.reputation", "op": ">=", "value": 3}],
+     "effects": []},
+    {"id": "ramene_chez_soi", "chance": 0.6, "wake": "home",
+     "message": "Tu te réveilles chez toi, sans savoir comment.",
+     "when": [{"path": "sleep.forced", "op": "==", "value": true}, {"path": "player.home.spot_id", "op": "!=", "value": ""}],
+     "effects": []},
+    {"id": "repos", "chance": 1.0, "wake": "same", "message": "",
+     "when": [{"path": "sleep.normal", "op": "==", "value": true}],
+     "effects": []},
+    {"id": "mauvaise_nuit", "chance": 1.0, "wake": "same",
+     "message": "Une mauvaise nuit.",
+     "effects": [{"op": "add", "path": "player.identity.reputation", "value": -0.2}]}
+  ]
+}

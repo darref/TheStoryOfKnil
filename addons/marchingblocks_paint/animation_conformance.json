@@ -1,0 +1,764 @@
+{
+  "cases": [
+    {
+      "expected": 0,
+      "input": {
+        "count": 4,
+        "fps": 12.0,
+        "phase": 0.0,
+        "ping_pong": false,
+        "t": 0.0
+      },
+      "kind": "frame",
+      "name": "frame: 4 frames, 12.0 fps, t 0.0, phase 0.0"
+    },
+    {
+      "expected": 3,
+      "input": {
+        "count": 4,
+        "fps": 12.0,
+        "phase": 0.0,
+        "ping_pong": false,
+        "t": 0.25
+      },
+      "kind": "frame",
+      "name": "frame: 4 frames, 12.0 fps, t 0.25, phase 0.0"
+    },
+    {
+      "expected": 0,
+      "input": {
+        "count": 4,
+        "fps": 12.0,
+        "phase": 0.0,
+        "ping_pong": false,
+        "t": 1.0
+      },
+      "kind": "frame",
+      "name": "frame: 4 frames, 12.0 fps, t 1.0, phase 0.0"
+    },
+    {
+      "expected": 1,
+      "input": {
+        "count": 4,
+        "fps": 2.0,
+        "phase": 0.0,
+        "ping_pong": true,
+        "t": 2.75
+      },
+      "kind": "frame",
+      "name": "frame: 4 frames, 2.0 fps, ping-pong, t 2.75, phase 0.0"
+    },
+    {
+      "expected": 0,
+      "input": {
+        "count": 4,
+        "fps": 2.0,
+        "phase": 0.0,
+        "ping_pong": true,
+        "t": 3.0
+      },
+      "kind": "frame",
+      "name": "frame: 4 frames, 2.0 fps, ping-pong, t 3.0, phase 0.0"
+    },
+    {
+      "expected": 3,
+      "input": {
+        "count": 4,
+        "fps": 2.0,
+        "phase": 0.0,
+        "ping_pong": true,
+        "t": 4.5
+      },
+      "kind": "frame",
+      "name": "frame: 4 frames, 2.0 fps, ping-pong, t 4.5, phase 0.0"
+    },
+    {
+      "expected": 0,
+      "input": {
+        "count": 1,
+        "fps": 8.0,
+        "phase": 0.0,
+        "ping_pong": true,
+        "t": 3.3
+      },
+      "kind": "frame",
+      "name": "frame: 1 frames, 8.0 fps, ping-pong, t 3.3, phase 0.0"
+    },
+    {
+      "expected": 0,
+      "input": {
+        "count": 0,
+        "fps": 8.0,
+        "phase": 0.0,
+        "ping_pong": false,
+        "t": 3.3
+      },
+      "kind": "frame",
+      "name": "frame: 0 frames, 8.0 fps, t 3.3, phase 0.0"
+    },
+    {
+      "expected": 1,
+      "input": {
+        "count": 5,
+        "fps": 6.0,
+        "phase": 0.75,
+        "ping_pong": false,
+        "t": 0.5
+      },
+      "kind": "frame",
+      "name": "frame: 5 frames, 6.0 fps, t 0.5, phase 0.75"
+    },
+    {
+      "expected": 2,
+      "input": {
+        "count": 5,
+        "fps": 6.0,
+        "phase": 0.75,
+        "ping_pong": true,
+        "t": 0.5
+      },
+      "kind": "frame",
+      "name": "frame: 5 frames, 6.0 fps, ping-pong, t 0.5, phase 0.75"
+    },
+    {
+      "expected": 2,
+      "input": {
+        "count": 3,
+        "fps": 0.5,
+        "phase": 0.0,
+        "ping_pong": false,
+        "t": 100.25
+      },
+      "kind": "frame",
+      "name": "frame: 3 frames, 0.5 fps, t 100.25, phase 0.0"
+    },
+    {
+      "expected": 0,
+      "input": {
+        "count": 7,
+        "fps": 60.0,
+        "phase": 0.3125,
+        "ping_pong": true,
+        "t": 12.375
+      },
+      "kind": "frame",
+      "name": "frame: 7 frames, 60.0 fps, ping-pong, t 12.375, phase 0.3125"
+    },
+    {
+      "expected": 1,
+      "input": {
+        "count": 2,
+        "fps": 12.0,
+        "phase": 0.0,
+        "ping_pong": true,
+        "t": 0.1
+      },
+      "kind": "frame",
+      "name": "frame: 2 frames, 12.0 fps, ping-pong, t 0.1, phase 0.0"
+    },
+    {
+      "expected": 186,
+      "input": {
+        "count": 256,
+        "fps": 60.0,
+        "phase": 0.5,
+        "ping_pong": false,
+        "t": 9.5
+      },
+      "kind": "frame",
+      "name": "frame: 256 frames, 60.0 fps, t 9.5, phase 0.5"
+    },
+    {
+      "expected": 1.0,
+      "input": {
+        "frequency": 0.5,
+        "minimum": 0.2,
+        "phase": 0.0,
+        "t": 0.0
+      },
+      "kind": "pulse",
+      "name": "pulse: 0.5 Hz, minimum 0.2, t 0.0, phase 0.0"
+    },
+    {
+      "expected": 0.2,
+      "input": {
+        "frequency": 0.5,
+        "minimum": 0.2,
+        "phase": 0.0,
+        "t": 1.0
+      },
+      "kind": "pulse",
+      "name": "pulse: 0.5 Hz, minimum 0.2, t 1.0, phase 0.0"
+    },
+    {
+      "expected": 0.6,
+      "input": {
+        "frequency": 0.5,
+        "minimum": 0.2,
+        "phase": 0.0,
+        "t": 0.5
+      },
+      "kind": "pulse",
+      "name": "pulse: 0.5 Hz, minimum 0.2, t 0.5, phase 0.0"
+    },
+    {
+      "expected": 0.65,
+      "input": {
+        "frequency": 2.0,
+        "minimum": 0.3,
+        "phase": 0.0,
+        "t": 0.125
+      },
+      "kind": "pulse",
+      "name": "pulse: 2.0 Hz, minimum 0.3, t 0.125, phase 0.0"
+    },
+    {
+      "expected": 1.0,
+      "input": {
+        "frequency": 0.0,
+        "minimum": 0.3,
+        "phase": 0.0,
+        "t": 7.0
+      },
+      "kind": "pulse",
+      "name": "pulse: 0.0 Hz, minimum 0.3, t 7.0, phase 0.0"
+    },
+    {
+      "expected": 0.0,
+      "input": {
+        "frequency": 1.0,
+        "minimum": 0.0,
+        "phase": 0.25,
+        "t": 0.25
+      },
+      "kind": "pulse",
+      "name": "pulse: 1.0 Hz, minimum 0.0, t 0.25, phase 0.25"
+    },
+    {
+      "expected": 1.0,
+      "input": {
+        "frequency": 3.0,
+        "minimum": 1.0,
+        "phase": 0.6,
+        "t": 1.7
+      },
+      "kind": "pulse",
+      "name": "pulse: 3.0 Hz, minimum 1.0, t 1.7, phase 0.6"
+    },
+    {
+      "expected": 0.75,
+      "input": {
+        "frequency": 20.0,
+        "minimum": 0.5,
+        "phase": 0.0,
+        "t": 0.0125
+      },
+      "kind": "pulse",
+      "name": "pulse: 20.0 Hz, minimum 0.5, t 0.0125, phase 0.0"
+    },
+    {
+      "expected": 0.999188064374152,
+      "input": {
+        "origin": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "kind": "phase",
+      "name": "phase: origin (1.0, 1.0, 1.0)"
+    },
+    {
+      "expected": 0.129629643793123,
+      "input": {
+        "origin": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "kind": "phase",
+      "name": "phase: origin (0.0, 0.0, 0.0)"
+    },
+    {
+      "expected": 0.790116108915754,
+      "input": {
+        "origin": [
+          5.0,
+          2.0,
+          -3.0
+        ]
+      },
+      "kind": "phase",
+      "name": "phase: origin (5.0, 2.0, -3.0)"
+    },
+    {
+      "expected": 0.926004860080269,
+      "input": {
+        "origin": [
+          -7.0,
+          -2.0,
+          5.0
+        ]
+      },
+      "kind": "phase",
+      "name": "phase: origin (-7.0, -2.0, 5.0)"
+    },
+    {
+      "expected": 0.956249739423129,
+      "input": {
+        "origin": [
+          12.0,
+          0.0,
+          12.0
+        ]
+      },
+      "kind": "phase",
+      "name": "phase: origin (12.0, 0.0, 12.0)"
+    },
+    {
+      "expected": 0.211566194284387,
+      "input": {
+        "origin": [
+          -40.0,
+          3.0,
+          17.0
+        ]
+      },
+      "kind": "phase",
+      "name": "phase: origin (-40.0, 3.0, 17.0)"
+    },
+    {
+      "expected": 0.320798174911488,
+      "input": {
+        "origin": [
+          130.0,
+          64.0,
+          -90.0
+        ]
+      },
+      "kind": "phase",
+      "name": "phase: origin (130.0, 64.0, -90.0)"
+    },
+    {
+      "expected": 0.796812106851576,
+      "input": {
+        "origin": [
+          2.5,
+          0.75,
+          -1.5
+        ]
+      },
+      "kind": "phase",
+      "name": "phase: origin (2.5, 0.75, -1.5)"
+    },
+    {
+      "expected": [
+        0.0,
+        -0.5
+      ],
+      "input": {
+        "phase": 0.0,
+        "synced": true,
+        "t": 2.0,
+        "u": 0.0,
+        "v": -0.25
+      },
+      "kind": "scroll",
+      "name": "scroll: u 0.0 v -0.25, t 2.0, synced, phase 0.0"
+    },
+    {
+      "expected": [
+        1.03125,
+        -2.0625
+      ],
+      "input": {
+        "phase": 0.375,
+        "synced": false,
+        "t": 1.5,
+        "u": 0.25,
+        "v": -0.5
+      },
+      "kind": "scroll",
+      "name": "scroll: u 0.25 v -0.5, t 1.5, offset, phase 0.375"
+    },
+    {
+      "expected": [
+        3.5,
+        0.0
+      ],
+      "input": {
+        "phase": 0.5,
+        "synced": false,
+        "t": 0.0,
+        "u": 1.0,
+        "v": 0.0
+      },
+      "kind": "scroll",
+      "name": "scroll: u 1.0 v 0.0, t 0.0, offset, phase 0.5"
+    },
+    {
+      "expected": [
+        -30.0,
+        20.0
+      ],
+      "input": {
+        "phase": 0.9,
+        "synced": true,
+        "t": 10.0,
+        "u": -3.0,
+        "v": 2.0
+      },
+      "kind": "scroll",
+      "name": "scroll: u -3.0 v 2.0, t 10.0, synced, phase 0.9"
+    },
+    {
+      "expected": {
+        "albedo": {
+          "frames": {
+            "fps": 8.0,
+            "images": [
+              "animation/a_0000.png",
+              "animation/a_0001.png"
+            ],
+            "ping_pong": true,
+            "synced": false
+          },
+          "scroll": {
+            "synced": true,
+            "u": 0.25,
+            "v": -0.5
+          }
+        },
+        "emission": {
+          "pulse": {
+            "frequency": 2.0,
+            "minimum": 0.3,
+            "synced": false
+          }
+        },
+        "format": "marchingblocks-animation",
+        "orm": {
+          "scroll": {
+            "synced": false,
+            "u": 0.0,
+            "v": 0.1
+          }
+        },
+        "version": 1
+      },
+      "input": {
+        "albedo": {
+          "frames": {
+            "fps": 8.0,
+            "images": [
+              "animation/a_0000.png",
+              "animation/a_0001.png"
+            ],
+            "ping_pong": true,
+            "synced": false
+          },
+          "scroll": {
+            "synced": true,
+            "u": 0.25,
+            "v": -0.5
+          }
+        },
+        "emission": {
+          "pulse": {
+            "frequency": 2.0,
+            "minimum": 0.3,
+            "synced": false
+          }
+        },
+        "format": "marchingblocks-animation",
+        "orm": {
+          "scroll": {
+            "synced": false,
+            "u": 0.0,
+            "v": 0.1
+          }
+        },
+        "version": 1
+      },
+      "kind": "read",
+      "name": "read: a full animation"
+    },
+    {
+      "expected": {
+        "emission": {
+          "frames": {
+            "fps": 12.0,
+            "images": [
+              "animation/e.png"
+            ],
+            "ping_pong": false,
+            "synced": false
+          },
+          "pulse": {
+            "frequency": 0.5,
+            "minimum": 0.2,
+            "synced": false
+          }
+        },
+        "format": "marchingblocks-animation",
+        "normal": {
+          "scroll": {
+            "synced": true,
+            "u": 0.0,
+            "v": -0.25
+          }
+        },
+        "version": 1
+      },
+      "input": {
+        "emission": {
+          "frames": {
+            "images": [
+              "animation/e.png"
+            ]
+          },
+          "pulse": {}
+        },
+        "format": "marchingblocks-animation",
+        "normal": {
+          "scroll": {}
+        },
+        "version": 1
+      },
+      "kind": "read",
+      "name": "read: missing values take their defaults"
+    },
+    {
+      "expected": {
+        "albedo": {
+          "frames": {
+            "fps": 12.0,
+            "images": [
+              "animation/x.png"
+            ],
+            "ping_pong": false,
+            "synced": false
+          },
+          "scroll": {
+            "synced": true,
+            "u": 0.0,
+            "v": 0.5
+          }
+        },
+        "format": "marchingblocks-animation",
+        "version": 1
+      },
+      "input": {
+        "albedo": {
+          "frames": {
+            "fps": true,
+            "images": [
+              "animation/x.png",
+              4,
+              ""
+            ],
+            "ping_pong": "yes"
+          },
+          "scroll": {
+            "synced": 1,
+            "u": "fast",
+            "v": 0.5
+          }
+        },
+        "format": "marchingblocks-animation",
+        "version": 1
+      },
+      "kind": "read",
+      "name": "read: values of the wrong type are ignored"
+    },
+    {
+      "expected": {
+        "albedo": {
+          "frames": {
+            "fps": 60.0,
+            "images": [
+              "animation/x.png"
+            ],
+            "ping_pong": false,
+            "synced": false
+          },
+          "scroll": {
+            "synced": true,
+            "u": 10.0,
+            "v": -10.0
+          }
+        },
+        "emission": {
+          "pulse": {
+            "frequency": 20.0,
+            "minimum": 0.0,
+            "synced": false
+          }
+        },
+        "format": "marchingblocks-animation",
+        "version": 1
+      },
+      "input": {
+        "albedo": {
+          "frames": {
+            "fps": 500,
+            "images": [
+              "animation/x.png"
+            ]
+          },
+          "scroll": {
+            "u": 50,
+            "v": -50
+          }
+        },
+        "emission": {
+          "pulse": {
+            "frequency": 99,
+            "minimum": -2
+          }
+        },
+        "format": "marchingblocks-animation",
+        "version": 1
+      },
+      "kind": "read",
+      "name": "read: out of range: clamped"
+    },
+    {
+      "expected": {},
+      "input": {
+        "albedo": {
+          "pulse": {
+            "frequency": 1
+          }
+        },
+        "format": "marchingblocks-animation",
+        "version": 1
+      },
+      "kind": "read",
+      "name": "read: a pulse outside the emission is dropped"
+    },
+    {
+      "expected": {
+        "albedo": {
+          "scroll": {
+            "synced": true,
+            "u": 1.0,
+            "v": -0.25
+          }
+        },
+        "format": "marchingblocks-animation",
+        "version": 1
+      },
+      "input": {
+        "albedo": {
+          "frames": {
+            "images": []
+          },
+          "scroll": {
+            "u": 1
+          }
+        },
+        "format": "marchingblocks-animation",
+        "version": 1
+      },
+      "kind": "read",
+      "name": "read: frames without a frame are dropped"
+    },
+    {
+      "expected": {},
+      "input": {
+        "albedo": {
+          "wobble": {
+            "u": 1
+          }
+        },
+        "format": "marchingblocks-animation",
+        "height": {
+          "scroll": {
+            "u": 1
+          }
+        },
+        "version": 1
+      },
+      "kind": "read",
+      "name": "read: unknown channel and track are ignored"
+    },
+    {
+      "expected": {},
+      "input": {
+        "albedo": {
+          "scroll": {}
+        },
+        "format": "marchingblocks-animation",
+        "version": 2
+      },
+      "kind": "read",
+      "name": "read: a newer version: no animation"
+    },
+    {
+      "expected": {},
+      "input": {
+        "albedo": {
+          "scroll": {}
+        },
+        "format": "something-else",
+        "version": 1
+      },
+      "kind": "read",
+      "name": "read: not an animation"
+    },
+    {
+      "expected": {},
+      "input": {
+        "albedo": {
+          "scroll": {}
+        },
+        "format": "marchingblocks-animation"
+      },
+      "kind": "read",
+      "name": "read: no version"
+    }
+  ],
+  "format": "marchingblocks-animation-conformance",
+  "limits": {
+    "fps_max": 60.0,
+    "frames_max": 256,
+    "pixels_max": 67108864,
+    "scroll_max": 10.0
+  },
+  "rules_text": [
+    "Every case: {name, kind, input, expected}. Integers are exact. Floats: compare with an absolute tolerance of 1e-6",
+    "(1e-5 for anything that went through a sine or a cosine). Cells and vertices are integer [x, y, z] in FORMAT space",
+    "(right-handed, +Y up, cell c covers [c, c + 1]); a set of cells is sorted by x, then y, then z.",
+    "ANIMATED TEXTURES — a material of tiles.glb may carry extras.mb_animation:",
+    "  format \"marchingblocks-animation\", version 1 (refuse anything newer: ignore the animation, show the still material).",
+    "  channels: albedo, normal, orm (r ambient occlusion, g roughness, b metal), emission. Each has tracks:",
+    "    scroll {u, v (image repeats per second, in [-10.0, 10.0]), synced}",
+    "    frames {images (paths RELATIVE to the .mbset folder, in order; at most 256), fps (in [0.1, 60.0]),",
+    "            ping_pong, synced}   — a frames track without a frame does not exist",
+    "    pulse  {frequency (Hz, in [0, 20]), minimum (in [0, 1]), synced}   — emission only",
+    "  A value of the wrong type is ignored (its default takes its place), a number out of range is clamped, an",
+    "  unknown channel or track is ignored. Defaults: scroll u 0, v -0.25, synced; frames fps 12, no ping-pong,",
+    "  not synced; pulse frequency 0.5, minimum 0.2, not synced.",
+    "  The material itself is a standard glTF material showing frame 0: an engine that ignores the animation",
+    "  still shows the tile right.",
+    "TIME is global (one clock for every material). PHASE of a tile = hash of its ORIGIN in FORMAT space (the",
+    "  vertex v + piece_offset): p = floor(o + 0.5); p = fract(p * 0.3183099 + (0.71, 0.113, 0.419)) * 17;",
+    "  phase = fract(p.x * p.y * p.z * (p.x + p.y + p.z)). A synced track uses phase 0.",
+    "  scroll offset at time t = (u, v) * (t + (synced ? 0 : 7 * phase)), added to the UVs (they repeat).",
+    "  frame at time t, n frames: k = floor(t * fps + phase * n); ping_pong and n > 1: p = 2n - 2, k = k mod p,",
+    "    frame = k < n ? k : p - k; else frame = k mod n (mod is always >= 0).",
+    "  pulse at time t: frequency <= 0 gives 1; else minimum + (1 - minimum) * (0.5 + 0.5 cos(2 pi (t * frequency",
+    "    + phase))), multiplying the emission.",
+    "  The UVs of a tile turn with it: a v scroll stays vertical on every copy, a u scroll follows each copy's turn.",
+    "CASES — frame {count, fps, ping_pong, t, phase} → the frame index; pulse {frequency, minimum, t, phase} → the",
+    "emission factor; phase {origin} → the phase, with this EXACT mixed precision (the reference keeps its vectors",
+    "in 32-bit floats): p = floor(origin + 0.5); a_i = fract(p_i * 0.3183099 + k_i) in double (k = 0.71, 0.113,",
+    "0.419); f_i = (float32) a_i; q_i = (float32)(f_i * 17); phase = fract(q.x * q.y * q.z * (q.x + q.y + q.z)) in",
+    "double. A full 32-bit shader gives another phase for the same tile — compare on the CPU, or accept the",
+    "difference on the GPU); scroll {u, v, t, synced,",
+    "phase} → the UV offset [du, dv]; read: mb_animation in, the normalized animation out ({} = no animation)."
+  ],
+  "version": 1
+}

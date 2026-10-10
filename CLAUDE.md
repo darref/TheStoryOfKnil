@@ -1,0 +1,508 @@
+# Resolve — charte du jeu
+
+## 1. Le jeu en une phrase — DÉCIDÉ (Jordan, 8 octobre 2026)
+
+> **Explorer un grand monde de tuiles MarchingBlocks, et choisir — ou non — de résoudre les problèmes des gens et
+> du monde, par une barre d'actions que le contexte compose.**
+
+Le principe général change peu ; c'est l'expression visuelle et le gameplay qui viendront par-dessus. D'où la règle
+d'architecture : **le backend ne connaît pas la présentation.** Il émet sur l'`EventBus` ; caméra, UI, animations,
+lumière écoutent.
+
+- **Le monde** : des tuiles 3D MarchingBlocks ; des régions — villes, une capitale, villages, forêts, lacs,
+  montagnes, désert, côte, marais…
+- **La vue** : un personnage animé, vu **de dessus** dehors ; **troisième personne** dans un intérieur (bâtiment,
+  grotte) ; la bascule est AUTOMATIQUE (`Interior` → `CameraRig`).
+- **Les rencontres** : une barre horizontale de boutons CARRÉS, un par action ; l'icône dit le but de l'action.
+  **« Mépriser » est toujours là** (en dernier) : la barre n'est jamais vide.
+- **Le moteur de décision** compose la barre depuis : qui je suis, mon patrimoine, où nous sommes, la date et
+  l'heure, et l'historique de mes rencontres avec la cible (personnage ou objet). Ses tirages sont déterministes
+  au **germe de la partie** : deux parties ne se ressemblent jamais, **la divergence est gratuite par
+  construction**, sans scénario écrit.
+- **Le sommeil rythme le jeu** : au plus tous les **3 jours** (72 h), sinon effondrement où que l'on soit. Le cycle
+  jour / nuit défile en accéléré pendant le sommeil. On se réveille au même endroit ou ailleurs selon le couchage
+  et TOUS les choix de la partie. Préconisé : un lit (chez soi, chez quelqu'un, à l'auberge).
+
+## 2. MarchingBlocks dans ce projet — VÉRIFIÉ (8 octobre 2026)
+
+**Oui, c'est installable dans un autre projet, et c'est fait.** Mais pas comme on s'en souvenait :
+
+- ⚠ **CE QUI SERT, C'EST LE GREFFON GRATUIT `addons/marchingblocks_paint/`, ET LUI SEUL.** Il est AUTONOME : il ne
+  charge RIEN du cœur (charte de MB, « LE GREFFON GODOT À PARITÉ »). Il réécrit la règle de pose depuis le texte
+  du format (`rules_text` dans `tileset.json`), en GDScript. Il donne :
+  - dans l'ÉDITEUR : le pinceau (barre au-dessus de la vue 3D) pour peindre / retoucher le terrain, et
+    **Project → Tools → Import MarchingBlocks world…** ;
+  - en JEU : le nœud `MarchingBlocksWorld` (un par couche) qui pose ses tuiles au `_ready`, et `apply_cells()` pour
+    changer le monde en cours de partie. **Mesuré ici : il marche à l'exécution, pas seulement dans l'éditeur.**
+- ⚠ **LA GDEXTENSION DU CŒUR C++ (`MBNatif`, `MBMonde`) N'EST PAS UTILISABLE PAR UN JEU AUJOURD'HUI.** Elle ne
+  part que dans l'exe de l'appli ; son pont dépend de `marching_blocks.gd` (l'addon `marchingblocks_core`, la
+  partie qui se vend) pour sa table. Que les greffons embarquent la GDExtension est l'étape (4) du plan de MB, et
+  **l'API de jeu** (`GetCell`, `Raycast`, `TileAt`, `OnCellsChanged`, `SaveCells`…) l'étape (5) — PROPOSÉES, pas
+  écrites. Ce n'est pas bloquant : on n'en a besoin que pour la VITESSE (voir §6, le monde large).
+- **LE LOGICIEL MARCHINGBLOCKS FAIT LES DEUX** :
+  - **les TUILES** — ateliers Geometry / Texturing / Animation / Transitions / Foliage, puis « Export to engines » :
+    un dossier `<nom>.mbset/` (`tileset.json` + `tiles.glb`), une couche ;
+  - **le MONDE** — atelier World (peindre, formes spéciales, salles, eau, couches), exporté en `<nom>.mbworld/`
+    (`world.json` + un `.mbset` par couche + eau, transitions, feuillage). Importé dans Godot, il donne un
+    `MarchingBlocksWorld` par couche, `MarchingBlocksWater`, `MarchingBlocksTransitions`, `MarchingBlocksFoliage`.
+  - **Recommandé** : peindre le monde DANS MarchingBlocks (outils plus complets, eau, feuillage), l'importer ici
+    sous `mondes/`, le CUIRE (ci-dessous). On ne retouche pas le terrain dans Godot : on repeint dans MB, on recuit.
+
+**Installer / mettre à jour le greffon** : copier `D:\MarchingBlocks\addons\marchingblocks_paint` dans `addons\`
+(ici : copie du commit `9ec4403` de MB, 8 octobre 2026). Une mise à jour = recopier le dossier. Le greffon REFUSE un
+format plus récent que le sien : greffon et appli doivent avancer ensemble.
+
+⚠ **UN `.mbset` D'AVANT LE 30 SEPTEMBRE 2026 EST REFUSÉ** (« must be one tile name (one tile per key) ») :
+`D:\MarchingBlocks\global_blender_bevel_and_tripo_texture.mbset` en est un. Le jeu d'essai d'ici est
+`assets/tilesets/temoin.mbset`, copié de `engines/unity/test-project/Assets/witness.mbset` (format actuel ; il lui
+manque 20 tuiles sur le terrain d'essai — cubes rouges, cachés en jeu). **Le vrai jeu de tuiles est à faire dans
+MarchingBlocks.**
+
+~~**Ce que le jeu ajoute au greffon** (`MBTerrain`)~~ — retiré le 8 octobre 2026 : le jeu ne pose plus de tuiles
+par le greffon, il charge des morceaux cuits (ci-dessous). ⚠ **Ne jamais poser de `MarchingBlocksWorld` dans une scène
+du jeu** : ouverte dans l'éditeur, la scène enregistre les grilles générées par le greffon (vu : `main.tscn` passé de
+190 à 2 278 lignes, 3 MeshLibrary et 104 maillages embarqués).
+
+### LE MONDE SE FAIT DANS LE LOGICIEL MB — DÉCIDÉ (Jordan, 8 octobre 2026)
+
+« On laissera le greffon pour les acheteurs de MB. » Le monde de Resolve se peint dans l'appli MarchingBlocks, pas
+dans Godot. ⚠ Il faut quand même LIRE son export (`.mbworld`) côté jeu : le greffon reste la référence de lecture,
+mais seulement dans la CHAÎNE DE CUISSON (outil d'éditeur, §6) — le jeu livré n'embarque ni le greffon ni la règle
+de pose, il charge des morceaux cuits. À terme, un « Export baked world » dans l'appli MB elle-même ferait la
+cuisson à la source (une fonction utile aussi aux acheteurs) : à proposer à MarchingBlocks.
+
+### LES COUCHES DU MONDE — DÉCIDÉ (Jordan, 8 octobre 2026), ÉCRIT LE MÊME JOUR
+
+Le monde de Resolve est **UN `.mbworld` à plusieurs COUCHES**, peintes dans le logiciel MB :
+
+| Couche MB (nom) | Rôle (`tools/cuisson/couches.json`) | Ce qu'elle porte | Piste, distance |
+|---|---|---|---|
+| **Batiments** | `batiments` | l'atelier **Houses** de MB 1.0.0 (c'est son nom dans la charte de MB) — rien à peindre avant | ~64 |
+| **GrosObstacles** | `gros` | un volcan, une montagne : ce qui se voit de LOIN | ~400 |
+| **Obstacles** | `obstacles` | les massifs qui bordent chemins et places | ~72 |
+| **Sol** | `sol` | le relief (« une carte de hauteur », arches comprises), les GALERIES sous presque toute la carte ; l'eau et le feuillage | ~56 |
+
+- ⚠ **UN SEUL MONDE, PAS QUATRE** : la règle de pose lit les couches ENSEMBLE (pas de mur où un massif touche le sol ;
+  où elles se touchent, la PREMIÈRE couche l'emporte). Ordre conseillé dans MB : Batiments, GrosObstacles, Obstacles, Sol.
+  Une couche est reconnue par son NOM (casse et espaces ignorés) ; un nom inconnu va au Sol, et la cuisson le dit.
+- **CHAQUE RÔLE SA PISTE** : la cuisson range chaque couche dans ses propres fichiers (`cuit/<monde>/<rôle>/m_*.scn`),
+  le `ChunkStreamer` les charge chacune à sa distance (un volcan se voit de loin, un massif de près). La COLLISION et le
+  SOUS-SOL, toutes couches ensemble, restent à part et tout près (~20).
+- **LE SOUS-SOL EST AUTOMATIQUE** : les galeries courent sous presque toute la carte — on ne les borde pas de volumes
+  à la main. Une tuile est SOUTERRAINE quand chacune de ses cases vides a au moins `profondeur_souterrain` (2) cases
+  pleines au-dessus : une galerie oui ; une ARCHE, un surplomb, l'entrée d'une grotte (une case de couvert) non. La
+  cuisson range ces tuiles dans « Souterrain » (cachées vues de dessus) et écrit, par morceau, les tronçons d'air
+  ENFOUI. En jeu, si les pieds du joueur sont dans cet air, `Interior.set_underground(true)` (après 0,25 s) : caméra
+  en troisième personne, torche, ambiante d'intérieur, tuiles souterraines montrées.
+- **PAR FENÊTRES** : la cuisson pose le monde fenêtre par fenêtre (4 × 4 morceaux), une case de marge — un sommet ne
+  lit que les cases v..v+1 et leurs colonnes. La règle tourne UNE fois par fenêtre pour toutes les couches
+  (`Rule.placements_layered`, la référence du greffon), au lieu d'une fois par couche dans le greffon.
+  ⚠ **VU PAR L'ÉPREUVE** : une fenêtre qui n'a que des cases de MARGE porte les sommets du bord du monde (devant la
+  première case) — sautée, le pourtour perdait ses tuiles (aire 52 181 au lieu de 54 765).
+- **ÉPROUVÉ** (`test_cuisson`, 94 vérifications, 36 fenêtres d'un morceau sur le monde d'essai à trois couches : Sol
+  157 252 cases avec galeries et arche, Obstacles en anneau autour de la place, un volcan) : **chaque rôle a la MÊME
+  géométrie que le monde ENTIER bâti par le greffon** (`WorldFile.build`, couche par couche) ; les pistes ; le volcan
+  chargé de loin ; sous terre dans la galerie, à l'air sous l'arche et sur la place ; les tuiles souterraines
+  montrées puis cachées ; le sol de la galerie se marche. **Mutations rouges** : marge supprimée (sol ET volcan
+  faux), profondeur 1 (l'arche devient souterraine). `sonde_scene` : dans la galerie, souterrain, troisième personne,
+  torche allumée. Vu à l'image (`capture_couches`).
+
+### LE VAL DE RÉSOLVE — LE PREMIER MONDE, FAIT PAR LE LOGICIEL MB (Jordan, 8 octobre 2026 : « utilise l'exemple de test
+### qui a déjà 3 matières, rajoute 7 matières bien pensées et fais un monde à thème »)
+
+**`Resolve_MB_project/`** (un `.gdignore` : le projet Resolve ne le lit pas) — le projet MarchingBlocks du jeu :
+**`val_de_resolve.mbproj`, UN SEUL PROJET** (Jordan, 9 octobre 2026 : « je ne veux pas avoir plusieurs sous-maps »), à
+ouvrir dans MB pour repeindre ; `matieres/` (l'exemple de MB et les sept matières neuves), `modeles/arbres/` (les arbres
+de HEARTWORLD), `outils/fabriquer_val.gd` (le script qui l'a fait, LANCÉ DANS LE PROJET MB — rien du format n'est
+réécrit), `outils/banc_ouverture_mb.gd` (ouvre un projet dans la fenêtre de MB et mesure : `--tenir=s`, `--vues=26;60;
+monde@300`, `--sans-feuillage`, `--octant=n`, `--sans-physique`, `--chronos` ; remet les réglages de MB) :
+
+```
+"$GODOT" --headless --path D:/MarchingBlocks --script D:/Resolve/Resolve_MB_project/outils/fabriquer_val.gd [-- --taille=784]
+"$GODOT" --path D:/MarchingBlocks --script D:/Resolve/Resolve_MB_project/outils/banc_ouverture_mb.gd -- --projet=<.mbproj>
+"$GODOT" --headless --path D:/Resolve --import
+"$GODOT" --headless --path D:/Resolve res://tools/cuisson/cuire.tscn -- --monde=res://mondes/val_de_resolve.mbworld/world.json
+"$GODOT" --headless --path D:/Resolve res://tests/sonde_collision.tscn -- --monde=res://cuit/val_de_resolve
+```
+
+- ⚠ **MB PLANTAIT SUR LE VAL — RÉPARÉ DANS MB (9 octobre 2026, Jordan : « il ne doit pas planter »)**, deux fichiers et
+  une épreuve (voir la charte de MB, « LES GRANDS MONDES NE PLANTENT PLUS ») : « FATAL: Index p_index = 4294967294 is
+  out of bounds (count = 32771) » venait du moteur PHYSIQUE de Godot, débordé par les formes de collision que les
+  grilles d'affichage de l'appli portaient pour rien (`MassifPeint.collision_des_pieces`, faux dans l'appli). Et le
+  feuillage de MB était une MultiMesh pour tout le monde (299 M primitives, 4 img/s de près) : par morceaux de 32,
+  portée 400, LOD. **Le Val entier s'ouvre** (5,5 s, 4,1 Go) : 25 img/s à l'ouverture, 12 à 60 m de recul, 6 à
+  150 m ; tout cadré (F) : 1 img/s — les vues lointaines de MB restent lentes (OUVERT dans MB). Épreuves de MB
+  vertes : `test_massif_peint` 130, `test_feuillage` 70, `test_repli_procedural` 3 922, `fumee_appli` 937.
+  ⚠ PAS COMMITÉ dans MB (`git diff` : `massif_peint.gd`, `vue.gd`, `feuillage_vue.gd`, `test_massif_peint.gd`, sa charte).
+  ⚠ **L'APPLI INSTALLÉE NE LE SAVAIT PAS** (« plante encore malgré réinstallation ») : l'installeur `build/` datait du
+  8 octobre. Rebâtie le 9 au soir par `DEV_TOOLS/exporter_marchingblocks.sh` depuis un arbre git À PART
+  (`D:/MarchingBlocks_wt_resolve` : HEAD + ces seuls correctifs, fins de ligne LF, projet importé — un autre travail en
+  cours dans `D:/MarchingBlocks` cassait la fumée), 28 suites vertes, sortie `D:/MarchingBlocks_build_resolve/` ; l'exe
+  et sa DLL copiés dans `%LOCALAPPDATA%/Programs/MarchingBlocks` (l'ancien gardé à côté, `ancienne_version_8_octobre/`).
+  Vu à l'image : le Val s'ouvre (5,6 Go). ⚠ Réinstaller depuis `D:/MarchingBlocks/build/installeur` remettrait l'ancien.
+  ⚠ La FUMÉE de MB réécrit `reglages.cfg` de l'appli (où vit la CLÉ DE LICENCE) : tuée en route, elle l'a perdue — remise
+  depuis une copie.
+- **DIX MATIÈRES** (une matière = une couche MB = un jeu de tuiles). De l'exemple : **Prairie** (Grass), **Roche**
+  (GreyRock), **Désert** (Desert). Neuves, sur le témoin de MB, DEUX textures chacune (le dessus et les flancs, choisis
+  par la normale de chaque face), générées sans couture (une période par case), projection « boîte », cartes PBR
+  déduites par MB : **Pavés** (pierres arrondies / moellons en assises), **Chemins** (terre battue et gravillons /
+  terre en strates), **Sous-bois** (mousse et litière / humus et racines), **Marais** (vase luisante / boue),
+  **Neige** (neige / roche glacée), **Basalte** (cendre et braises / orgues), **Profondeurs** (gravier / strates de grès).
+- **ONZE COUCHES**, dans l'ordre de MB : Neige, Volcan (Basalte), Montagnes (Roche), Massifs (Roche aussi : deux couches,
+  une source, un `.mbset`), Paves, Chemins, SousBois, Marais, Desert, Prairie, Profondeurs — et leur rôle dans
+  `couches.json` (gros : Neige, Volcan, Montagnes ; obstacles : Massifs ; sol : le reste).
+- **LE PLAN, v2 (Jordan, 9 octobre 2026 : « de grandes étendues plates… un réseau irrégulier de massifs qui bordent
+  la zone parcourable, d'au moins 4 de haut… des bords montagneux qui encadrent toute la map » ; la v1 — un relief
+  qui faisait trop sauter, « ça ressemble à Minecraft » — est remplacée)**, 784² cases de 1 m :
+  - **LA DALLE** : une case (dessus à y = 1), sa matière selon la région (Prairie, Pavés, Chemins, Sous-bois, Marais,
+    Désert) — on marche À PLAT partout ; les lacs sont des cuvettes d'une case.
+  - **LE RÉSEAU DE MASSIFS** (Massifs, 4 à 7 de haut) entre de grandes étendues (un pavage de Voronoï, ~100 m),
+    percé de passages (un arbre couvrant : toutes les étendues sont reliées, plus un tiers de passages en plus) ; les
+    routes et les villages les écartent ; **18 ESCALIERS** (marches d'une case) montent sur leurs dessus : les ÉTAGES
+    où l'on s'infiltre — ailleurs, on n'y monte pas.
+  - **LE CADRE** (Montagnes, 7 à 13 de haut, 6 à 9 d'épaisseur, enneigé en haut) sur tout le pourtour ; les LIMITES
+    (±385 m, au pied du cadre là où il est le plus mince) le doublent en jeu (§4).
+  - la capitale Haute-Résolve au centre (place pavée de 30 m, remparts de 4 percés aux routes), quatre villages
+    (Bois-Joli à l'ouest, La Sablière au sud-est, Les Joncs au sud-ouest, Pied-Mont au nord), une route à chacun ; le
+    volcan du nord-est (Basalte, 24 de haut, lave au cratère) ; le lac du Val, l'étang du marais.
+  - **LES GALERIES** (Profondeurs) : des TUBES sous la dalle (sol à y = −4, plafond à −1), un couloir tous les 64 m,
+    29 escaliers qui y descendent.
+    ⚠ **CETTE v2 EST IMPRATICABLE** (Jordan, 10 octobre 2026 : « l'étroitesse et les escaliers ne permettent pas de
+    rentrer dedans ») : 2 cases de large, 2 de haut, et au bas de l'escalier le PLAFOND du couloir coupait la tête
+    (dernière marche à −2,25, plafond à −0,75, le joueur fait 1,8 m). **v3 dans `fabriquer_val.gd`** (`GALLERY_W`,
+    `GALLERY_FLOOR`, `STAIR_*`) : 4 de large, 3 cases d'air (sol en −5, plafond en −1), l'escalier sur toute la largeur,
+    4 marches d'une case (2 de long) puis un PALIER de 3 à ciel ouvert au sol de la galerie. ÉPROUVÉ sur un Val d'essai
+    256² fait par MB et cuit (`tests/sonde_galerie.tscn`) : 4,00 m libres, 3,00 m sous plafond, une capsule du joueur
+    descend, longe et remonte en sautant les marches. ⚠ **LE VAL N'EST PAS REGÉNÉRÉ, ET NE LE SERA PAS** (Jordan : « je
+    vais peindre la map moi-même ») : ces cotes sont la RÈGLE POUR PEINDRE une galerie dans MB — au moins 3 cases d'air
+    en hauteur, 3 à 4 de large, des marches d'une case avec 2 de long, et en bas un palier À CIEL OUVERT avant le
+    plafond. `sonde_galerie` vérifie une galerie peinte (`--escalier=x,z`, le couloir le long de x).
+  - **LES ARBRES DE HEARTWORLD** (`D:/Spirit3D/HEART_WORLD/biomes/maps`, copiés dans `modeles/arbres/`), 5,5 m
+    (plaines) et 6,5 m (bois) — SAUF LES DÉCIMÉS, reconnus À LEUR COMPTE DE TRIANGLES ROND (une cible de
+    décimation ; aucune liste écrite n'a été trouvée) : jungle 01–03 (30 000 pile), palmier, « stylized tree », arbre
+    des marais (~5 000), woodland 08 (9 996), woodland 01 (24 978). Gardés : plains 01–04, woodland 02–07 et 09.
+    **Leur collision** : un cylindre par tronc (rayon du quart bas du modèle, hauteur ≤ 4 m), cuit dans la piste de
+    collision, couche physique 5.
+  Les régions de `main.tscn` suivent ce plan.
+- **MESURÉ (v2)** : MB le fabrique en 4 min (dont 2,8 de réparation des diagonales) : **1,36 M cases** (la v1 : 6,7 M),
+  587 contacts diagonaux comblés, 3 eaux (lac 806 cases, étang 380, lave 1 024), 3 383 arbres ; `.mbproj` 22 Mo,
+  `.mbworld` 284 Mo. Cuisson : 8 min 25, 1,55 Go au plus, **1,7 Go** cuits, 1,71 M tuiles, 2 500 morceaux. Collision
+  fidèle (0 écart sur 9 morceaux, 900 rayons), scène, saut, galerie, triche et limites : verts.
+- **LES À-COUPS DE LA TRAVERSÉE APRÈS LES ARBRES — RÉGLÉS (9 octobre 2026)** : 7 à 13 images > 33 ms → **0** (deux
+  traversées aller-retour, pire image 28 ms, ~200 img/s). Trouvé par `banc_marche --detail` (il dit la piste, la clé
+  et ce qui se lisait en même temps) : l'ENTRÉE des morceaux de COLLISION, 26 à 45 ms. ⚠ **UNE FORME CONCAVE CRÉÉE
+  DANS UN FIL** (la lecture en fond) **LAISSE SON TRAVAIL AU MOTEUR PHYSIQUE, QUI LE FAIT D'UN BLOC SUR LE FIL
+  PRINCIPAL** quand le morceau entre — mesuré, le même morceau : 0,1 ms lu sur le fil principal, 24 ms lu dans un fil ;
+  et tout lire sur le fil principal coûtait pire (13 ms en moyenne, 44 au pire). **Remède** : la cuisson range les
+  triangles de collision en DONNÉES (`world/collision_morceau.gd`, des pièces de 3 000 triangles) et le ChunkStreamer
+  en fait des formes sur le fil principal, à petites doses (`_build_shapes`, `shape_budget_ms` = 2 ms par image, les
+  plus proches d'abord) ; le morceau sous la cible, et les sauts (`load_around_now`), d'un coup. Et la collision est
+  SOUDÉE avant d'être simplifiée (`_collision_of` : positions seules, arrondies au 1/10 de mm ; même borne de 5 cm) :
+  22,8 M triangles au lieu de 27,2. Essayé et retiré : n'entrer qu'avec rien en lecture (8 à-coups au lieu de 13).
+- ⚠ **LES CONTACTS DIAGONAUX FONT DES TROUS** (la charte de MB : « le monde sans contact diagonal ») : un relief
+  procédural en crée (les pics), et le peintre de MB ne les pose pas. Vus : des trous bleus (le ciel) dans les
+  montagnes et le volcan. Réparés par la règle même du bouton « Fix diagonal contacts » ; et la cuisson COMPTE
+  désormais les tuiles manquantes (`tiles_missing`) et le DIT.
+- ⚠ **LA COLLISION SIMPLIFIÉE PAR UNE PART DE TRIANGLES A SUPPRIMÉ DES SOLS DE GALERIE** (le joueur y tombait,
+  y = −5,5) : elle est désormais bornée par l'ERREUR de chaque LOD (`collision_max_error`, 5 cm), et
+  `tests/sonde_collision.tscn` compare la collision cuite à la collision complète, rayon par rayon (509 écarts
+  avant, 0 après). ⚠ La sonde ne tire jamais sur une coordonnée entière : c'est l'arête d'une marche.
+- **LES À-COUPS — RÉGLÉS (9 octobre 2026)**. Mesuré d'abord (`banc_marche -- --detail`, `--aller-retour`, `--garder`) :
+  ni le code du streamer (0,04 ms par image), ni le rendu (CPU 0,3 ms, GPU 2 à 4), ni les transitions (23 avec, 23
+  sans), ni la compilation des shaders ; et en revenant SANS RIEN CHARGER (`--garder`) : 0 à-coup. C'était le
+  CHARGEMENT : un morceau de 32 du Val envoie ~15 Mo à la carte graphique (~300 000 sommets, trois par triangle —
+  chaque triangle a sa normale, la soudure ne gagne rien), et plusieurs se lisaient à la fois. Le rendu multi-fil de
+  Godot n'y change rien (23). **Remède : des morceaux de 16 (≈ 4 Mo chacun) et au plus DEUX lectures à la fois, les
+  plus proches d'abord (`ChunkStreamer.max_loading`) → 0 image > 33 ms (pire 32,8 ms)** sur la traversée en courant ;
+  les morceaux de 32 avec la même limite : encore 25. 460 appels de dessin au lieu de 206, ~110 img/s.
+- ⚠ **UN MONDE CUIT NE SE DÉPLACE PAS** : ses morceaux renvoient à `partage/` par un chemin `res://` ABSOLU — renommé,
+  plus rien ne se charge (vu : « Cannot call method 'instantiate' on a null value »). On recuit dans le bon dossier.
+- **LE WORKFLOW — PEINDRE DANS MB, JOUER DANS GODOT (Jordan, 9 octobre 2026 : « le plus simplement possible »)** :
+  1. MB : ouvrir `Resolve_MB_project/val_de_resolve.mbproj`, peindre, enregistrer (Ctrl+S) ;
+  2. MB : World → « Export the world… » → le dossier `D:\Resolve\mondes` (l'export s'appelle comme le projet :
+     `mondes/val_de_resolve.mbworld`, réécrit sur place) ;
+  3. **double-clic sur `D:\Resolve\recuire.bat`** (le jeu fermé ; l'éditeur Godot peut rester ouvert) : l'import, la
+     cuisson (~8 min), la sonde de collision ; il dit « C'EST PRÊT » ou ce qui ne va pas (`cuit/derniere_cuisson.txt`) ;
+  4. lancer le jeu. Oublié l'étape 3 ? Le jeu le DIT (`ChunkStreamer._warn_if_stale` : l'export plus récent que la
+     cuisson → un message à l'écran et un avertissement).
+  ⚠ `fabriquer_val.gd` refait TOUT le projet : il refuse d'écraser un `val_de_resolve.mbproj` existant (`--ecraser`).
+  ⚠ Les LIMITES du monde (±385 m) sont dans `mondes/val_de_resolve.limites.json`, hors du dossier que MB réécrit : un
+  cadre repeint ailleurs → les y changer. ⚠ Les RÉGIONS, PNJ, lits, l'auberge sont posés dans `scenes/main.tscn` : une
+  ville déplacée dans MB → les déplacer dans Godot.
+- La piste « gros » est ramenée à 200 m (400 chargeait 114 morceaux de la chaîne du nord au départ).
+
+### LES TRANSITIONS ENTRE TOUTES LES MATIÈRES — DEMANDÉ (Jordan, 8 octobre 2026), ÉCRIT ET VU LE MÊME JOUR
+
+- **CÔTÉ MB** (`fabriquer_val.gd`) : l'état de l'atelier Transitions dans le projet et l'export — les 55 paires des 11
+  couches ACTIVES, réglages par défaut de l'atelier ; représentant d'une matière neuve : son DESSUS ; d'une matière de
+  l'exemple : son matériau le plus porté (le défaut de l'atelier). Tout se règle ensuite dans MB, et se réexporte.
+- **CÔTÉ CUISSON** : le matériau des transitions est bâti par les fonctions du greffon (`Trans.table`,
+  `Trans.cell_texture`, les représentants), posé en passe suivante sur TOUS les matériaux des tuiles. Le shader du
+  greffon lit le centre de la tuile dans sa matrice (`MODEL_MATRIX`) — que la fusion efface : chaque sommet cuit porte
+  le centre de SA tuile (CUSTOM0), et la COPIE CUITE du shader le lit là (`_patch_material`). Le même remède vaut pour
+  la phase des textures ANIMÉES (l'ancien OUVERT (1) de la cuisson : fermé).
+- ⚠ **SANS FENÊTRE, LES TEXTURES FAITES À LA VOLÉE S'ENREGISTRENT VIDES** (comme les MultiMesh) : la texture 3D des
+  cases, le tableau des représentants, LA TABLE DES PAIRES. Et la couleur des représentants (un tableau de couleurs sur
+  un `vec4[15]`) ne survit pas à l'enregistrement. Vu deux fois : rien ne se dessinait (« img.is_null() » au
+  chargement), puis des bords NOIRS là où le greffon les dessine verts (`tests/capture_reference.tscn` : le greffon
+  lui-même, au même endroit). Tout part en DONNÉES (`world/transitions_cuites.gd` : octets, images, table, couleurs),
+  que le ChunkStreamer repose UNE fois sur le matériau partagé au chargement du monde.
+- **ÉPROUVÉ** (`test_cuisson`, 105) : passe posée, shader cuit lisant CUSTOM0, un centre par sommet et le BON
+  (v + 1 entier, à moins d'une tuile), textures, table et couleurs rebâties sur le matériau même des morceaux. Vu : le
+  pied du volcan d'essai bordé de vert, comme par le greffon. Le Val : 110 entrées de table (55 paires, deux sens), une
+  texture des cases de 796 × 57 × 796 ; 1,9 Go cuits (le centre par sommet empêche la soudure des sommets).
+
+### LE SAUT — DEMANDÉ (Jordan, 9 octobre 2026), ÉCRIT LE MÊME JOUR
+
+Espace : une impulsion pour 1,4 m (une marche du monde MB fait une case, 1 m : elle se franchit) ; on saute encore
+0,12 s après avoir quitté un bord, et un appui fait 0,12 s avant de toucher le sol est retenu ; en l'air, 60 % de la
+commande. Tombé à plus de 30 m sous le dernier sol touché : retour à ce sol. L'animation reçoit
+`parameters/conditions/airborne` (ou joue « jump »). MESURÉ (`sonde_scene`) : +1,44 m, retour au sol.
+
+### LES ZOOMS — DEMANDÉS (Jordan, 8 octobre 2026), ÉCRITS LE MÊME JOUR
+
+- **La MOLETTE** : le zoom continu (`CameraRig.zoom`, 0,35 à 4, ×1,15 par cran), dans les deux vues.
+- **CTRL + MOLETTE** : deux états, indépendants du zoom — vers le bas, la VUE HAUTE (130 m au-dessus du joueur) ; vers
+  le haut, le retour à sa hauteur (le zoom de la molette est gardé).
+- La caméra dit ce qu'elle voit au sol (`EventBus.view_radius_changed`) : le ChunkStreamer charge les pistes VISIBLES
+  jusqu'à 1,3 × ce rayon + 24 m (la collision, non) ; le feuillage s'efface plus loin. MESURÉ (`capture_zoom`) : rayon
+  vu 15 m, 31 m après cinq crans, 127 m en vue haute — 18, 19 puis 35 à 46 morceaux de sol chargés ; ~200 à 360 img/s.
+  ⚠ En vue haute, le bord de ce qui est chargé se voit un moment (les morceaux arrivent un par image) : une vue
+  LOINTAINE cuite (un maillage très simple du monde entier) le remplacerait — à faire si la vue haute reste.
+
+### LA CUISSON PAR MORCEAUX — ÉCRITE ET MESURÉE (8 octobre 2026)
+
+**Le chemin d'un monde** : peint dans le logiciel MB → World, « Export the world… » → le dossier `.mbworld` copié
+sous `mondes/` → **cuit** → `cuit/<nom>/` → chargé en jeu par `ChunkStreamer` (le nœud `Monde` de `main.tscn`).
+
+```
+"$GODOT" --headless --path D:/Resolve --import      # après avoir copié un .mbworld (ses .glb s'importent)
+"$GODOT" --headless --path D:/Resolve res://tools/cuisson/cuire.tscn -- --monde=res://mondes/<nom>.mbworld/world.json
+         [--sortie=res://cuit/<nom>] [--morceau=32] [--sans-lod] [--compression] [--sans-collision]
+```
+
+- **RIEN N'EST RÉÉCRIT** (`tools/cuisson/cuisson.gd`) : le monde est bâti hors écran PAR LE GREFFON (`WorldFile.build` :
+  règle de pose, eau, feuillage, matériaux), puis récolté et découpé. Le greffon ne sert qu'à la cuisson : **le jeu ne
+  le charge jamais** (vérifié : aucun morceau ne renvoie à `addons/`).
+- **UN MORCEAU** (32 × 32 colonnes, toute la hauteur) : `Surface` (tuiles à l'air libre) et `Couvert` (sous couvert :
+  grottes, surplombs — la règle d'air libre du greffon), fusionnées, UNE surface par matériau (les matériaux aux mêmes
+  réglages fusionnés), avec LOD ; `Eau` (la nappe, découpée par triangle) ; `Feuillage` (les plants en DONNÉES, faits
+  MultiMesh au chargement par `world/feuillage_morceau.gd`, effacés au-delà de 80) ; et À PART `collision/c_*.scn`.
+  Ce qui est partagé (matériaux, textures, shaders, maillages des plants) est écrit une fois dans `partage/`.
+  `monde.json` : les morceaux, leurs boîtes, leurs comptes, l'empreinte md5 de la source.
+- **ÉPROUVÉ, PREMIÈRE VERSION (avant les couches)** (`test_cuisson`, 47 vérifications, sur le monde d'essai fait par
+  `tests/fabriquer_monde_essai.tscn` : collines, plateau, butte percée d'un tunnel, lac, 551 arbres) : chaque triangle
+  du greffon une fois et un seul ; la MÊME GÉOMÉTRIE (somme des aires et des centres des triangles — un compte de
+  triangles ne voyait pas une tuile mal tournée) ; le tunnel en `Couvert` ; la nappe ; chaque arbre à sa place ; LOD ;
+  collision ; le chargement : peu de morceaux au départ, la collision seulement tout près, un saut recharge d'un coup,
+  la marche suit en fond. **Mutations rouges** : tuiles non tournées, tout « à l'air libre ».
+- ⚠ **SANS FENÊTRE, UNE MULTIMESH NE GARDE PAS SES INSTANCES** (le rendu factice de `--headless`) : lue, elle rendait
+  551 arbres à l'origine ; écrite, elle les aurait perdus. D'où les poses refaites par `instances()` du greffon, et le
+  feuillage cuit en données.
+- ⚠ **UN PACKED*ARRAY ALLONGÉ DANS UN DICTIONARY EST RECOPIÉ À CHAQUE AJOUT** (copie sur écriture) : la fusion se fait
+  dans des variables locales (`_merge`) ; et la clé d'un matériau se calcule une fois, pas par tuile (31 s → 0,6 s).
+- **MESURÉ — la cuisson** : 128² colonnes 11 s (1,24 M triangles, 26 morceaux, 25 Mo) ; **256² colonnes 34 s**
+  (4,8 M triangles, 81 morceaux, **100 Mo**). La fusion des sommets identiques ne gagne RIEN sur le témoin (chaque
+  triangle y a sa propre normale) ; elle gagnera sur des tuiles lissées. La compression 16 bits : 26 → 25 Mo pour
+  ~1 mm d'écart et des fentes possibles entre morceaux — éteinte par défaut (`--compression`).
+- **MESURÉ — en jeu** (`tests/banc_marche.tscn`, traversée du 256² en courant, vue de dessus, RTX 2060) : ~210 img/s,
+  ~86 appels de dessin, 26 morceaux montrés au plus sur 81. **Les à-coups venaient de la COLLISION** : forme concave
+  pleine dans chaque morceau montré, 46 images > 33 ms (pire 273) ; sans collision : 0. Remèdes : la forme bâtie sur
+  un LOD (¼ des triangles), l'instanciation dans un fil de travail, la lecture sans sous-fils, et **la collision à
+  part, chargée à 20 de la cible seulement → 3 à 4 images > 33 ms par traversée** (pire 60 à 97 ms). Jolt n'y change
+  presque rien (36 au lieu de 46, essayé avant les remèdes). La physique sur son propre fil
+  (`physics/3d/run_on_separate_thread`) : 3 au lieu de 4 — PAS activée (elle change le fil des rappels physiques du
+  jeu ; à décider).
+
+## 3. L'architecture — ÉCRITE (8 octobre 2026)
+
+Godot 4.7, GDScript. Commentaires et données en français, identifiants en anglais (l'API de Godot l'est).
+
+```
+core/        LE BACKEND — autoloads, sans aucune présentation
+  event_bus.gd        EventBus : tous les signaux (lieux, rencontres, temps, sommeil, partie)
+  game_clock.gd       GameClock : LE temps (minutes depuis le début), phases, saisons, avance accélérée
+  game_state.gd       GameState : l'état lu par le moteur et sauvé — par CHEMINS (« player.wealth.gold »)
+  rules.gd            le langage des données : conditions, effets, tirage déterministe
+  decision_engine.gd  DecisionEngine : propose la barre, applique un choix, donne et fait expirer les problèmes
+  sleep_system.gd     SleepSystem : fatigue, effondrement à 72 h, sommeil accéléré, règles de réveil
+  save_system.gd      SaveSystem : un JSON par emplacement (F5 / F9)
+  inputs.gd           les touches (PHYSIQUES : W A S D = Z Q S D en AZERTY), déclarées en code
+data/        CE QUI FAIT LE JEU — sans code
+  actions.json        les actions de la barre
+  problems.json       les problèmes que le moteur donne aux entités
+  sleep.json          couchages, limites, règles de réveil
+tools/cuisson/  la cuisson d'un .mbworld en morceaux (§2), et `couches.json` : le rôle de chaque couche — outil,
+             ne part pas dans le jeu
+mondes/      les .mbworld exportés par le logiciel MB (les SOURCES) · cuit/ : les mondes cuits (générés, hors git)
+world/       les nœuds posés dans le monde
+  region.gd           Region (Area3D) : ville, capitale, forêt, lac, montagne, désert… — emboîtables
+  interior.gd         Interior (Area3D) : maison, auberge… — passe la caméra en 3e personne ; « souterrain » :
+                      l'intérieur AUTOMATIQUE des galeries (`set_underground`, dit par le ChunkStreamer)
+  interactable.gd     Interactable (Area3D) : l'objet d'une décision — personne, animal, objet, lieu
+  sleep_spot.gd       SleepSpot (Area3D) : lit maison / auberge / autre, camp
+  chunk_streamer.gd   ChunkStreamer : les morceaux cuits chargés autour du joueur (le visible, puis la collision)
+  feuillage_morceau.gd  les plants d'un morceau, faits MultiMesh au chargement
+  souterrain_morceau.gd  le sous-sol d'un morceau (l'air enfoui) : le joueur est-il sous terre ?
+  day_night.gd        le soleil et le ciel suivent l'horloge ; la nuit, une LUNE (ombrée : sans ombre elle éclairait
+                      l'auberge à travers le toit, vu) et un plancher d'ambiante ; dans un intérieur l'ambiante baisse
+  prefabs/            pnj.tscn, lit.tscn (provisoires)
+player/      player.gd/.tscn (CharacterBody3D), camera_rig.gd (les deux vues et leur fondu), torche.gd (la torche :
+             allumée d'elle-même hors du plein jour et dans un intérieur, T la force)
+ui/          hud.gd (provisoire), action_bar.gd (la barre de boutons carrés)
+scenes/      main.tscn — le bac à sable : le monde d'essai cuit (Sol et galeries, Obstacles autour de la place, un
+             volcan), un village, une auberge, un lac, quatre rencontres, deux lits
+tests/       les épreuves (§5)
+```
+
+**Couches physiques** : 1 le monde (tuiles, bâtiments) · 2 le joueur · 4 les interactables · 8 les couchages.
+
+### Le moteur de décision — le cœur du jeu
+
+- **LE CONTEXTE** d'une rencontre (`DecisionEngine.build_context`) — tout ce qu'une condition peut lire :
+  `player.*` (identity, wealth, home) · `place.*` (region_id, region_type, tags, interior, interior_type,
+  interior_owner) · `time.*` (day, hour, phase, weekday, season) · `target.*` (ce que l'Interactable déclare +
+  son état persistant : problem, disposition, state) · `history.*` (count, actions, categories, last_action,
+  days_since_last, disposition — avec CETTE cible) · `karma.*` (le bilan de toute la partie) · `flags.*`.
+- **LE LANGAGE** (`core/rules.gd`, et nulle part ailleurs) — condition `{"path", "op", "value"}`, ops
+  `== != < <= > >= in not_in has not_has exists missing`, `{"any": […]}`, `{"not": …}` ; effets `add set push
+  erase stamp resolve_problem` ; un chemin `target.*` écrit dans l'état persistant de la cible.
+- **LA BARRE** : filtrer (`when`), pondérer (`weight` × `weight_mods`), tirer au plus `max_choices − 1` actions,
+  ranger par `order`, puis **« Mépriser » en dernier, toujours**.
+- **LE TIRAGE EST DÉTERMINISTE** : germe de la partie + cible + jour + nombre de rencontres. Même partie, même
+  moment → même barre (on ne « relance » pas une rencontre en partant et revenant) ; autre partie → autre monde.
+- **LES PROBLÈMES** naissent au même germe (`problems.json`), durent `duration_days`, et s'ils sont laissés sans
+  réponse, `on_expire` laisse ses traces (marques sur l'entité, faits du monde). C'est là que la partie diverge.
+- Ajouter du contenu = écrire du JSON. Une nouvelle sorte de valeur dans le contexte = l'ajouter dans
+  `build_context` (UN endroit).
+
+### Le sommeil
+
+`awake_hours` = depuis `player.last_wake_minutes`. Avertissements à 48, 60, 68 h ; à 72 h, `sleep(null, forced)`.
+On ne peut dormir qu'après `min_awake_hours` (10). Le sommeil avance l'horloge en accéléré (`real_seconds` : 8 s
+réelles), jusqu'au matin. Puis les `wake_rules` (dans l'ordre ; conditions + chance) donnent la destination :
+`same`, `home`, `nearest:<couchage>`, `tag:<étiquette>` — une règle qui veut un lieu que le monde n'a pas passe la
+main à la suivante. Un couchage qui n'est pas « à soi » (auberge non payée, lit d'un inconnu) compte comme le sol.
+
+## 4. Commandes de jeu (provisoires)
+
+À LA MANETTE (Xbox) : stick gauche se déplacer · clic du stick ou RB courir · A sauter (et valider dans la barre) ·
+X parler / partir · B fermer · Y torche · LB dormir · croix ← → choisir dans la barre · stick droit ← → tourner la
+troisième personne, ↑ ↓ zoomer · Back vue haute. Les textes à l'écran suivent le dernier appareil touché
+(`core/inputs.gd`, la table des deux). ⚠ Sur une manette, A SAUTE et VALIDE : barre ouverte — ou fermée à l'image
+même — A ne fait pas sauter (`DecisionEngine.closed_frame`) ; vu par mutation : sans cela, choisir faisait sauter de
+1,44 m. ÉPROUVÉ par de faux événements (`sonde_manette`, 15) — PAS ENCORE TENU EN MAIN avec une vraie manette.
+AU CLAVIER : W A S D (Z Q S D en AZERTY) se déplacer · Maj courir · Espace sauter (1,4 m) · E parler / partir · 1–8 choisir · F dormir · T torche
+(automatique → allumée → éteinte) · molette : zoom · Ctrl + molette : vue haute / retour · Échap fermer ·
+F5 / F9 sauvegarde rapide · clic droit + souris : tourner la vue en troisième personne.
+
+**LA TRICHE — ACTIVE (Jordan, 9 octobre 2026 : « active le cheat et tu le désactiveras quand je te le demanderai »).**
+`data/triche.json` → `"actif": true` ; À ÉTEINDRE (`false`) QUAND JORDAN LE DEMANDE, pas avant. `core/triche.gd` :
+F1 / Start le VOL (Espace / A monte, C / gâchette gauche descend, pas de gravité) · F2 le FANTÔME (on traverse tout ;
+vol compris) · F3 / clic du stick droit la VITESSE ×1, ×3, ×8 · F4 +1 h. Le HUD l'affiche en orange. Éteinte, ses
+touches ne font rien. ÉPROUVÉE : `sonde_triche_limites` (11).
+
+**LES LIMITES DU MONDE — RADICALES (même demande).** Le monde cuit porte `play_bounds` (±385 m, écrites par le
+générateur dans `resolve_limites.json`, à côté du `world.json`) ; le ChunkStreamer en fait QUATRE MURS invisibles de 600 m de haut (`Monde/Limites`) et les donne au
+joueur (`Player.world_bounds`), qui est ramené en dedans À CHAQUE IMAGE (position et vitesse), en marchant, en
+volant, en fantôme : grimper sur le cadre par un bug ne fait sortir de rien. Les troncs d'arbre sont sur la couche
+physique 5 (valeur 16) : le joueur les heurte, la caméra non.
+
+## 5. Les épreuves
+
+```
+GODOT=/c/Users/jorda/Desktop/Godot_v4.7-stable_win64.exe/Godot_v4.7-stable_win64_console.exe
+"$GODOT" --headless --path D:/Resolve --import                          # la première fois
+"$GODOT" --headless --path D:/Resolve res://tests/test_backend.tscn     # le backend : 141 vérifications
+"$GODOT" --headless --path D:/Resolve res://tests/fabriquer_monde_essai.tscn   # le monde d'essai (.mbworld)
+"$GODOT" --headless --path D:/Resolve res://tests/test_cuisson.tscn     # la cuisson par couches et fenêtres, le chargement, le sous-sol : 94
+"$GODOT" --headless --path D:/Resolve res://tests/sonde_scene.tscn      # la scène : morceaux, sol, région, caméra
+"$GODOT" --path D:/Resolve --windowed res://tests/banc_marche.tscn       # la traversée du grand monde : à-coups
+"$GODOT" --path D:/Resolve --windowed res://tests/capture_nuit.tscn      # la nuit : lune, ambiante, torche (user://captures)
+"$GODOT" --path D:/Resolve --windowed res://tests/capture_couches.tscn   # la place et ses massifs, le volcan, une galerie
+"$GODOT" --path D:/Resolve --windowed res://tests/capture_monde.tscn -- --monde=res://cuit/val_de_resolve [--lieux=x,y,z;…]
+"$GODOT" --headless --path D:/Resolve res://tests/sonde_collision.tscn -- --monde=…  # collision cuite = rendu ?
+"$GODOT" --headless --path D:/Resolve res://tests/sonde_galerie.tscn -- --monde=… [--escalier=x,z]  # la galerie se parcourt ?
+"$GODOT" --path D:/Resolve --windowed res://tests/capture_zoom.tscn       # molette, Ctrl + molette, ce qui se charge
+"$GODOT" --headless --path D:/Resolve res://tests/sonde_manette.tscn     # la manette (faux événements) : 15 vérifications
+"$GODOT" --headless --path D:/Resolve res://tests/sonde_triche_limites.tscn   # la triche et les limites : 11 vérifications
+"$GODOT" --path D:/Resolve --windowed res://tests/capture_reference.tscn -- --monde=… --lieu=x,y,z  # le GREFFON, pour comparer
+"$GODOT" --headless --path D:/Resolve res://tests/banc_taille.tscn      # le temps de pose selon la taille du monde
+"$GODOT" --path D:/Resolve res://tests/capture_scene.tscn                # deux captures (user://captures)
+"$GODOT" --path D:/Resolve res://tests/banc_rendu.tscn --disable-vsync [-- --cuit]   # le rendu, GridMap ou cuit
+```
+
+**MESURÉ le 8 octobre 2026** : `test_backend` 141 / 141 (Mépriser toujours dernier et unique ; même germe → même
+partie, autre germe → autre ; l'or conditionne les actions ; historique et disposition ; expiration d'un problème
+et sa conséquence ; effondrement à 72 h et pas à 71 ; réveil et fatigue remise à zéro ; sauvegarde aller-retour).
+Deux mutations, deux rouges (barre sans place pour Mépriser ; effondrement décalé d'une heure).
+`sonde_scene` : 10 048 tuiles posées, 52 formes de collision, le joueur au sol (y = 0,75) dans la région « bourg »
+en vue de dessus ; téléporté dans l'auberge → intérieur « auberge », caméra en TROISIÈME PERSONNE, l'aubergiste en
+vue, barre : Écouter · Donner 5 or · Commercer · Louer une chambre · Voler · Mépriser. Vu à l'image (captures).
+
+## 6. OUVERT
+
+- **LE RENDU D'UN GRAND MONDE — MESURÉ (8 octobre 2026, RTX 2060, `tests/banc_rendu.tscn`, monde de 256² colonnes,
+  152 000 tuiles du témoin).** Le GridMap du greffon : vue de dessus du jeu **4 370 appels de dessin, 189 img/s** ;
+  tout le monde à l'écran **8 655 appels, 48 img/s** — pour 0,17 à 0,31 M triangles seulement. **Ce ne sont pas les
+  triangles qui coûtent, ce sont les APPELS DE DESSIN** (une MultiMesh par tuile différente et par octant de 8³).
+  Les mêmes tuiles CUITES en morceaux de 32 × 32 colonnes, UN maillage par morceau, une surface par matériau
+  (`-- --cuit`) : vue de dessus **66 appels, 419 img/s** ; tout le monde **183 appels, 247 img/s** (4,8 M triangles :
+  il reste de la marge, et des LOD à gagner). ⚠ La cuisson a pris **80 s en GDScript** : elle se fait HORS DU JEU,
+  une fois par export du monde, jamais au chargement.
+  **DONC, LA STRATÉGIE — PROPOSÉE** : (1) cuire le monde en MORCEAUX (maillage fusionné par matériau + LOD +
+  collision cuite) ; (2) les charger / décharger autour du joueur en fond (`ResourceLoader.load_threaded_request`) ;
+  (3) `visibility_range` et brouillard au loin — la vue de dessus voit peu de monde, c'est un atout ; (4) les
+  intérieurs et grottes dans leurs propres morceaux, montrés seulement quand on y est (la vue de dessus cache le
+  sous-sol, la 3e personne est enfermée) ; (5) l'eau cuite par morceaux, l'OCÉAN au loin en un seul plan de shader ;
+  (6) le feuillage en MultiMesh PAR MORCEAU, avec `visibility_range` et fondu ; (7) les PNJ n'existent comme nœuds
+  qu'autour du joueur — au loin ils vivent dans le GameState seul (le backend est déjà fait pour : il ne lit que
+  des données), animation coupée hors champ. Et à mesurer avec le VRAI jeu de tuiles : le nombre de matériaux
+  (l'export MB en donne un par maillage — « sand », « sand2 »… — à fusionner, sinon les appels remontent).
+- **LE MONDE DE 2048² — À DÉCIDER AVANT DE LE PEINDRE (mesuré le 8 octobre 2026).** Sur le monde d'essai en
+  **512²** (Sol épais de 10 cases, galeries sous presque toute la carte : 2,5 M cases, 834 000 tuiles) : `world.json`
+  **28 Mo**, cuisson **161 s**, **1 Go** de mémoire au plus, **511 Mo** cuits, **28 M triangles** (tuiles du témoin,
+  ~34 triangles par tuile). Mis à l'échelle de **2048²** (× 16) : ~40 M cases, `world.json` ~450 Mo, cuisson ~45 min,
+  **~16 Go de mémoire** (le .mbworld se lit d'un bloc), **~8 Go cuits**, ~450 M triangles. Et le plus grand monde
+  MESURÉ dans le logiciel MB fait ~500 000 cases (sa charte) : 80 fois moins.
+  **MESURÉ EN 1024²** (même monde, 10 M cases, 3,3 M tuiles) : `world.json` **116 Mo**, cuisson **10 min 45 s**
+  (dont la règle 82 s), **4,2 Go** de mémoire au plus, **2,0 Go** cuits, **113 M triangles**, 1 089 morceaux. En jeu
+  (`banc_marche`, traversée en courant) : ~550 img/s en moyenne, 123 appels de dessin, au plus 22 morceaux chargés —
+  mais **16 images > 33 ms** (pire 69 ms) contre 3 à 4 en 256² sans galeries : la collision des galeries alourdit
+  chaque morceau (26 000 triangles de collision en moyenne). ⚠ Le lac de ce monde d'essai est VIDE : la nappe déduite
+  par le greffon (GDScript) sur 10 M cases n'a rien donné — un défaut du FABRICANT d'essai, pas de la cuisson (MB cuit
+  la nappe lui-même). **784²** (déduit : la mise à l'échelle 512² → 1024² est linéaire à ±5 %) : ~5,9 M cases,
+  `world.json` ~68 Mo, cuisson ~6 min 20, ~2,5 Go de mémoire, ~1,2 Go cuits, ~66 M triangles.
+  **LES BASCULES DE VUE — MESURÉ** (`tests/banc_vues.tscn`, 1024², RTX 2060) : la vue ne charge rien, le
+  ChunkStreamer charge autour du JOUEUR quelle que soit la caméra — la troisième personne face à l'horizon ne voit que
+  les morceaux déjà là (17 de sol, 4 du volcan), jamais la carte entière. De dessus 661 img/s, 127 appels, 0,73 M
+  triangles ; troisième personne en surface 629 img/s ; dans une galerie 605 img/s, 1,19 M triangles (la surface
+  au-dessus est dessinée aussi). Pire image PENDANT une bascule : 2 à 3,4 ms (entrée, sortie de galerie, surface).
+  ⚠ Un SAUT de plus de 40 (réveil ailleurs, sauvegarde relue) recharge d'un coup, sur le fil principal : 181 ms vu —
+  à couvrir d'un fondu au noir à ces moments-là. Les leviers, à trancher : (1) la TAILLE
+  D'UNE CASE (`cell_size` : 2048 cases de 1 m ou 1024 de 2 m — quatre fois moins de tout) ; (2) la DENSITÉ des tuiles
+  (le vrai jeu de tuiles, plus léger que le témoin ?) ; (3) des galeries MOINS partout ; (4) côté MB, un export du monde
+  PAR RÉGIONS (ou un format binaire des cases) — la cuisson par fenêtres est prête pour, la lecture d'un bloc ne l'est
+  pas ; et la tenue du logiciel MB lui-même sur des dizaines de millions de cases.
+- **CE QUI RESTE DE LA CUISSON — OUVERT** : ~~(1) les shaders d'animation et de transitions et l'origine de la
+  tuile~~ — FAIT (§2, les transitions : CUSTOM0) ; (2) le POIDS : 100 Mo pour 256² avec le témoin (~32 triangles par tuile) — à
+  remesurer avec le vrai jeu de tuiles ; (3) 3 à 4 à-coups par traversée, à chercher au profileur de Godot ; (4) la
+  cuisson est en GDScript : un « Export baked world » dans le logiciel MB la ferait à la source, plus vite ; (5) une
+  cuisson PÉRIMÉE (le .mbworld changé depuis) se voit à `source_md5`, mais rien ne la refuse encore.
+- ~~**LE MONDE LARGE, LE CHARGEMENT — À DÉCIDER AVANT DE PEINDRE LE MONDE.**~~ Décidé et écrit : la cuisson (§2). Mesuré (`banc_taille`) : le greffon pose
+  ~13 µs par case, linéaire — 64² colonnes 175 ms, 128² 0,7 s, **256² 3,0 s** (227 000 cases). Un monde de 1 024²
+  colonnes prendrait ~50 s au chargement. Trois voies, cumulables : (a) **découper en morceaux** (une scène par
+  région, chargées / déchargées autour du joueur) — ⚠ à vérifier : deux mondes voisins séparés se ferment chacun
+  à leur bord (une paroi à la couture) ; (b) **cuire** les tuiles posées dans la scène (le greffon les refait à
+  chaque `_ready` aujourd'hui) ; (c) **le cœur C++ dans le greffon** (étape 4 de MB : la pose y est 3,6× plus
+  rapide, mesuré dans l'appli). Recommandation : (a) d'abord, et demander (c) à MarchingBlocks.
+- **LES RÉGIONS** sont des volumes posés à la main (`Region`). Alternative : les déduire des couches MB (une couche
+  « sable » = désert). À trancher quand le vrai monde existe.
+- **LE PERSONNAGE ANIMÉ** : `Player` attend un `AnimationTree` (`parameters/move/blend_position`,
+  `parameters/conditions/sleeping`) ou un `AnimationPlayer` (`idle`, `walk`, `run`, `sleep`). Pas de modèle encore.
+- **LES ICÔNES** de la barre sont des glyphes ; chaque action prend `icon_path` quand l'art existe.
+- **LES PNJ** sont immobiles. Leurs routines (horaires, déplacements, foyers) se brancheront sur `GameClock` et
+  le GameState, comme le reste.
+- **QUI JE SUIS** : `player.identity` (origine, métier, traits, réputation) est en place mais fixe ; sa création
+  (choix au début, ou déduite des actes) est à décider.
+- La collision en formes CONCAVES par tuile est la plus fidèle et la plus chère ; à mesurer sur le vrai monde.

@@ -1,0 +1,7 @@
+.godot/
+*.tmp
+/export/
+# Les mondes CUITS se régénèrent (tools/cuisson) : seules leurs sources (mondes/*.mbworld) se gardent.
+/cuit/
+# Le grand monde d'essai ne sert qu'aux bancs de mesure.
+/mondes/grand.mbworld/

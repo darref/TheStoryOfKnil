@@ -1,0 +1,8178 @@
+{
+  "cases": [
+    {
+      "expected": {},
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "h": {},
+        "n": 0.5,
+        "ranks": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.5,
+            "grain": 1.5,
+            "irregularity": 0.35,
+            "reach": 0.2,
+            "softness": 0.45
+          },
+          "1|0": {
+            "fills_hollows": 0.5,
+            "grain": 1.5,
+            "irregularity": 0.35,
+            "reach": 0.2,
+            "softness": 0.45
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: a single layer: nothing blends"
+    },
+    {
+      "expected": {
+        "alpha": 0.00891632373113849,
+        "other": 1,
+        "owner": 0,
+        "s": 0.5,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "h": {},
+        "n": 0.5,
+        "ranks": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.5,
+            "grain": 1.5,
+            "irregularity": 0.35,
+            "reach": 0.2,
+            "softness": 0.45
+          },
+          "1|0": {
+            "fills_hollows": 0.5,
+            "grain": 1.5,
+            "irregularity": 0.35,
+            "reach": 0.2,
+            "softness": 0.45
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: two layers, half and half, the middle"
+    },
+    {
+      "expected": {},
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "h": {},
+        "n": 0.5,
+        "ranks": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "table": {}
+      },
+      "kind": "blend",
+      "name": "blend: the pair is off (no direction in the table)"
+    },
+    {
+      "expected": {},
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "h": {},
+        "n": 0.5,
+        "ranks": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "table": {
+          "1|0": {
+            "fills_hollows": 0.5,
+            "grain": 1.5,
+            "irregularity": 0.35,
+            "reach": 0.2,
+            "softness": 0.45
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: half a table (one direction only): nothing"
+    },
+    {
+      "expected": {
+        "alpha": 0.605947427346867,
+        "other": 3,
+        "owner": 1,
+        "s": 0.699999988079071,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.300000011920929,
+          0.5,
+          0.5
+        ],
+        "h": {},
+        "n": 0.5,
+        "ranks": [
+          3,
+          1,
+          3,
+          1,
+          3,
+          1,
+          3,
+          1
+        ],
+        "table": {
+          "1|3": {
+            "fills_hollows": 0.5,
+            "grain": 1.5,
+            "irregularity": 0.35,
+            "reach": 0.2,
+            "softness": 0.45
+          },
+          "3|1": {
+            "fills_hollows": 0.5,
+            "grain": 1.5,
+            "irregularity": 0.35,
+            "reach": 0.2,
+            "softness": 0.45
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: the owner is the SMALLEST rank"
+    },
+    {
+      "expected": {
+        "alpha": 0.0,
+        "other": 1,
+        "owner": 0,
+        "s": 0.400000005960464,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.400000005960464,
+          0.5,
+          0.5
+        ],
+        "h": {},
+        "n": 0.5,
+        "ranks": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.5,
+            "grain": 1.5,
+            "irregularity": 0.35,
+            "reach": 0.5,
+            "softness": 0.45
+          },
+          "1|0": {
+            "fills_hollows": 0.5,
+            "grain": 1.5,
+            "irregularity": 0.35,
+            "reach": -0.5,
+            "softness": 0.45
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: reach pushes the cover forward"
+    },
+    {
+      "expected": {
+        "alpha": 0.0,
+        "other": 1,
+        "owner": 0,
+        "s": 0.625,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.625,
+          0.25,
+          0.75
+        ],
+        "h": {},
+        "n": 0.5,
+        "ranks": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.0,
+            "grain": 1.5,
+            "irregularity": 0.0,
+            "reach": 0.4,
+            "softness": 0.2
+          },
+          "1|0": {
+            "fills_hollows": 0.0,
+            "grain": 1.5,
+            "irregularity": 0.0,
+            "reach": -0.3,
+            "softness": 0.9
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: the two directions differ (a desert on rock is not rock on a desert)"
+    },
+    {
+      "expected": {
+        "alpha": 0.0,
+        "other": 1,
+        "owner": 0,
+        "s": 0.5,
+        "vote": 1.0
+      },
+      "input": {
+        "choices": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "f": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "h": {},
+        "n": 0.5,
+        "ranks": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.5,
+            "grain": 1.5,
+            "irregularity": 0.35,
+            "reach": 0.3,
+            "softness": 0.3
+          },
+          "1|0": {
+            "fills_hollows": 0.5,
+            "grain": 1.5,
+            "irregularity": 0.35,
+            "reach": -0.2,
+            "softness": 0.3
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: the brush: every corner chose layer 1 to cover"
+    },
+    {
+      "expected": {
+        "alpha": 0.0,
+        "other": 1,
+        "owner": 0,
+        "s": 0.375,
+        "vote": 0.5625
+      },
+      "input": {
+        "choices": [
+          1,
+          -1,
+          1,
+          -1,
+          1,
+          1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.375,
+          0.625,
+          0.25
+        ],
+        "h": {},
+        "n": 0.5,
+        "ranks": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.5,
+            "grain": 1.5,
+            "irregularity": 0.35,
+            "reach": 0.3,
+            "softness": 0.3
+          },
+          "1|0": {
+            "fills_hollows": 0.5,
+            "grain": 1.5,
+            "irregularity": 0.35,
+            "reach": -0.2,
+            "softness": 0.3
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: the brush on half the corners: the votes weigh"
+    },
+    {
+      "expected": {
+        "alpha": 0.0,
+        "other": 1,
+        "owner": 0,
+        "s": 0.5,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "f": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "h": {},
+        "n": 0.5,
+        "ranks": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.5,
+            "grain": 1.5,
+            "irregularity": 0.35,
+            "reach": 0.3,
+            "softness": 0.3
+          },
+          "1|0": {
+            "fills_hollows": 0.5,
+            "grain": 1.5,
+            "irregularity": 0.35,
+            "reach": -0.2,
+            "softness": 0.3
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: a choice of a THIRD layer counts as no choice"
+    },
+    {
+      "expected": {},
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.0,
+          0.5,
+          0.5
+        ],
+        "h": {
+          "0": 0.0,
+          "1": 1.0
+        },
+        "n": 1.0,
+        "ranks": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 1.0,
+            "grain": 6.0,
+            "irregularity": 1.0,
+            "reach": 0.5,
+            "softness": 1.0
+          },
+          "1|0": {
+            "fills_hollows": 1.0,
+            "grain": 6.0,
+            "irregularity": 1.0,
+            "reach": 0.5,
+            "softness": 1.0
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: at the owner's end, settings at their maximum: nothing shows"
+    },
+    {
+      "expected": {
+        "alpha": 1.0,
+        "other": 1,
+        "owner": 0,
+        "s": 1.0,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          1.0,
+          0.5,
+          0.5
+        ],
+        "h": {
+          "0": 0.0,
+          "1": 1.0
+        },
+        "n": 1.0,
+        "ranks": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 1.0,
+            "grain": 6.0,
+            "irregularity": 1.0,
+            "reach": 0.5,
+            "softness": 1.0
+          },
+          "1|0": {
+            "fills_hollows": 1.0,
+            "grain": 6.0,
+            "irregularity": 1.0,
+            "reach": 0.5,
+            "softness": 1.0
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: at the other's end, settings at their maximum: fully the other"
+    },
+    {
+      "expected": {
+        "alpha": 1.0,
+        "other": 1,
+        "owner": 0,
+        "s": 0.375,
+        "vote": 1.0
+      },
+      "input": {
+        "choices": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "f": [
+          0.375,
+          0.5,
+          0.5
+        ],
+        "h": {
+          "0": 0.05,
+          "1": 0.9
+        },
+        "n": 0.5,
+        "ranks": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 1.0,
+            "grain": 1.5,
+            "irregularity": 0.0,
+            "reach": 0.0,
+            "softness": 0.3
+          },
+          "1|0": {
+            "fills_hollows": 1.0,
+            "grain": 1.5,
+            "irregularity": 0.0,
+            "reach": 0.0,
+            "softness": 0.3
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: fills hollows: a dark owner surface is covered first"
+    },
+    {
+      "expected": {
+        "alpha": 0.0,
+        "other": 1,
+        "owner": 0,
+        "s": 0.375,
+        "vote": 1.0
+      },
+      "input": {
+        "choices": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "f": [
+          0.375,
+          0.5,
+          0.5
+        ],
+        "h": {
+          "0": 0.95,
+          "1": 0.9
+        },
+        "n": 0.5,
+        "ranks": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 1.0,
+            "grain": 1.5,
+            "irregularity": 0.0,
+            "reach": 0.0,
+            "softness": 0.3
+          },
+          "1|0": {
+            "fills_hollows": 1.0,
+            "grain": 1.5,
+            "irregularity": 0.0,
+            "reach": 0.0,
+            "softness": 0.3
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: fills hollows: a bright owner surface resists"
+    },
+    {
+      "expected": {
+        "alpha": 0.00891632373113849,
+        "other": 1,
+        "owner": 0,
+        "s": 0.5,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "h": {},
+        "n": 0.5,
+        "ranks": [
+          0,
+          -1,
+          0,
+          1,
+          -1,
+          1,
+          -1,
+          -1
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.5,
+            "grain": 1.5,
+            "irregularity": 0.35,
+            "reach": 0.2,
+            "softness": 0.45
+          },
+          "1|0": {
+            "fills_hollows": 0.5,
+            "grain": 1.5,
+            "irregularity": 0.35,
+            "reach": 0.2,
+            "softness": 0.45
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: empty corners are ignored"
+    },
+    {
+      "expected": {
+        "alpha": 0.0,
+        "other": 1,
+        "owner": 0,
+        "s": 0.4375,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.4375,
+          0.5,
+          0.5
+        ],
+        "h": {},
+        "n": 0.875,
+        "ranks": [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.5,
+            "grain": 1.5,
+            "irregularity": 1.0,
+            "reach": 0.0,
+            "softness": 0.2
+          },
+          "1|0": {
+            "fills_hollows": 0.5,
+            "grain": 1.5,
+            "irregularity": 1.0,
+            "reach": 0.0,
+            "softness": 0.2
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: irregularity: the noise moves the line"
+    },
+    {
+      "expected": {
+        "alpha": 0.827841006515775,
+        "other": 2,
+        "owner": 0,
+        "s": 0.333333333333333,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "h": {},
+        "n": 0.5,
+        "ranks": [
+          0,
+          2,
+          1,
+          0,
+          0,
+          2,
+          1,
+          0
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.5,
+            "grain": 1.5,
+            "irregularity": 0.35,
+            "reach": 0.2,
+            "softness": 0.45
+          },
+          "0|2": {
+            "fills_hollows": 0.5,
+            "grain": 1.5,
+            "irregularity": 0.35,
+            "reach": -0.4,
+            "softness": 0.8
+          },
+          "1|0": {
+            "fills_hollows": 0.5,
+            "grain": 1.5,
+            "irregularity": 0.35,
+            "reach": 0.2,
+            "softness": 0.45
+          },
+          "2|0": {
+            "fills_hollows": 0.5,
+            "grain": 1.5,
+            "irregularity": 0.35,
+            "reach": 0.4,
+            "softness": 0.8
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: a tie between two other layers: the first corner wins"
+    },
+    {
+      "expected": {},
+      "input": {
+        "choices": [
+          2,
+          -1,
+          2,
+          -1,
+          -1,
+          -1,
+          2,
+          -1
+        ],
+        "f": [
+          0.984375,
+          0.46875,
+          0.671875
+        ],
+        "h": {
+          "0": 0.59375,
+          "1": 0.421875,
+          "2": 0.578125,
+          "3": 0.09375
+        },
+        "n": 0.03125,
+        "ranks": [
+          2,
+          2,
+          2,
+          2,
+          3,
+          0,
+          -1,
+          2
+        ],
+        "table": {
+          "0|3": {
+            "fills_hollows": 0.1875,
+            "grain": 0.33984375,
+            "irregularity": 0.515625,
+            "reach": 0.140625,
+            "softness": 0.62890625
+          },
+          "2|3": {
+            "fills_hollows": 0.140625,
+            "grain": 5.37109375,
+            "irregularity": 0.890625,
+            "reach": -0.359375,
+            "softness": 0.7625
+          },
+          "3|0": {
+            "fills_hollows": 0.640625,
+            "grain": 4.0234375,
+            "irregularity": 0.921875,
+            "reach": 0.421875,
+            "softness": 0.5546875
+          },
+          "3|2": {
+            "fills_hollows": 0.578125,
+            "grain": 4.921875,
+            "irregularity": 0.75,
+            "reach": -0.34375,
+            "softness": 0.12421875
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 0"
+    },
+    {
+      "expected": {
+        "alpha": 0.0,
+        "other": 1,
+        "owner": 0,
+        "s": 0.4489206150661,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          -1,
+          3,
+          3,
+          -1,
+          -1
+        ],
+        "f": [
+          0.953125,
+          0.546875,
+          0.28125
+        ],
+        "h": {
+          "0": 0.734375,
+          "1": 0.828125,
+          "2": 0.6875,
+          "3": 0.078125
+        },
+        "n": 0.921875,
+        "ranks": [
+          0,
+          1,
+          2,
+          0,
+          -1,
+          -1,
+          1,
+          -1
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.359375,
+            "grain": 5.01171875,
+            "irregularity": 0.390625,
+            "reach": 0.359375,
+            "softness": 0.09453125
+          },
+          "0|3": {
+            "fills_hollows": 0.921875,
+            "grain": 3.57421875,
+            "irregularity": 0.953125,
+            "reach": 0.453125,
+            "softness": 0.21328125
+          },
+          "1|0": {
+            "fills_hollows": 0.65625,
+            "grain": 2.31640625,
+            "irregularity": 0.4375,
+            "reach": -0.421875,
+            "softness": 0.525
+          },
+          "1|3": {
+            "fills_hollows": 0.09375,
+            "grain": 0.51953125,
+            "irregularity": 0.515625,
+            "reach": 0.4375,
+            "softness": 0.1984375
+          },
+          "3|0": {
+            "fills_hollows": 0.71875,
+            "grain": 2.046875,
+            "irregularity": 0.234375,
+            "reach": 0.140625,
+            "softness": 0.51015625
+          },
+          "3|1": {
+            "fills_hollows": 0.8125,
+            "grain": 5.8203125,
+            "irregularity": 0.328125,
+            "reach": 0.203125,
+            "softness": 0.8515625
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 1"
+    },
+    {
+      "expected": {
+        "alpha": 0.998710417102726,
+        "other": 1,
+        "owner": 0,
+        "s": 0.810201169267597,
+        "vote": 0.358772277832031
+      },
+      "input": {
+        "choices": [
+          1,
+          2,
+          -1,
+          -1,
+          2,
+          -1,
+          -1,
+          0
+        ],
+        "f": [
+          0.484375,
+          0.109375,
+          0.21875
+        ],
+        "h": {
+          "0": 0.578125,
+          "1": 0.328125,
+          "2": 0.453125,
+          "3": 0.046875
+        },
+        "n": 0.71875,
+        "ranks": [
+          1,
+          3,
+          1,
+          3,
+          -1,
+          0,
+          2,
+          2
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.8125,
+            "grain": 1.59765625,
+            "irregularity": 0.828125,
+            "reach": -0.21875,
+            "softness": 0.12421875
+          },
+          "0|2": {
+            "fills_hollows": 0.375,
+            "grain": 2.67578125,
+            "irregularity": 0.171875,
+            "reach": 0.109375,
+            "softness": 0.525
+          },
+          "0|3": {
+            "fills_hollows": 0.234375,
+            "grain": 1.1484375,
+            "irregularity": 0.828125,
+            "reach": 0.3125,
+            "softness": 0.92578125
+          },
+          "1|0": {
+            "fills_hollows": 0.984375,
+            "grain": 4.0234375,
+            "irregularity": 0.46875,
+            "reach": 0.125,
+            "softness": 0.86640625
+          },
+          "1|2": {
+            "fills_hollows": 0.0625,
+            "grain": 4.921875,
+            "irregularity": 0.828125,
+            "reach": -0.5,
+            "softness": 0.89609375
+          },
+          "1|3": {
+            "fills_hollows": 0.796875,
+            "grain": 5.91015625,
+            "irregularity": 0.984375,
+            "reach": 0.390625,
+            "softness": 0.3765625
+          },
+          "2|0": {
+            "fills_hollows": 0.484375,
+            "grain": 3.57421875,
+            "irregularity": 0.421875,
+            "reach": 0.1875,
+            "softness": 0.56953125
+          },
+          "2|1": {
+            "fills_hollows": 0.328125,
+            "grain": 1.41796875,
+            "irregularity": 0.703125,
+            "reach": 0.09375,
+            "softness": 0.12421875
+          },
+          "2|3": {
+            "fills_hollows": 0.953125,
+            "grain": 4.0234375,
+            "irregularity": 0.3125,
+            "reach": 0.421875,
+            "softness": 1.0
+          },
+          "3|0": {
+            "fills_hollows": 0.90625,
+            "grain": 5.28125,
+            "irregularity": 0.34375,
+            "reach": -0.171875,
+            "softness": 0.89609375
+          },
+          "3|1": {
+            "fills_hollows": 0.03125,
+            "grain": 2.5859375,
+            "irregularity": 0.359375,
+            "reach": 0.0,
+            "softness": 0.92578125
+          },
+          "3|2": {
+            "fills_hollows": 0.4375,
+            "grain": 2.5859375,
+            "irregularity": 0.46875,
+            "reach": -0.265625,
+            "softness": 0.71796875
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 2"
+    },
+    {
+      "expected": {
+        "alpha": 0.0,
+        "other": 3,
+        "owner": 2,
+        "s": 0.184790161200667,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          2,
+          -1,
+          -1,
+          -1,
+          0
+        ],
+        "f": [
+          0.859375,
+          0.15625,
+          0.8125
+        ],
+        "h": {
+          "0": 0.03125,
+          "1": 0.0625,
+          "2": 0.65625,
+          "3": 1.0
+        },
+        "n": 0.3125,
+        "ranks": [
+          3,
+          3,
+          3,
+          -1,
+          -1,
+          2,
+          2,
+          2
+        ],
+        "table": {
+          "0|3": {
+            "fills_hollows": 0.421875,
+            "grain": 4.5625,
+            "irregularity": 0.78125,
+            "reach": -0.359375,
+            "softness": 0.18359375
+          },
+          "1|3": {
+            "fills_hollows": 0.265625,
+            "grain": 1.41796875,
+            "irregularity": 0.046875,
+            "reach": 0.015625,
+            "softness": 0.5546875
+          },
+          "2|3": {
+            "fills_hollows": 0.203125,
+            "grain": 1.59765625,
+            "irregularity": 0.96875,
+            "reach": -0.109375,
+            "softness": 0.1390625
+          },
+          "3|0": {
+            "fills_hollows": 0.484375,
+            "grain": 1.59765625,
+            "irregularity": 0.921875,
+            "reach": -0.03125,
+            "softness": 0.15390625
+          },
+          "3|1": {
+            "fills_hollows": 0.3125,
+            "grain": 5.1015625,
+            "irregularity": 0.796875,
+            "reach": 0.453125,
+            "softness": 0.09453125
+          },
+          "3|2": {
+            "fills_hollows": 0.828125,
+            "grain": 3.84375,
+            "irregularity": 0.4375,
+            "reach": -0.3125,
+            "softness": 0.703125
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 3"
+    },
+    {
+      "expected": {},
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          2,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.171875,
+          0.171875,
+          0.65625
+        ],
+        "h": {
+          "0": 0.296875,
+          "1": 0.875,
+          "2": 0.140625,
+          "3": 0.171875
+        },
+        "n": 0.609375,
+        "ranks": [
+          2,
+          2,
+          2,
+          0,
+          0,
+          1,
+          0,
+          3
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.96875,
+            "grain": 3.484375,
+            "irregularity": 0.515625,
+            "reach": -0.40625,
+            "softness": 0.3171875
+          },
+          "1|0": {
+            "fills_hollows": 0.28125,
+            "grain": 2.85546875,
+            "irregularity": 0.734375,
+            "reach": -0.265625,
+            "softness": 0.80703125
+          },
+          "1|3": {
+            "fills_hollows": 0.140625,
+            "grain": 2.5859375,
+            "irregularity": 0.03125,
+            "reach": 0.4375,
+            "softness": 0.3171875
+          },
+          "2|3": {
+            "fills_hollows": 0.84375,
+            "grain": 3.39453125,
+            "irregularity": 0.671875,
+            "reach": 0.046875,
+            "softness": 0.39140625
+          },
+          "3|1": {
+            "fills_hollows": 0.46875,
+            "grain": 2.5859375,
+            "irregularity": 0.828125,
+            "reach": 0.328125,
+            "softness": 0.36171875
+          },
+          "3|2": {
+            "fills_hollows": 0.4375,
+            "grain": 1.8671875,
+            "irregularity": 0.828125,
+            "reach": -0.375,
+            "softness": 0.06484375
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 4"
+    },
+    {
+      "expected": {
+        "alpha": 0.490926737347011,
+        "other": 3,
+        "owner": 0,
+        "s": 0.828056660039761,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          2,
+          -1
+        ],
+        "f": [
+          0.890625,
+          0.90625,
+          0.578125
+        ],
+        "h": {
+          "0": 0.546875,
+          "1": 0.296875,
+          "2": 0.15625,
+          "3": 0.046875
+        },
+        "n": 0.5625,
+        "ranks": [
+          -1,
+          2,
+          3,
+          -1,
+          2,
+          0,
+          0,
+          3
+        ],
+        "table": {
+          "0|2": {
+            "fills_hollows": 0.375,
+            "grain": 1.95703125,
+            "irregularity": 0.578125,
+            "reach": 0.09375,
+            "softness": 0.51015625
+          },
+          "0|3": {
+            "fills_hollows": 0.21875,
+            "grain": 5.37109375,
+            "irregularity": 0.5,
+            "reach": 0.453125,
+            "softness": 0.703125
+          },
+          "1|3": {
+            "fills_hollows": 0.21875,
+            "grain": 2.49609375,
+            "irregularity": 0.84375,
+            "reach": 0.25,
+            "softness": 0.53984375
+          },
+          "2|0": {
+            "fills_hollows": 0.03125,
+            "grain": 1.8671875,
+            "irregularity": 0.234375,
+            "reach": -0.453125,
+            "softness": 0.346875
+          },
+          "2|3": {
+            "fills_hollows": 0.828125,
+            "grain": 3.57421875,
+            "irregularity": 0.640625,
+            "reach": -0.109375,
+            "softness": 0.584375
+          },
+          "3|0": {
+            "fills_hollows": 0.34375,
+            "grain": 0.33984375,
+            "irregularity": 0.671875,
+            "reach": -0.421875,
+            "softness": 0.36171875
+          },
+          "3|1": {
+            "fills_hollows": 0.296875,
+            "grain": 0.96875,
+            "irregularity": 0.171875,
+            "reach": -0.21875,
+            "softness": 0.7625
+          },
+          "3|2": {
+            "fills_hollows": 0.296875,
+            "grain": 3.75390625,
+            "irregularity": 0.421875,
+            "reach": 0.09375,
+            "softness": 0.24296875
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 5"
+    },
+    {
+      "expected": {
+        "alpha": 1.0,
+        "other": 3,
+        "owner": 0,
+        "s": 0.994753043234924,
+        "vote": 0.06866455078125
+      },
+      "input": {
+        "choices": [
+          -1,
+          3,
+          -1,
+          0,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.078125,
+          0.0625,
+          0.0625
+        ],
+        "h": {
+          "0": 0.71875,
+          "1": 0.46875,
+          "2": 0.828125,
+          "3": 0.078125
+        },
+        "n": 0.953125,
+        "ranks": [
+          3,
+          -1,
+          3,
+          0,
+          2,
+          2,
+          3,
+          1
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.328125,
+            "grain": 2.13671875,
+            "irregularity": 0.40625,
+            "reach": 0.3125,
+            "softness": 0.40625
+          },
+          "0|2": {
+            "fills_hollows": 0.46875,
+            "grain": 1.59765625,
+            "irregularity": 0.078125,
+            "reach": -0.328125,
+            "softness": 0.64375
+          },
+          "0|3": {
+            "fills_hollows": 0.75,
+            "grain": 3.21484375,
+            "irregularity": 0.546875,
+            "reach": 0.140625,
+            "softness": 0.48046875
+          },
+          "1|0": {
+            "fills_hollows": 0.5625,
+            "grain": 3.484375,
+            "irregularity": 0.453125,
+            "reach": 0.1875,
+            "softness": 0.525
+          },
+          "1|3": {
+            "fills_hollows": 0.9375,
+            "grain": 0.7890625,
+            "irregularity": 0.640625,
+            "reach": -0.5,
+            "softness": 0.16875
+          },
+          "2|0": {
+            "fills_hollows": 0.09375,
+            "grain": 2.85546875,
+            "irregularity": 0.8125,
+            "reach": 0.3125,
+            "softness": 0.9703125
+          },
+          "3|0": {
+            "fills_hollows": 0.21875,
+            "grain": 6.0,
+            "irregularity": 0.828125,
+            "reach": 0.109375,
+            "softness": 0.18359375
+          },
+          "3|1": {
+            "fills_hollows": 0.984375,
+            "grain": 5.91015625,
+            "irregularity": 0.40625,
+            "reach": 0.40625,
+            "softness": 0.33203125
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 6"
+    },
+    {
+      "expected": {
+        "alpha": 0.631318556611939,
+        "other": 2,
+        "owner": 1,
+        "s": 0.341609589041096,
+        "vote": 0.0547943115234375
+      },
+      "input": {
+        "choices": [
+          -1,
+          3,
+          -1,
+          0,
+          2,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.703125,
+          0.8125,
+          0.984375
+        ],
+        "h": {
+          "0": 0.625,
+          "1": 0.359375,
+          "2": 0.578125,
+          "3": 0.484375
+        },
+        "n": 0.46875,
+        "ranks": [
+          1,
+          -1,
+          -1,
+          3,
+          2,
+          3,
+          2,
+          1
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.171875,
+            "grain": 0.87890625,
+            "irregularity": 0.828125,
+            "reach": -0.484375,
+            "softness": 0.346875
+          },
+          "0|2": {
+            "fills_hollows": 0.40625,
+            "grain": 5.37109375,
+            "irregularity": 0.328125,
+            "reach": -0.359375,
+            "softness": 0.06484375
+          },
+          "0|3": {
+            "fills_hollows": 0.171875,
+            "grain": 5.28125,
+            "irregularity": 0.5,
+            "reach": 0.203125,
+            "softness": 0.40625
+          },
+          "1|0": {
+            "fills_hollows": 0.015625,
+            "grain": 4.0234375,
+            "irregularity": 0.984375,
+            "reach": 0.34375,
+            "softness": 0.53984375
+          },
+          "1|2": {
+            "fills_hollows": 0.359375,
+            "grain": 3.3046875,
+            "irregularity": 0.703125,
+            "reach": -0.140625,
+            "softness": 0.15390625
+          },
+          "1|3": {
+            "fills_hollows": 0.53125,
+            "grain": 0.69921875,
+            "irregularity": 0.328125,
+            "reach": -0.140625,
+            "softness": 0.59921875
+          },
+          "2|0": {
+            "fills_hollows": 0.609375,
+            "grain": 3.39453125,
+            "irregularity": 0.609375,
+            "reach": -0.296875,
+            "softness": 0.16875
+          },
+          "2|1": {
+            "fills_hollows": 0.34375,
+            "grain": 3.39453125,
+            "irregularity": 0.859375,
+            "reach": 0.265625,
+            "softness": 0.703125
+          },
+          "3|0": {
+            "fills_hollows": 0.375,
+            "grain": 2.49609375,
+            "irregularity": 0.453125,
+            "reach": -0.40625,
+            "softness": 0.51015625
+          },
+          "3|1": {
+            "fills_hollows": 0.078125,
+            "grain": 3.93359375,
+            "irregularity": 0.453125,
+            "reach": 0.34375,
+            "softness": 0.7625
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 7"
+    },
+    {
+      "expected": {
+        "alpha": 0.0,
+        "other": 3,
+        "owner": 0,
+        "s": 0.125,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          1,
+          -1,
+          -1,
+          -1,
+          2,
+          -1,
+          -1,
+          1
+        ],
+        "f": [
+          1.0,
+          0.875,
+          0.015625
+        ],
+        "h": {
+          "0": 0.6875,
+          "1": 0.84375,
+          "2": 0.359375,
+          "3": 0.890625
+        },
+        "n": 0.3125,
+        "ranks": [
+          1,
+          3,
+          3,
+          0,
+          -1,
+          2,
+          2,
+          1
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.0625,
+            "grain": 1.95703125,
+            "irregularity": 0.578125,
+            "reach": 0.140625,
+            "softness": 0.42109375
+          },
+          "0|2": {
+            "fills_hollows": 0.578125,
+            "grain": 5.4609375,
+            "irregularity": 0.296875,
+            "reach": 0.40625,
+            "softness": 0.109375
+          },
+          "0|3": {
+            "fills_hollows": 0.75,
+            "grain": 2.765625,
+            "irregularity": 0.421875,
+            "reach": 0.171875,
+            "softness": 0.42109375
+          },
+          "1|0": {
+            "fills_hollows": 0.921875,
+            "grain": 4.5625,
+            "irregularity": 0.609375,
+            "reach": 0.3125,
+            "softness": 0.48046875
+          },
+          "1|2": {
+            "fills_hollows": 0.0625,
+            "grain": 4.3828125,
+            "irregularity": 0.671875,
+            "reach": 0.375,
+            "softness": 0.30234375
+          },
+          "2|0": {
+            "fills_hollows": 0.390625,
+            "grain": 3.39453125,
+            "irregularity": 0.8125,
+            "reach": -0.421875,
+            "softness": 0.80703125
+          },
+          "2|1": {
+            "fills_hollows": 0.984375,
+            "grain": 1.328125,
+            "irregularity": 0.921875,
+            "reach": -0.484375,
+            "softness": 0.3765625
+          },
+          "2|3": {
+            "fills_hollows": 0.5625,
+            "grain": 0.25,
+            "irregularity": 0.34375,
+            "reach": -0.109375,
+            "softness": 0.39140625
+          },
+          "3|0": {
+            "fills_hollows": 0.8125,
+            "grain": 5.73046875,
+            "irregularity": 0.40625,
+            "reach": 0.4375,
+            "softness": 0.51015625
+          },
+          "3|2": {
+            "fills_hollows": 0.0,
+            "grain": 3.93359375,
+            "irregularity": 0.375,
+            "reach": -0.484375,
+            "softness": 0.24296875
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 8"
+    },
+    {
+      "expected": {
+        "alpha": 0.000919733062514792,
+        "other": 1,
+        "owner": 0,
+        "s": 0.243198680956307,
+        "vote": 0.0009307861328125
+      },
+      "input": {
+        "choices": [
+          1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          3,
+          -1
+        ],
+        "f": [
+          0.984375,
+          0.046875,
+          0.9375
+        ],
+        "h": {
+          "0": 0.078125,
+          "1": 0.484375,
+          "2": 0.875,
+          "3": 0.4375
+        },
+        "n": 0.625,
+        "ranks": [
+          1,
+          -1,
+          0,
+          1,
+          0,
+          -1,
+          1,
+          -1
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.203125,
+            "grain": 4.0234375,
+            "irregularity": 0.46875,
+            "reach": 0.234375,
+            "softness": 0.27265625
+          },
+          "0|2": {
+            "fills_hollows": 0.765625,
+            "grain": 1.1484375,
+            "irregularity": 0.203125,
+            "reach": -0.296875,
+            "softness": 0.45078125
+          },
+          "0|3": {
+            "fills_hollows": 0.0625,
+            "grain": 4.65234375,
+            "irregularity": 0.234375,
+            "reach": 0.109375,
+            "softness": 0.77734375
+          },
+          "1|0": {
+            "fills_hollows": 0.921875,
+            "grain": 1.23828125,
+            "irregularity": 0.5,
+            "reach": 0.375,
+            "softness": 0.80703125
+          },
+          "1|2": {
+            "fills_hollows": 0.6875,
+            "grain": 3.75390625,
+            "irregularity": 0.78125,
+            "reach": 0.328125,
+            "softness": 0.27265625
+          },
+          "1|3": {
+            "fills_hollows": 0.515625,
+            "grain": 2.2265625,
+            "irregularity": 0.65625,
+            "reach": 0.296875,
+            "softness": 0.940625
+          },
+          "2|0": {
+            "fills_hollows": 0.390625,
+            "grain": 2.2265625,
+            "irregularity": 0.03125,
+            "reach": 0.46875,
+            "softness": 0.21328125
+          },
+          "2|1": {
+            "fills_hollows": 0.0,
+            "grain": 0.25,
+            "irregularity": 0.0625,
+            "reach": 0.359375,
+            "softness": 0.27265625
+          },
+          "2|3": {
+            "fills_hollows": 0.984375,
+            "grain": 3.84375,
+            "irregularity": 0.890625,
+            "reach": -0.1875,
+            "softness": 0.98515625
+          },
+          "3|0": {
+            "fills_hollows": 0.359375,
+            "grain": 1.5078125,
+            "irregularity": 0.15625,
+            "reach": 0.03125,
+            "softness": 0.18359375
+          },
+          "3|1": {
+            "fills_hollows": 0.4375,
+            "grain": 0.51953125,
+            "irregularity": 0.25,
+            "reach": 0.390625,
+            "softness": 0.65859375
+          },
+          "3|2": {
+            "fills_hollows": 0.84375,
+            "grain": 2.13671875,
+            "irregularity": 0.515625,
+            "reach": -0.234375,
+            "softness": 0.6734375
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 9"
+    },
+    {
+      "expected": {
+        "alpha": 1.0,
+        "other": 2,
+        "owner": 1,
+        "s": 1.0,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          3,
+          -1,
+          -1,
+          -1,
+          -1,
+          1,
+          1,
+          -1
+        ],
+        "f": [
+          1.0,
+          0.6875,
+          0.359375
+        ],
+        "h": {
+          "0": 0.359375,
+          "1": 0.234375,
+          "2": 1.0,
+          "3": 0.109375
+        },
+        "n": 0.65625,
+        "ranks": [
+          1,
+          3,
+          3,
+          -1,
+          -1,
+          2,
+          -1,
+          2
+        ],
+        "table": {
+          "1|2": {
+            "fills_hollows": 0.25,
+            "grain": 1.95703125,
+            "irregularity": 0.46875,
+            "reach": -0.0625,
+            "softness": 0.40625
+          },
+          "1|3": {
+            "fills_hollows": 0.71875,
+            "grain": 1.95703125,
+            "irregularity": 0.15625,
+            "reach": -0.375,
+            "softness": 1.0
+          },
+          "2|1": {
+            "fills_hollows": 0.59375,
+            "grain": 5.28125,
+            "irregularity": 0.109375,
+            "reach": 0.296875,
+            "softness": 0.53984375
+          },
+          "3|1": {
+            "fills_hollows": 0.625,
+            "grain": 3.93359375,
+            "irregularity": 0.21875,
+            "reach": 0.09375,
+            "softness": 0.65859375
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 10"
+    },
+    {
+      "expected": {},
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          3,
+          -1,
+          -1,
+          -1,
+          0,
+          -1
+        ],
+        "f": [
+          0.390625,
+          0.625,
+          0.203125
+        ],
+        "h": {
+          "0": 0.28125,
+          "1": 0.921875,
+          "2": 0.078125,
+          "3": 0.515625
+        },
+        "n": 0.9375,
+        "ranks": [
+          -1,
+          0,
+          1,
+          0,
+          -1,
+          3,
+          -1,
+          -1
+        ],
+        "table": {
+          "0|2": {
+            "fills_hollows": 0.609375,
+            "grain": 1.5078125,
+            "irregularity": 0.34375,
+            "reach": 0.09375,
+            "softness": 0.6734375
+          },
+          "0|3": {
+            "fills_hollows": 0.578125,
+            "grain": 2.2265625,
+            "irregularity": 0.234375,
+            "reach": -0.484375,
+            "softness": 0.83671875
+          },
+          "1|2": {
+            "fills_hollows": 0.6875,
+            "grain": 5.01171875,
+            "irregularity": 0.015625,
+            "reach": -0.40625,
+            "softness": 0.30234375
+          },
+          "2|0": {
+            "fills_hollows": 1.0,
+            "grain": 3.84375,
+            "irregularity": 0.578125,
+            "reach": 0.171875,
+            "softness": 0.24296875
+          },
+          "2|1": {
+            "fills_hollows": 1.0,
+            "grain": 0.87890625,
+            "irregularity": 0.109375,
+            "reach": 0.234375,
+            "softness": 0.584375
+          },
+          "3|0": {
+            "fills_hollows": 0.5,
+            "grain": 3.6640625,
+            "irregularity": 0.609375,
+            "reach": 0.3125,
+            "softness": 0.77734375
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 11"
+    },
+    {
+      "expected": {},
+      "input": {
+        "choices": [
+          0,
+          -1,
+          -1,
+          0,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.640625,
+          0.6875,
+          0.109375
+        ],
+        "h": {
+          "0": 0.859375,
+          "1": 0.21875,
+          "2": 0.09375,
+          "3": 0.015625
+        },
+        "n": 0.78125,
+        "ranks": [
+          3,
+          -1,
+          1,
+          0,
+          3,
+          3,
+          0,
+          3
+        ],
+        "table": {
+          "0|2": {
+            "fills_hollows": 0.265625,
+            "grain": 5.91015625,
+            "irregularity": 0.65625,
+            "reach": -0.375,
+            "softness": 0.16875
+          },
+          "0|3": {
+            "fills_hollows": 0.5,
+            "grain": 5.19140625,
+            "irregularity": 0.953125,
+            "reach": 0.265625,
+            "softness": 0.525
+          },
+          "1|2": {
+            "fills_hollows": 0.421875,
+            "grain": 1.23828125,
+            "irregularity": 0.421875,
+            "reach": -0.328125,
+            "softness": 0.5546875
+          },
+          "1|3": {
+            "fills_hollows": 0.859375,
+            "grain": 3.21484375,
+            "irregularity": 0.84375,
+            "reach": -0.375,
+            "softness": 0.3765625
+          },
+          "2|0": {
+            "fills_hollows": 0.421875,
+            "grain": 0.96875,
+            "irregularity": 0.5625,
+            "reach": 0.265625,
+            "softness": 0.8515625
+          },
+          "2|1": {
+            "fills_hollows": 0.421875,
+            "grain": 1.8671875,
+            "irregularity": 0.75,
+            "reach": 0.03125,
+            "softness": 0.95546875
+          },
+          "2|3": {
+            "fills_hollows": 0.546875,
+            "grain": 1.8671875,
+            "irregularity": 0.8125,
+            "reach": 0.0625,
+            "softness": 0.4953125
+          },
+          "3|0": {
+            "fills_hollows": 0.578125,
+            "grain": 2.13671875,
+            "irregularity": 0.578125,
+            "reach": -0.3125,
+            "softness": 0.06484375
+          },
+          "3|1": {
+            "fills_hollows": 0.203125,
+            "grain": 4.3828125,
+            "irregularity": 0.46875,
+            "reach": 0.109375,
+            "softness": 0.940625
+          },
+          "3|2": {
+            "fills_hollows": 0.375,
+            "grain": 0.4296875,
+            "irregularity": 0.296875,
+            "reach": 0.5,
+            "softness": 0.92578125
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 12"
+    },
+    {
+      "expected": {},
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          -1,
+          0,
+          -1,
+          2,
+          -1
+        ],
+        "f": [
+          0.25,
+          0.453125,
+          0.671875
+        ],
+        "h": {
+          "0": 0.0,
+          "1": 0.515625,
+          "2": 0.703125,
+          "3": 0.078125
+        },
+        "n": 0.90625,
+        "ranks": [
+          0,
+          3,
+          2,
+          3,
+          3,
+          3,
+          2,
+          2
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.28125,
+            "grain": 4.29296875,
+            "irregularity": 0.109375,
+            "reach": 0.21875,
+            "softness": 0.7625
+          },
+          "1|0": {
+            "fills_hollows": 0.703125,
+            "grain": 5.91015625,
+            "irregularity": 0.15625,
+            "reach": 0.265625,
+            "softness": 0.39140625
+          },
+          "1|2": {
+            "fills_hollows": 0.0625,
+            "grain": 0.87890625,
+            "irregularity": 0.25,
+            "reach": 0.40625,
+            "softness": 0.9109375
+          },
+          "1|3": {
+            "fills_hollows": 0.515625,
+            "grain": 2.40625,
+            "irregularity": 0.1875,
+            "reach": 0.015625,
+            "softness": 0.2875
+          },
+          "2|1": {
+            "fills_hollows": 0.109375,
+            "grain": 2.5859375,
+            "irregularity": 0.765625,
+            "reach": 0.328125,
+            "softness": 0.39140625
+          },
+          "2|3": {
+            "fills_hollows": 0.046875,
+            "grain": 4.11328125,
+            "irregularity": 0.53125,
+            "reach": -0.46875,
+            "softness": 0.228125
+          },
+          "3|1": {
+            "fills_hollows": 0.34375,
+            "grain": 2.2265625,
+            "irregularity": 0.65625,
+            "reach": -0.34375,
+            "softness": 0.109375
+          },
+          "3|2": {
+            "fills_hollows": 0.09375,
+            "grain": 1.23828125,
+            "irregularity": 0.25,
+            "reach": -0.0625,
+            "softness": 0.228125
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 13"
+    },
+    {
+      "expected": {
+        "alpha": 0.0,
+        "other": 2,
+        "owner": 1,
+        "s": 0.422489305357507,
+        "vote": 0.100456237792969
+      },
+      "input": {
+        "choices": [
+          0,
+          2,
+          -1,
+          3,
+          -1,
+          -1,
+          0,
+          1
+        ],
+        "f": [
+          0.515625,
+          0.34375,
+          0.703125
+        ],
+        "h": {
+          "0": 0.671875,
+          "1": 0.671875,
+          "2": 0.09375,
+          "3": 0.171875
+        },
+        "n": 0.65625,
+        "ranks": [
+          -1,
+          -1,
+          2,
+          3,
+          -1,
+          1,
+          3,
+          2
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.6875,
+            "grain": 1.1484375,
+            "irregularity": 0.125,
+            "reach": 0.375,
+            "softness": 0.228125
+          },
+          "1|0": {
+            "fills_hollows": 0.1875,
+            "grain": 1.41796875,
+            "irregularity": 0.921875,
+            "reach": 0.140625,
+            "softness": 0.98515625
+          },
+          "1|2": {
+            "fills_hollows": 0.78125,
+            "grain": 1.59765625,
+            "irregularity": 0.28125,
+            "reach": 0.203125,
+            "softness": 0.09453125
+          },
+          "2|1": {
+            "fills_hollows": 0.9375,
+            "grain": 6.0,
+            "irregularity": 0.1875,
+            "reach": -0.484375,
+            "softness": 0.16875
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 14"
+    },
+    {
+      "expected": {
+        "alpha": 0.904464315201938,
+        "other": 2,
+        "owner": 0,
+        "s": 0.899755355331464,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          -1,
+          1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.46875,
+          0.96875,
+          0.890625
+        ],
+        "h": {
+          "0": 0.921875,
+          "1": 0.140625,
+          "2": 0.765625,
+          "3": 0.015625
+        },
+        "n": 0.96875,
+        "ranks": [
+          2,
+          0,
+          3,
+          0,
+          1,
+          -1,
+          2,
+          1
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.3125,
+            "grain": 5.8203125,
+            "irregularity": 0.078125,
+            "reach": 0.453125,
+            "softness": 0.83671875
+          },
+          "0|2": {
+            "fills_hollows": 0.71875,
+            "grain": 2.765625,
+            "irregularity": 0.859375,
+            "reach": 0.28125,
+            "softness": 0.71796875
+          },
+          "1|0": {
+            "fills_hollows": 0.21875,
+            "grain": 4.921875,
+            "irregularity": 0.6875,
+            "reach": 0.453125,
+            "softness": 0.05
+          },
+          "1|3": {
+            "fills_hollows": 0.734375,
+            "grain": 0.33984375,
+            "irregularity": 0.640625,
+            "reach": 0.3125,
+            "softness": 0.39140625
+          },
+          "2|0": {
+            "fills_hollows": 0.796875,
+            "grain": 0.51953125,
+            "irregularity": 0.703125,
+            "reach": -0.484375,
+            "softness": 0.821875
+          },
+          "3|1": {
+            "fills_hollows": 0.6875,
+            "grain": 3.484375,
+            "irregularity": 0.859375,
+            "reach": -0.15625,
+            "softness": 0.65859375
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 15"
+    },
+    {
+      "expected": {
+        "alpha": 0.0,
+        "other": 3,
+        "owner": 1,
+        "s": 0.0883703136954858,
+        "vote": 0.5921630859375
+      },
+      "input": {
+        "choices": [
+          3,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.015625,
+          0.125,
+          0.3125
+        ],
+        "h": {
+          "0": 0.828125,
+          "1": 0.984375,
+          "2": 0.90625,
+          "3": 0.234375
+        },
+        "n": 0.59375,
+        "ranks": [
+          1,
+          1,
+          3,
+          1,
+          1,
+          -1,
+          2,
+          1
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.328125,
+            "grain": 6.0,
+            "irregularity": 0.015625,
+            "reach": -0.4375,
+            "softness": 0.525
+          },
+          "0|2": {
+            "fills_hollows": 0.453125,
+            "grain": 4.921875,
+            "irregularity": 0.78125,
+            "reach": 0.046875,
+            "softness": 0.59921875
+          },
+          "0|3": {
+            "fills_hollows": 0.96875,
+            "grain": 0.51953125,
+            "irregularity": 0.40625,
+            "reach": 0.125,
+            "softness": 0.228125
+          },
+          "1|0": {
+            "fills_hollows": 0.859375,
+            "grain": 5.73046875,
+            "irregularity": 0.671875,
+            "reach": 0.359375,
+            "softness": 0.6734375
+          },
+          "1|2": {
+            "fills_hollows": 0.6875,
+            "grain": 5.73046875,
+            "irregularity": 0.28125,
+            "reach": -0.09375,
+            "softness": 0.7921875
+          },
+          "1|3": {
+            "fills_hollows": 0.625,
+            "grain": 1.5078125,
+            "irregularity": 0.203125,
+            "reach": 0.5,
+            "softness": 0.36171875
+          },
+          "2|0": {
+            "fills_hollows": 0.796875,
+            "grain": 2.13671875,
+            "irregularity": 0.140625,
+            "reach": -0.46875,
+            "softness": 0.821875
+          },
+          "2|1": {
+            "fills_hollows": 0.3125,
+            "grain": 2.2265625,
+            "irregularity": 0.140625,
+            "reach": -0.21875,
+            "softness": 0.59921875
+          },
+          "2|3": {
+            "fills_hollows": 0.109375,
+            "grain": 4.29296875,
+            "irregularity": 0.0625,
+            "reach": 0.4375,
+            "softness": 0.821875
+          },
+          "3|0": {
+            "fills_hollows": 0.203125,
+            "grain": 1.23828125,
+            "irregularity": 0.796875,
+            "reach": -0.359375,
+            "softness": 0.95546875
+          },
+          "3|1": {
+            "fills_hollows": 0.25,
+            "grain": 3.21484375,
+            "irregularity": 0.09375,
+            "reach": -0.125,
+            "softness": 0.9109375
+          },
+          "3|2": {
+            "fills_hollows": 0.34375,
+            "grain": 4.5625,
+            "irregularity": 1.0,
+            "reach": 0.375,
+            "softness": 0.12421875
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 16"
+    },
+    {
+      "expected": {
+        "alpha": 1.0,
+        "other": 1,
+        "owner": 0,
+        "s": 0.871859296482412,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          0,
+          -1,
+          -1,
+          0,
+          -1
+        ],
+        "f": [
+          0.46875,
+          0.875,
+          0.75
+        ],
+        "h": {
+          "0": 0.8125,
+          "1": 0.953125,
+          "2": 0.734375,
+          "3": 0.015625
+        },
+        "n": 0.203125,
+        "ranks": [
+          1,
+          1,
+          2,
+          3,
+          0,
+          2,
+          -1,
+          1
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 1.0,
+            "grain": 2.49609375,
+            "irregularity": 0.609375,
+            "reach": -0.078125,
+            "softness": 0.05
+          },
+          "0|2": {
+            "fills_hollows": 0.625,
+            "grain": 5.37109375,
+            "irregularity": 0.3125,
+            "reach": 0.375,
+            "softness": 0.3171875
+          },
+          "0|3": {
+            "fills_hollows": 0.171875,
+            "grain": 1.6875,
+            "irregularity": 0.578125,
+            "reach": -0.109375,
+            "softness": 0.05
+          },
+          "1|0": {
+            "fills_hollows": 0.890625,
+            "grain": 2.9453125,
+            "irregularity": 0.671875,
+            "reach": 0.453125,
+            "softness": 0.98515625
+          },
+          "1|2": {
+            "fills_hollows": 0.796875,
+            "grain": 4.7421875,
+            "irregularity": 0.828125,
+            "reach": 0.359375,
+            "softness": 0.95546875
+          },
+          "2|0": {
+            "fills_hollows": 0.171875,
+            "grain": 5.4609375,
+            "irregularity": 0.75,
+            "reach": 0.171875,
+            "softness": 0.95546875
+          },
+          "2|1": {
+            "fills_hollows": 0.515625,
+            "grain": 5.8203125,
+            "irregularity": 0.15625,
+            "reach": 0.296875,
+            "softness": 0.24296875
+          },
+          "2|3": {
+            "fills_hollows": 0.1875,
+            "grain": 2.13671875,
+            "irregularity": 0.609375,
+            "reach": -0.296875,
+            "softness": 0.12421875
+          },
+          "3|0": {
+            "fills_hollows": 0.046875,
+            "grain": 4.3828125,
+            "irregularity": 0.65625,
+            "reach": -0.15625,
+            "softness": 0.39140625
+          },
+          "3|2": {
+            "fills_hollows": 0.6875,
+            "grain": 4.203125,
+            "irregularity": 0.4375,
+            "reach": 0.15625,
+            "softness": 0.06484375
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 17"
+    },
+    {
+      "expected": {
+        "alpha": 1.0,
+        "other": 2,
+        "owner": 0,
+        "s": 0.823785951241694,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          0,
+          -1,
+          -1,
+          -1,
+          3,
+          -1,
+          -1,
+          3
+        ],
+        "f": [
+          0.734375,
+          0.828125,
+          0.515625
+        ],
+        "h": {
+          "0": 0.78125,
+          "1": 0.453125,
+          "2": 0.75,
+          "3": 0.75
+        },
+        "n": 0.03125,
+        "ranks": [
+          1,
+          -1,
+          0,
+          2,
+          0,
+          3,
+          1,
+          2
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 1.0,
+            "grain": 4.11328125,
+            "irregularity": 0.40625,
+            "reach": -0.125,
+            "softness": 0.98515625
+          },
+          "0|2": {
+            "fills_hollows": 0.421875,
+            "grain": 4.3828125,
+            "irregularity": 0.203125,
+            "reach": 0.453125,
+            "softness": 0.09453125
+          },
+          "0|3": {
+            "fills_hollows": 0.796875,
+            "grain": 2.31640625,
+            "irregularity": 0.328125,
+            "reach": -0.109375,
+            "softness": 0.33203125
+          },
+          "1|0": {
+            "fills_hollows": 0.203125,
+            "grain": 3.39453125,
+            "irregularity": 0.671875,
+            "reach": 0.390625,
+            "softness": 0.21328125
+          },
+          "1|3": {
+            "fills_hollows": 0.5,
+            "grain": 1.41796875,
+            "irregularity": 0.984375,
+            "reach": -0.296875,
+            "softness": 0.940625
+          },
+          "2|0": {
+            "fills_hollows": 0.375,
+            "grain": 5.1015625,
+            "irregularity": 0.484375,
+            "reach": -0.109375,
+            "softness": 0.09453125
+          },
+          "2|3": {
+            "fills_hollows": 0.796875,
+            "grain": 3.39453125,
+            "irregularity": 0.34375,
+            "reach": 0.25,
+            "softness": 0.92578125
+          },
+          "3|0": {
+            "fills_hollows": 0.359375,
+            "grain": 1.6875,
+            "irregularity": 0.546875,
+            "reach": -0.3125,
+            "softness": 0.68828125
+          },
+          "3|1": {
+            "fills_hollows": 0.46875,
+            "grain": 2.31640625,
+            "irregularity": 0.5,
+            "reach": -0.34375,
+            "softness": 0.584375
+          },
+          "3|2": {
+            "fills_hollows": 0.703125,
+            "grain": 1.1484375,
+            "irregularity": 0.875,
+            "reach": -0.328125,
+            "softness": 0.45078125
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 18"
+    },
+    {
+      "expected": {
+        "alpha": 1.0,
+        "other": 3,
+        "owner": 0,
+        "s": 0.944191737823531,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          1
+        ],
+        "f": [
+          0.890625,
+          0.484375,
+          0.90625
+        ],
+        "h": {
+          "0": 0.015625,
+          "1": 0.90625,
+          "2": 0.03125,
+          "3": 0.078125
+        },
+        "n": 0.015625,
+        "ranks": [
+          3,
+          0,
+          0,
+          2,
+          2,
+          3,
+          -1,
+          3
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.578125,
+            "grain": 4.29296875,
+            "irregularity": 0.171875,
+            "reach": -0.265625,
+            "softness": 0.15390625
+          },
+          "0|2": {
+            "fills_hollows": 0.78125,
+            "grain": 5.55078125,
+            "irregularity": 0.359375,
+            "reach": -0.4375,
+            "softness": 0.4359375
+          },
+          "0|3": {
+            "fills_hollows": 0.0625,
+            "grain": 0.33984375,
+            "irregularity": 0.3125,
+            "reach": 0.421875,
+            "softness": 0.6734375
+          },
+          "1|0": {
+            "fills_hollows": 0.171875,
+            "grain": 2.046875,
+            "irregularity": 0.953125,
+            "reach": -0.171875,
+            "softness": 0.89609375
+          },
+          "1|2": {
+            "fills_hollows": 0.65625,
+            "grain": 5.4609375,
+            "irregularity": 0.796875,
+            "reach": -0.375,
+            "softness": 0.1390625
+          },
+          "1|3": {
+            "fills_hollows": 0.46875,
+            "grain": 3.21484375,
+            "irregularity": 0.90625,
+            "reach": 0.421875,
+            "softness": 0.64375
+          },
+          "2|0": {
+            "fills_hollows": 0.21875,
+            "grain": 1.5078125,
+            "irregularity": 0.890625,
+            "reach": 0.0625,
+            "softness": 0.45078125
+          },
+          "2|1": {
+            "fills_hollows": 0.0625,
+            "grain": 4.921875,
+            "irregularity": 0.484375,
+            "reach": -0.390625,
+            "softness": 0.98515625
+          },
+          "2|3": {
+            "fills_hollows": 0.03125,
+            "grain": 1.05859375,
+            "irregularity": 0.796875,
+            "reach": 0.375,
+            "softness": 0.36171875
+          },
+          "3|0": {
+            "fills_hollows": 0.359375,
+            "grain": 3.484375,
+            "irregularity": 0.890625,
+            "reach": 0.234375,
+            "softness": 0.3765625
+          },
+          "3|1": {
+            "fills_hollows": 0.109375,
+            "grain": 1.5078125,
+            "irregularity": 0.390625,
+            "reach": -0.015625,
+            "softness": 0.584375
+          },
+          "3|2": {
+            "fills_hollows": 0.140625,
+            "grain": 4.3828125,
+            "irregularity": 0.265625,
+            "reach": 0.4375,
+            "softness": 0.703125
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 19"
+    },
+    {
+      "expected": {
+        "alpha": 0.823201094960887,
+        "other": 3,
+        "owner": 0,
+        "s": 0.7587890625,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.296875,
+          0.1875,
+          0.0
+        ],
+        "h": {
+          "0": 0.828125,
+          "1": 0.453125,
+          "2": 0.921875,
+          "3": 0.234375
+        },
+        "n": 0.328125,
+        "ranks": [
+          3,
+          0,
+          3,
+          3,
+          1,
+          1,
+          2,
+          1
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.0,
+            "grain": 4.65234375,
+            "irregularity": 0.375,
+            "reach": 0.296875,
+            "softness": 0.24296875
+          },
+          "0|2": {
+            "fills_hollows": 0.140625,
+            "grain": 2.13671875,
+            "irregularity": 0.5,
+            "reach": 0.484375,
+            "softness": 0.83671875
+          },
+          "0|3": {
+            "fills_hollows": 0.171875,
+            "grain": 0.7890625,
+            "irregularity": 0.953125,
+            "reach": 0.1875,
+            "softness": 0.89609375
+          },
+          "1|0": {
+            "fills_hollows": 0.328125,
+            "grain": 2.67578125,
+            "irregularity": 0.34375,
+            "reach": 0.15625,
+            "softness": 0.940625
+          },
+          "1|2": {
+            "fills_hollows": 0.375,
+            "grain": 0.51953125,
+            "irregularity": 0.328125,
+            "reach": 0.4375,
+            "softness": 0.525
+          },
+          "2|0": {
+            "fills_hollows": 0.90625,
+            "grain": 1.1484375,
+            "irregularity": 1.0,
+            "reach": 0.28125,
+            "softness": 0.703125
+          },
+          "2|1": {
+            "fills_hollows": 0.375,
+            "grain": 1.95703125,
+            "irregularity": 0.53125,
+            "reach": -0.421875,
+            "softness": 0.80703125
+          },
+          "2|3": {
+            "fills_hollows": 0.328125,
+            "grain": 0.87890625,
+            "irregularity": 0.15625,
+            "reach": 0.046875,
+            "softness": 0.62890625
+          },
+          "3|0": {
+            "fills_hollows": 0.140625,
+            "grain": 6.0,
+            "irregularity": 0.9375,
+            "reach": 0.296875,
+            "softness": 1.0
+          },
+          "3|2": {
+            "fills_hollows": 0.53125,
+            "grain": 6.0,
+            "irregularity": 0.515625,
+            "reach": 0.25,
+            "softness": 0.1390625
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 20"
+    },
+    {
+      "expected": {},
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.28125,
+          0.71875,
+          0.28125
+        ],
+        "h": {
+          "0": 0.265625,
+          "1": 0.28125,
+          "2": 0.734375,
+          "3": 0.6875
+        },
+        "n": 0.171875,
+        "ranks": [
+          1,
+          -1,
+          1,
+          0,
+          0,
+          1,
+          -1,
+          3
+        ],
+        "table": {
+          "0|3": {
+            "fills_hollows": 0.59375,
+            "grain": 5.1015625,
+            "irregularity": 0.203125,
+            "reach": 0.171875,
+            "softness": 0.24296875
+          },
+          "2|3": {
+            "fills_hollows": 0.078125,
+            "grain": 2.40625,
+            "irregularity": 0.96875,
+            "reach": 0.171875,
+            "softness": 0.39140625
+          },
+          "3|0": {
+            "fills_hollows": 0.6875,
+            "grain": 5.91015625,
+            "irregularity": 0.71875,
+            "reach": -0.5,
+            "softness": 0.42109375
+          },
+          "3|2": {
+            "fills_hollows": 0.203125,
+            "grain": 4.83203125,
+            "irregularity": 0.046875,
+            "reach": -0.453125,
+            "softness": 0.09453125
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 21"
+    },
+    {
+      "expected": {
+        "alpha": 0.854831771288967,
+        "other": 2,
+        "owner": 0,
+        "s": 0.819091796875,
+        "vote": 0.0124969482421875
+      },
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          2
+        ],
+        "f": [
+          0.5625,
+          0.109375,
+          0.203125
+        ],
+        "h": {
+          "0": 0.015625,
+          "1": 0.5625,
+          "2": 0.8125,
+          "3": 0.453125
+        },
+        "n": 0.0,
+        "ranks": [
+          2,
+          -1,
+          2,
+          1,
+          0,
+          -1,
+          2,
+          -1
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.265625,
+            "grain": 4.3828125,
+            "irregularity": 1.0,
+            "reach": 0.5,
+            "softness": 0.64375
+          },
+          "0|2": {
+            "fills_hollows": 0.140625,
+            "grain": 5.01171875,
+            "irregularity": 0.21875,
+            "reach": 0.34375,
+            "softness": 0.7921875
+          },
+          "1|0": {
+            "fills_hollows": 0.578125,
+            "grain": 0.87890625,
+            "irregularity": 0.375,
+            "reach": 0.4375,
+            "softness": 0.18359375
+          },
+          "1|2": {
+            "fills_hollows": 0.9375,
+            "grain": 0.4296875,
+            "irregularity": 0.328125,
+            "reach": 0.484375,
+            "softness": 0.346875
+          },
+          "1|3": {
+            "fills_hollows": 0.703125,
+            "grain": 4.921875,
+            "irregularity": 0.25,
+            "reach": 0.1875,
+            "softness": 0.80703125
+          },
+          "2|0": {
+            "fills_hollows": 0.015625,
+            "grain": 2.9453125,
+            "irregularity": 0.078125,
+            "reach": -0.234375,
+            "softness": 0.68828125
+          },
+          "2|1": {
+            "fills_hollows": 0.578125,
+            "grain": 1.05859375,
+            "irregularity": 0.453125,
+            "reach": -0.078125,
+            "softness": 0.4953125
+          },
+          "2|3": {
+            "fills_hollows": 0.3125,
+            "grain": 4.921875,
+            "irregularity": 0.125,
+            "reach": 0.015625,
+            "softness": 0.940625
+          },
+          "3|1": {
+            "fills_hollows": 0.8125,
+            "grain": 5.73046875,
+            "irregularity": 0.359375,
+            "reach": 0.5,
+            "softness": 0.48046875
+          },
+          "3|2": {
+            "fills_hollows": 0.5,
+            "grain": 4.3828125,
+            "irregularity": 0.875,
+            "reach": 0.328125,
+            "softness": 0.95546875
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 22"
+    },
+    {
+      "expected": {
+        "alpha": 0.0173343255788906,
+        "other": 2,
+        "owner": 0,
+        "s": 0.577415599534342,
+        "vote": 0.115814208984375
+      },
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          3,
+          3,
+          2,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.484375,
+          0.6875,
+          0.71875
+        ],
+        "h": {
+          "0": 0.296875,
+          "1": 0.484375,
+          "2": 0.171875,
+          "3": 0.484375
+        },
+        "n": 0.375,
+        "ranks": [
+          0,
+          -1,
+          -1,
+          0,
+          0,
+          2,
+          3,
+          2
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.546875,
+            "grain": 2.31640625,
+            "irregularity": 0.75,
+            "reach": 0.3125,
+            "softness": 0.1390625
+          },
+          "0|2": {
+            "fills_hollows": 0.921875,
+            "grain": 0.4296875,
+            "irregularity": 0.0625,
+            "reach": 0.265625,
+            "softness": 0.1984375
+          },
+          "0|3": {
+            "fills_hollows": 0.203125,
+            "grain": 1.05859375,
+            "irregularity": 0.0625,
+            "reach": 0.234375,
+            "softness": 0.18359375
+          },
+          "1|0": {
+            "fills_hollows": 0.640625,
+            "grain": 4.0234375,
+            "irregularity": 0.0,
+            "reach": 0.453125,
+            "softness": 0.821875
+          },
+          "1|2": {
+            "fills_hollows": 0.0,
+            "grain": 5.1015625,
+            "irregularity": 0.40625,
+            "reach": 0.4375,
+            "softness": 1.0
+          },
+          "1|3": {
+            "fills_hollows": 0.5625,
+            "grain": 0.7890625,
+            "irregularity": 0.6875,
+            "reach": -0.46875,
+            "softness": 0.821875
+          },
+          "2|0": {
+            "fills_hollows": 0.578125,
+            "grain": 4.203125,
+            "irregularity": 0.796875,
+            "reach": -0.34375,
+            "softness": 0.940625
+          },
+          "2|1": {
+            "fills_hollows": 0.6875,
+            "grain": 4.83203125,
+            "irregularity": 0.671875,
+            "reach": -0.421875,
+            "softness": 0.45078125
+          },
+          "2|3": {
+            "fills_hollows": 0.828125,
+            "grain": 5.28125,
+            "irregularity": 0.234375,
+            "reach": -0.265625,
+            "softness": 0.821875
+          },
+          "3|0": {
+            "fills_hollows": 0.84375,
+            "grain": 2.046875,
+            "irregularity": 0.46875,
+            "reach": 0.15625,
+            "softness": 0.36171875
+          },
+          "3|1": {
+            "fills_hollows": 0.0,
+            "grain": 3.57421875,
+            "irregularity": 0.203125,
+            "reach": 0.109375,
+            "softness": 0.83671875
+          },
+          "3|2": {
+            "fills_hollows": 0.4375,
+            "grain": 2.2265625,
+            "irregularity": 0.9375,
+            "reach": 0.453125,
+            "softness": 0.36171875
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 23"
+    },
+    {
+      "expected": {
+        "alpha": 0.550322010188051,
+        "other": 3,
+        "owner": 0,
+        "s": 0.488,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          0,
+          -1,
+          -1,
+          0,
+          -1,
+          -1,
+          -1,
+          0
+        ],
+        "f": [
+          0.046875,
+          0.109375,
+          0.5
+        ],
+        "h": {
+          "0": 0.65625,
+          "1": 0.765625,
+          "2": 0.421875,
+          "3": 0.546875
+        },
+        "n": 0.65625,
+        "ranks": [
+          0,
+          1,
+          2,
+          -1,
+          3,
+          0,
+          1,
+          -1
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.546875,
+            "grain": 2.40625,
+            "irregularity": 0.375,
+            "reach": -0.046875,
+            "softness": 0.0796875
+          },
+          "0|3": {
+            "fills_hollows": 0.78125,
+            "grain": 2.9453125,
+            "irregularity": 0.40625,
+            "reach": -0.0625,
+            "softness": 0.703125
+          },
+          "1|0": {
+            "fills_hollows": 0.078125,
+            "grain": 4.921875,
+            "irregularity": 0.046875,
+            "reach": -0.34375,
+            "softness": 0.59921875
+          },
+          "2|3": {
+            "fills_hollows": 0.53125,
+            "grain": 5.91015625,
+            "irregularity": 0.4375,
+            "reach": 0.109375,
+            "softness": 0.12421875
+          },
+          "3|0": {
+            "fills_hollows": 0.421875,
+            "grain": 3.84375,
+            "irregularity": 0.9375,
+            "reach": 0.0,
+            "softness": 0.40625
+          },
+          "3|2": {
+            "fills_hollows": 0.9375,
+            "grain": 0.25,
+            "irregularity": 0.71875,
+            "reach": 0.0625,
+            "softness": 0.74765625
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 24"
+    },
+    {
+      "expected": {
+        "alpha": 0.999914559644823,
+        "other": 1,
+        "owner": 0,
+        "s": 0.74596533173939,
+        "vote": 0.148773193359375
+      },
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.8125,
+          0.390625,
+          0.53125
+        ],
+        "h": {
+          "0": 0.15625,
+          "1": 0.359375,
+          "2": 0.875,
+          "3": 0.125
+        },
+        "n": 0.453125,
+        "ranks": [
+          2,
+          1,
+          2,
+          3,
+          3,
+          1,
+          3,
+          0
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.484375,
+            "grain": 4.65234375,
+            "irregularity": 0.765625,
+            "reach": -0.4375,
+            "softness": 0.940625
+          },
+          "0|2": {
+            "fills_hollows": 0.1875,
+            "grain": 3.484375,
+            "irregularity": 0.9375,
+            "reach": -0.078125,
+            "softness": 0.65859375
+          },
+          "0|3": {
+            "fills_hollows": 0.140625,
+            "grain": 3.75390625,
+            "irregularity": 0.296875,
+            "reach": 0.3125,
+            "softness": 0.80703125
+          },
+          "1|0": {
+            "fills_hollows": 0.46875,
+            "grain": 5.640625,
+            "irregularity": 0.671875,
+            "reach": -0.203125,
+            "softness": 0.39140625
+          },
+          "1|3": {
+            "fills_hollows": 0.78125,
+            "grain": 4.47265625,
+            "irregularity": 0.515625,
+            "reach": 0.125,
+            "softness": 0.3171875
+          },
+          "2|0": {
+            "fills_hollows": 0.703125,
+            "grain": 3.484375,
+            "irregularity": 0.40625,
+            "reach": -0.40625,
+            "softness": 0.7921875
+          },
+          "2|3": {
+            "fills_hollows": 0.421875,
+            "grain": 5.55078125,
+            "irregularity": 0.171875,
+            "reach": 0.4375,
+            "softness": 0.83671875
+          },
+          "3|0": {
+            "fills_hollows": 0.125,
+            "grain": 0.609375,
+            "irregularity": 0.640625,
+            "reach": -0.453125,
+            "softness": 0.30234375
+          },
+          "3|1": {
+            "fills_hollows": 0.0625,
+            "grain": 5.19140625,
+            "irregularity": 0.828125,
+            "reach": 0.1875,
+            "softness": 0.821875
+          },
+          "3|2": {
+            "fills_hollows": 0.546875,
+            "grain": 2.13671875,
+            "irregularity": 0.234375,
+            "reach": 0.484375,
+            "softness": 0.821875
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 25"
+    },
+    {
+      "expected": {},
+      "input": {
+        "choices": [
+          2,
+          -1,
+          0,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.40625,
+          0.859375,
+          0.75
+        ],
+        "h": {
+          "0": 0.296875,
+          "1": 0.15625,
+          "2": 0.953125,
+          "3": 0.59375
+        },
+        "n": 0.546875,
+        "ranks": [
+          0,
+          1,
+          1,
+          2,
+          1,
+          1,
+          -1,
+          2
+        ],
+        "table": {
+          "0|3": {
+            "fills_hollows": 0.09375,
+            "grain": 2.046875,
+            "irregularity": 0.546875,
+            "reach": -0.328125,
+            "softness": 0.59921875
+          },
+          "1|2": {
+            "fills_hollows": 0.8125,
+            "grain": 0.96875,
+            "irregularity": 0.484375,
+            "reach": -0.171875,
+            "softness": 0.4359375
+          },
+          "1|3": {
+            "fills_hollows": 0.453125,
+            "grain": 2.765625,
+            "irregularity": 0.40625,
+            "reach": 0.109375,
+            "softness": 0.45078125
+          },
+          "2|1": {
+            "fills_hollows": 0.265625,
+            "grain": 1.05859375,
+            "irregularity": 0.828125,
+            "reach": 0.265625,
+            "softness": 0.92578125
+          },
+          "3|0": {
+            "fills_hollows": 0.140625,
+            "grain": 5.91015625,
+            "irregularity": 0.96875,
+            "reach": -0.4375,
+            "softness": 0.06484375
+          },
+          "3|1": {
+            "fills_hollows": 0.8125,
+            "grain": 2.85546875,
+            "irregularity": 0.53125,
+            "reach": -0.25,
+            "softness": 0.228125
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 26"
+    },
+    {
+      "expected": {
+        "alpha": 1.0,
+        "other": 3,
+        "owner": 0,
+        "s": 0.953125,
+        "vote": 0.267601013183594
+      },
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          -1,
+          0,
+          3,
+          -1,
+          -1
+        ],
+        "f": [
+          0.359375,
+          0.046875,
+          0.78125
+        ],
+        "h": {
+          "0": 0.765625,
+          "1": 0.578125,
+          "2": 0.546875,
+          "3": 1.0
+        },
+        "n": 0.015625,
+        "ranks": [
+          2,
+          2,
+          1,
+          -1,
+          -1,
+          3,
+          1,
+          0
+        ],
+        "table": {
+          "0|3": {
+            "fills_hollows": 0.015625,
+            "grain": 2.49609375,
+            "irregularity": 0.78125,
+            "reach": 0.390625,
+            "softness": 0.89609375
+          },
+          "1|3": {
+            "fills_hollows": 0.859375,
+            "grain": 6.0,
+            "irregularity": 0.796875,
+            "reach": -0.375,
+            "softness": 0.89609375
+          },
+          "3|0": {
+            "fills_hollows": 0.296875,
+            "grain": 2.85546875,
+            "irregularity": 0.390625,
+            "reach": -0.171875,
+            "softness": 0.15390625
+          },
+          "3|1": {
+            "fills_hollows": 1.0,
+            "grain": 1.59765625,
+            "irregularity": 0.671875,
+            "reach": 0.0625,
+            "softness": 0.68828125
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 27"
+    },
+    {
+      "expected": {},
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.6875,
+          0.5,
+          0.390625
+        ],
+        "h": {
+          "0": 0.84375,
+          "1": 0.015625,
+          "2": 0.5625,
+          "3": 0.359375
+        },
+        "n": 0.109375,
+        "ranks": [
+          2,
+          3,
+          3,
+          3,
+          -1,
+          0,
+          3,
+          1
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.90625,
+            "grain": 5.4609375,
+            "irregularity": 0.140625,
+            "reach": -0.484375,
+            "softness": 0.703125
+          },
+          "0|2": {
+            "fills_hollows": 1.0,
+            "grain": 2.67578125,
+            "irregularity": 0.40625,
+            "reach": 0.28125,
+            "softness": 0.24296875
+          },
+          "1|0": {
+            "fills_hollows": 0.484375,
+            "grain": 3.6640625,
+            "irregularity": 0.171875,
+            "reach": 0.421875,
+            "softness": 0.4953125
+          },
+          "1|2": {
+            "fills_hollows": 0.8125,
+            "grain": 0.96875,
+            "irregularity": 0.015625,
+            "reach": 0.328125,
+            "softness": 0.30234375
+          },
+          "1|3": {
+            "fills_hollows": 0.5625,
+            "grain": 5.1015625,
+            "irregularity": 0.171875,
+            "reach": 0.421875,
+            "softness": 1.0
+          },
+          "2|0": {
+            "fills_hollows": 0.328125,
+            "grain": 0.609375,
+            "irregularity": 0.28125,
+            "reach": 0.375,
+            "softness": 0.15390625
+          },
+          "2|1": {
+            "fills_hollows": 0.015625,
+            "grain": 6.0,
+            "irregularity": 0.421875,
+            "reach": -0.09375,
+            "softness": 0.1390625
+          },
+          "2|3": {
+            "fills_hollows": 0.671875,
+            "grain": 4.3828125,
+            "irregularity": 0.0625,
+            "reach": -0.1875,
+            "softness": 0.821875
+          },
+          "3|1": {
+            "fills_hollows": 0.140625,
+            "grain": 0.33984375,
+            "irregularity": 0.9375,
+            "reach": 0.34375,
+            "softness": 0.465625
+          },
+          "3|2": {
+            "fills_hollows": 0.875,
+            "grain": 2.5859375,
+            "irregularity": 0.859375,
+            "reach": -0.265625,
+            "softness": 0.703125
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 28"
+    },
+    {
+      "expected": {
+        "alpha": 1.0,
+        "other": 3,
+        "owner": 0,
+        "s": 0.590141277641278,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.375,
+          0.953125,
+          0.46875
+        ],
+        "h": {
+          "0": 0.9375,
+          "1": 0.640625,
+          "2": 0.453125,
+          "3": 0.421875
+        },
+        "n": 0.078125,
+        "ranks": [
+          -1,
+          0,
+          0,
+          3,
+          -1,
+          1,
+          3,
+          2
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.8125,
+            "grain": 3.57421875,
+            "irregularity": 0.359375,
+            "reach": 0.46875,
+            "softness": 0.24296875
+          },
+          "0|3": {
+            "fills_hollows": 0.890625,
+            "grain": 5.640625,
+            "irregularity": 0.015625,
+            "reach": -0.4375,
+            "softness": 0.30234375
+          },
+          "1|0": {
+            "fills_hollows": 0.640625,
+            "grain": 5.4609375,
+            "irregularity": 0.453125,
+            "reach": 0.453125,
+            "softness": 1.0
+          },
+          "1|3": {
+            "fills_hollows": 0.515625,
+            "grain": 0.87890625,
+            "irregularity": 0.609375,
+            "reach": 0.125,
+            "softness": 0.09453125
+          },
+          "3|0": {
+            "fills_hollows": 0.40625,
+            "grain": 3.39453125,
+            "irregularity": 0.640625,
+            "reach": -0.484375,
+            "softness": 0.83671875
+          },
+          "3|1": {
+            "fills_hollows": 0.421875,
+            "grain": 1.6875,
+            "irregularity": 0.84375,
+            "reach": 0.03125,
+            "softness": 0.940625
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 29"
+    },
+    {
+      "expected": {
+        "alpha": 0.0,
+        "other": 2,
+        "owner": 0,
+        "s": 0.186225165562914,
+        "vote": 0.278091430664063
+      },
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          3,
+          0,
+          2,
+          -1,
+          -1
+        ],
+        "f": [
+          0.9375,
+          0.578125,
+          0.703125
+        ],
+        "h": {
+          "0": 0.46875,
+          "1": 0.296875,
+          "2": 0.3125,
+          "3": 0.3125
+        },
+        "n": 0.625,
+        "ranks": [
+          3,
+          1,
+          -1,
+          2,
+          0,
+          0,
+          0,
+          0
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.5,
+            "grain": 3.03515625,
+            "irregularity": 0.984375,
+            "reach": 0.09375,
+            "softness": 0.77734375
+          },
+          "0|2": {
+            "fills_hollows": 0.15625,
+            "grain": 4.203125,
+            "irregularity": 0.546875,
+            "reach": -0.34375,
+            "softness": 0.3171875
+          },
+          "0|3": {
+            "fills_hollows": 0.15625,
+            "grain": 1.6875,
+            "irregularity": 0.78125,
+            "reach": -0.09375,
+            "softness": 0.2578125
+          },
+          "1|0": {
+            "fills_hollows": 0.6875,
+            "grain": 3.125,
+            "irregularity": 0.09375,
+            "reach": -0.359375,
+            "softness": 0.59921875
+          },
+          "1|2": {
+            "fills_hollows": 0.109375,
+            "grain": 5.01171875,
+            "irregularity": 0.5,
+            "reach": 0.265625,
+            "softness": 0.465625
+          },
+          "1|3": {
+            "fills_hollows": 0.875,
+            "grain": 5.8203125,
+            "irregularity": 0.3125,
+            "reach": 0.015625,
+            "softness": 0.80703125
+          },
+          "2|0": {
+            "fills_hollows": 0.265625,
+            "grain": 1.41796875,
+            "irregularity": 0.703125,
+            "reach": -0.03125,
+            "softness": 0.06484375
+          },
+          "2|1": {
+            "fills_hollows": 0.125,
+            "grain": 3.93359375,
+            "irregularity": 0.28125,
+            "reach": -0.328125,
+            "softness": 0.39140625
+          },
+          "3|0": {
+            "fills_hollows": 0.765625,
+            "grain": 0.33984375,
+            "irregularity": 0.53125,
+            "reach": -0.171875,
+            "softness": 0.109375
+          },
+          "3|1": {
+            "fills_hollows": 0.765625,
+            "grain": 2.49609375,
+            "irregularity": 0.28125,
+            "reach": -0.4375,
+            "softness": 0.42109375
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 30"
+    },
+    {
+      "expected": {},
+      "input": {
+        "choices": [
+          0,
+          3,
+          -1,
+          2,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.359375,
+          0.453125,
+          0.765625
+        ],
+        "h": {
+          "0": 0.734375,
+          "1": 0.203125,
+          "2": 0.84375,
+          "3": 0.140625
+        },
+        "n": 0.640625,
+        "ranks": [
+          3,
+          2,
+          3,
+          0,
+          0,
+          3,
+          1,
+          0
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.40625,
+            "grain": 0.25,
+            "irregularity": 0.984375,
+            "reach": 0.46875,
+            "softness": 0.89609375
+          },
+          "0|2": {
+            "fills_hollows": 0.90625,
+            "grain": 3.75390625,
+            "irregularity": 0.96875,
+            "reach": -0.140625,
+            "softness": 0.77734375
+          },
+          "1|0": {
+            "fills_hollows": 0.140625,
+            "grain": 0.4296875,
+            "irregularity": 0.375,
+            "reach": 0.265625,
+            "softness": 0.940625
+          },
+          "1|2": {
+            "fills_hollows": 0.453125,
+            "grain": 4.7421875,
+            "irregularity": 0.015625,
+            "reach": 0.15625,
+            "softness": 0.1984375
+          },
+          "1|3": {
+            "fills_hollows": 0.671875,
+            "grain": 0.609375,
+            "irregularity": 0.890625,
+            "reach": -0.1875,
+            "softness": 0.56953125
+          },
+          "2|0": {
+            "fills_hollows": 0.296875,
+            "grain": 4.11328125,
+            "irregularity": 0.234375,
+            "reach": -0.09375,
+            "softness": 0.1984375
+          },
+          "2|1": {
+            "fills_hollows": 0.453125,
+            "grain": 4.83203125,
+            "irregularity": 0.953125,
+            "reach": -0.234375,
+            "softness": 0.9109375
+          },
+          "2|3": {
+            "fills_hollows": 0.34375,
+            "grain": 4.29296875,
+            "irregularity": 0.53125,
+            "reach": -0.046875,
+            "softness": 0.3765625
+          },
+          "3|1": {
+            "fills_hollows": 0.4375,
+            "grain": 4.29296875,
+            "irregularity": 0.4375,
+            "reach": -0.1875,
+            "softness": 0.703125
+          },
+          "3|2": {
+            "fills_hollows": 0.0625,
+            "grain": 4.3828125,
+            "irregularity": 0.1875,
+            "reach": -0.390625,
+            "softness": 0.65859375
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 31"
+    },
+    {
+      "expected": {},
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          -1,
+          2,
+          -1,
+          -1,
+          3
+        ],
+        "f": [
+          0.1875,
+          0.96875,
+          0.28125
+        ],
+        "h": {
+          "0": 0.609375,
+          "1": 0.796875,
+          "2": 0.984375,
+          "3": 0.359375
+        },
+        "n": 0.0625,
+        "ranks": [
+          1,
+          1,
+          2,
+          2,
+          1,
+          2,
+          2,
+          3
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.671875,
+            "grain": 1.23828125,
+            "irregularity": 0.171875,
+            "reach": 0.203125,
+            "softness": 0.74765625
+          },
+          "0|2": {
+            "fills_hollows": 0.953125,
+            "grain": 3.39453125,
+            "irregularity": 0.8125,
+            "reach": -0.359375,
+            "softness": 0.584375
+          },
+          "0|3": {
+            "fills_hollows": 0.78125,
+            "grain": 2.765625,
+            "irregularity": 0.453125,
+            "reach": 0.234375,
+            "softness": 0.33203125
+          },
+          "1|0": {
+            "fills_hollows": 0.71875,
+            "grain": 5.01171875,
+            "irregularity": 0.625,
+            "reach": 0.09375,
+            "softness": 0.4953125
+          },
+          "1|3": {
+            "fills_hollows": 0.828125,
+            "grain": 3.125,
+            "irregularity": 0.9375,
+            "reach": -0.265625,
+            "softness": 0.45078125
+          },
+          "2|0": {
+            "fills_hollows": 0.21875,
+            "grain": 1.95703125,
+            "irregularity": 0.109375,
+            "reach": 0.109375,
+            "softness": 0.228125
+          },
+          "2|3": {
+            "fills_hollows": 0.671875,
+            "grain": 2.49609375,
+            "irregularity": 0.515625,
+            "reach": -0.328125,
+            "softness": 0.68828125
+          },
+          "3|0": {
+            "fills_hollows": 0.21875,
+            "grain": 3.3046875,
+            "irregularity": 1.0,
+            "reach": 0.078125,
+            "softness": 0.3171875
+          },
+          "3|1": {
+            "fills_hollows": 0.609375,
+            "grain": 2.765625,
+            "irregularity": 0.34375,
+            "reach": -0.5,
+            "softness": 0.8515625
+          },
+          "3|2": {
+            "fills_hollows": 0.5625,
+            "grain": 4.921875,
+            "irregularity": 0.625,
+            "reach": 0.109375,
+            "softness": 0.21328125
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 32"
+    },
+    {
+      "expected": {
+        "alpha": 1.0,
+        "other": 3,
+        "owner": 0,
+        "s": 0.966460219151977,
+        "vote": 0.0615234375
+      },
+      "input": {
+        "choices": [
+          1,
+          -1,
+          -1,
+          -1,
+          -1,
+          3,
+          2,
+          3
+        ],
+        "f": [
+          0.09375,
+          0.9375,
+          0.65625
+        ],
+        "h": {
+          "0": 0.015625,
+          "1": 0.78125,
+          "2": 0.0625,
+          "3": 0.46875
+        },
+        "n": 0.609375,
+        "ranks": [
+          0,
+          0,
+          2,
+          1,
+          -1,
+          3,
+          3,
+          3
+        ],
+        "table": {
+          "0|2": {
+            "fills_hollows": 0.921875,
+            "grain": 3.21484375,
+            "irregularity": 0.90625,
+            "reach": 0.09375,
+            "softness": 0.346875
+          },
+          "0|3": {
+            "fills_hollows": 0.46875,
+            "grain": 2.31640625,
+            "irregularity": 0.703125,
+            "reach": 0.140625,
+            "softness": 0.33203125
+          },
+          "1|2": {
+            "fills_hollows": 0.953125,
+            "grain": 4.0234375,
+            "irregularity": 0.828125,
+            "reach": -0.25,
+            "softness": 0.4953125
+          },
+          "1|3": {
+            "fills_hollows": 0.25,
+            "grain": 5.91015625,
+            "irregularity": 0.953125,
+            "reach": -0.375,
+            "softness": 0.56953125
+          },
+          "2|0": {
+            "fills_hollows": 0.921875,
+            "grain": 4.7421875,
+            "irregularity": 0.859375,
+            "reach": 0.4375,
+            "softness": 0.4953125
+          },
+          "2|1": {
+            "fills_hollows": 0.359375,
+            "grain": 0.87890625,
+            "irregularity": 0.84375,
+            "reach": -0.203125,
+            "softness": 0.42109375
+          },
+          "2|3": {
+            "fills_hollows": 0.125,
+            "grain": 0.4296875,
+            "irregularity": 0.015625,
+            "reach": -0.015625,
+            "softness": 0.39140625
+          },
+          "3|0": {
+            "fills_hollows": 0.125,
+            "grain": 3.125,
+            "irregularity": 0.40625,
+            "reach": -0.359375,
+            "softness": 0.48046875
+          },
+          "3|1": {
+            "fills_hollows": 0.3125,
+            "grain": 5.01171875,
+            "irregularity": 0.21875,
+            "reach": 0.09375,
+            "softness": 0.16875
+          },
+          "3|2": {
+            "fills_hollows": 0.0625,
+            "grain": 1.5078125,
+            "irregularity": 0.53125,
+            "reach": -0.25,
+            "softness": 0.05
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 33"
+    },
+    {
+      "expected": {},
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.109375,
+          0.234375,
+          0.15625
+        ],
+        "h": {
+          "0": 0.3125,
+          "1": 0.953125,
+          "2": 0.140625,
+          "3": 0.5
+        },
+        "n": 0.953125,
+        "ranks": [
+          -1,
+          3,
+          0,
+          3,
+          1,
+          0,
+          1,
+          2
+        ],
+        "table": {
+          "0|2": {
+            "fills_hollows": 0.015625,
+            "grain": 6.0,
+            "irregularity": 0.03125,
+            "reach": -0.265625,
+            "softness": 0.6140625
+          },
+          "1|3": {
+            "fills_hollows": 0.921875,
+            "grain": 3.125,
+            "irregularity": 0.109375,
+            "reach": 0.296875,
+            "softness": 0.59921875
+          },
+          "2|0": {
+            "fills_hollows": 0.375,
+            "grain": 5.73046875,
+            "irregularity": 0.546875,
+            "reach": -0.203125,
+            "softness": 0.89609375
+          },
+          "2|3": {
+            "fills_hollows": 0.828125,
+            "grain": 0.7890625,
+            "irregularity": 0.453125,
+            "reach": 0.375,
+            "softness": 0.3765625
+          },
+          "3|1": {
+            "fills_hollows": 0.21875,
+            "grain": 2.85546875,
+            "irregularity": 0.203125,
+            "reach": -0.25,
+            "softness": 0.09453125
+          },
+          "3|2": {
+            "fills_hollows": 0.578125,
+            "grain": 3.03515625,
+            "irregularity": 0.25,
+            "reach": -0.203125,
+            "softness": 0.9703125
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 34"
+    },
+    {
+      "expected": {
+        "alpha": 1.0,
+        "other": 3,
+        "owner": 0,
+        "s": 0.955834763281241,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.078125,
+          0.796875,
+          0.84375
+        ],
+        "h": {
+          "0": 0.796875,
+          "1": 0.265625,
+          "2": 0.8125,
+          "3": 0.65625
+        },
+        "n": 0.28125,
+        "ranks": [
+          0,
+          1,
+          1,
+          2,
+          2,
+          3,
+          3,
+          2
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.15625,
+            "grain": 4.7421875,
+            "irregularity": 0.953125,
+            "reach": -0.265625,
+            "softness": 0.21328125
+          },
+          "0|2": {
+            "fills_hollows": 0.609375,
+            "grain": 2.9453125,
+            "irregularity": 0.90625,
+            "reach": -0.3125,
+            "softness": 0.98515625
+          },
+          "0|3": {
+            "fills_hollows": 0.53125,
+            "grain": 3.484375,
+            "irregularity": 0.546875,
+            "reach": 0.40625,
+            "softness": 0.465625
+          },
+          "1|0": {
+            "fills_hollows": 0.171875,
+            "grain": 3.93359375,
+            "irregularity": 0.65625,
+            "reach": -0.5,
+            "softness": 0.40625
+          },
+          "1|2": {
+            "fills_hollows": 0.15625,
+            "grain": 0.96875,
+            "irregularity": 0.71875,
+            "reach": 0.28125,
+            "softness": 0.2875
+          },
+          "1|3": {
+            "fills_hollows": 0.515625,
+            "grain": 5.1015625,
+            "irregularity": 0.21875,
+            "reach": 0.09375,
+            "softness": 0.703125
+          },
+          "2|0": {
+            "fills_hollows": 0.046875,
+            "grain": 5.640625,
+            "irregularity": 0.046875,
+            "reach": -0.3125,
+            "softness": 0.346875
+          },
+          "2|1": {
+            "fills_hollows": 0.96875,
+            "grain": 3.6640625,
+            "irregularity": 0.03125,
+            "reach": -0.328125,
+            "softness": 0.821875
+          },
+          "2|3": {
+            "fills_hollows": 0.59375,
+            "grain": 0.33984375,
+            "irregularity": 0.84375,
+            "reach": 0.078125,
+            "softness": 0.18359375
+          },
+          "3|0": {
+            "fills_hollows": 0.40625,
+            "grain": 2.67578125,
+            "irregularity": 0.328125,
+            "reach": -0.34375,
+            "softness": 0.4359375
+          },
+          "3|1": {
+            "fills_hollows": 0.875,
+            "grain": 5.73046875,
+            "irregularity": 0.109375,
+            "reach": -0.25,
+            "softness": 0.62890625
+          },
+          "3|2": {
+            "fills_hollows": 0.671875,
+            "grain": 0.4296875,
+            "irregularity": 0.59375,
+            "reach": 0.28125,
+            "softness": 0.4953125
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 35"
+    },
+    {
+      "expected": {
+        "alpha": 0.633522520851047,
+        "other": 3,
+        "owner": 0,
+        "s": 0.337420191794063,
+        "vote": 0.0514984130859375
+      },
+      "input": {
+        "choices": [
+          -1,
+          3,
+          -1,
+          1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.3125,
+          0.609375,
+          0.578125
+        ],
+        "h": {
+          "0": 0.375,
+          "1": 0.640625,
+          "2": 0.03125,
+          "3": 1.0
+        },
+        "n": 0.171875,
+        "ranks": [
+          -1,
+          3,
+          -1,
+          3,
+          0,
+          3,
+          0,
+          2
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.09375,
+            "grain": 3.125,
+            "irregularity": 0.734375,
+            "reach": -0.421875,
+            "softness": 0.42109375
+          },
+          "0|2": {
+            "fills_hollows": 0.765625,
+            "grain": 1.328125,
+            "irregularity": 0.296875,
+            "reach": -0.171875,
+            "softness": 0.74765625
+          },
+          "0|3": {
+            "fills_hollows": 0.5,
+            "grain": 0.96875,
+            "irregularity": 0.875,
+            "reach": 0.28125,
+            "softness": 0.62890625
+          },
+          "1|0": {
+            "fills_hollows": 0.4375,
+            "grain": 1.328125,
+            "irregularity": 0.8125,
+            "reach": -0.0625,
+            "softness": 0.05
+          },
+          "1|3": {
+            "fills_hollows": 0.421875,
+            "grain": 2.9453125,
+            "irregularity": 0.609375,
+            "reach": 0.28125,
+            "softness": 0.33203125
+          },
+          "2|0": {
+            "fills_hollows": 0.375,
+            "grain": 5.19140625,
+            "irregularity": 0.578125,
+            "reach": -0.171875,
+            "softness": 0.21328125
+          },
+          "3|0": {
+            "fills_hollows": 0.140625,
+            "grain": 0.69921875,
+            "irregularity": 0.359375,
+            "reach": 0.125,
+            "softness": 0.7328125
+          },
+          "3|1": {
+            "fills_hollows": 0.1875,
+            "grain": 4.29296875,
+            "irregularity": 0.640625,
+            "reach": -0.140625,
+            "softness": 0.51015625
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 36"
+    },
+    {
+      "expected": {
+        "alpha": 0.973043883274005,
+        "other": 2,
+        "owner": 0,
+        "s": 0.856146259321626,
+        "vote": 0.036529541015625
+      },
+      "input": {
+        "choices": [
+          -1,
+          2,
+          3,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.875,
+          0.109375,
+          0.953125
+        ],
+        "h": {
+          "0": 0.96875,
+          "1": 0.046875,
+          "2": 0.828125,
+          "3": 0.46875
+        },
+        "n": 0.171875,
+        "ranks": [
+          -1,
+          0,
+          3,
+          2,
+          -1,
+          2,
+          2,
+          0
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.28125,
+            "grain": 1.8671875,
+            "irregularity": 0.359375,
+            "reach": -0.140625,
+            "softness": 0.3171875
+          },
+          "0|2": {
+            "fills_hollows": 0.703125,
+            "grain": 6.0,
+            "irregularity": 0.671875,
+            "reach": 0.234375,
+            "softness": 0.12421875
+          },
+          "0|3": {
+            "fills_hollows": 0.46875,
+            "grain": 4.11328125,
+            "irregularity": 0.953125,
+            "reach": 0.09375,
+            "softness": 0.95546875
+          },
+          "1|0": {
+            "fills_hollows": 0.640625,
+            "grain": 5.37109375,
+            "irregularity": 0.40625,
+            "reach": 0.359375,
+            "softness": 0.16875
+          },
+          "1|2": {
+            "fills_hollows": 0.5625,
+            "grain": 1.05859375,
+            "irregularity": 0.28125,
+            "reach": -0.421875,
+            "softness": 0.2578125
+          },
+          "1|3": {
+            "fills_hollows": 0.6875,
+            "grain": 1.5078125,
+            "irregularity": 0.6875,
+            "reach": -0.328125,
+            "softness": 0.39140625
+          },
+          "2|0": {
+            "fills_hollows": 0.421875,
+            "grain": 4.47265625,
+            "irregularity": 0.734375,
+            "reach": -0.484375,
+            "softness": 0.59921875
+          },
+          "2|1": {
+            "fills_hollows": 0.609375,
+            "grain": 5.8203125,
+            "irregularity": 0.609375,
+            "reach": -0.390625,
+            "softness": 0.48046875
+          },
+          "2|3": {
+            "fills_hollows": 0.703125,
+            "grain": 4.11328125,
+            "irregularity": 1.0,
+            "reach": -0.3125,
+            "softness": 0.703125
+          },
+          "3|0": {
+            "fills_hollows": 0.265625,
+            "grain": 3.39453125,
+            "irregularity": 0.75,
+            "reach": 0.265625,
+            "softness": 0.9703125
+          },
+          "3|1": {
+            "fills_hollows": 0.140625,
+            "grain": 2.2265625,
+            "irregularity": 0.421875,
+            "reach": -0.375,
+            "softness": 0.40625
+          },
+          "3|2": {
+            "fills_hollows": 0.390625,
+            "grain": 1.95703125,
+            "irregularity": 0.5625,
+            "reach": 0.234375,
+            "softness": 0.703125
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 37"
+    },
+    {
+      "expected": {
+        "alpha": 0.179157481953401,
+        "other": 1,
+        "owner": 0,
+        "s": 0.560165975103734,
+        "vote": 0.09765625
+      },
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          1,
+          2,
+          -1,
+          -1,
+          3
+        ],
+        "f": [
+          0.15625,
+          1.0,
+          0.375
+        ],
+        "h": {
+          "0": 0.359375,
+          "1": 0.09375,
+          "2": 0.8125,
+          "3": 0.203125
+        },
+        "n": 0.796875,
+        "ranks": [
+          0,
+          0,
+          1,
+          0,
+          2,
+          0,
+          0,
+          -1
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.125,
+            "grain": 4.29296875,
+            "irregularity": 0.625,
+            "reach": 0.0,
+            "softness": 0.80703125
+          },
+          "0|2": {
+            "fills_hollows": 0.296875,
+            "grain": 5.1015625,
+            "irregularity": 0.140625,
+            "reach": 0.171875,
+            "softness": 0.95546875
+          },
+          "0|3": {
+            "fills_hollows": 0.96875,
+            "grain": 3.03515625,
+            "irregularity": 0.53125,
+            "reach": -0.234375,
+            "softness": 0.1984375
+          },
+          "1|0": {
+            "fills_hollows": 0.09375,
+            "grain": 0.51953125,
+            "irregularity": 0.15625,
+            "reach": -0.453125,
+            "softness": 0.21328125
+          },
+          "1|2": {
+            "fills_hollows": 0.109375,
+            "grain": 3.39453125,
+            "irregularity": 0.65625,
+            "reach": -0.125,
+            "softness": 0.2578125
+          },
+          "2|0": {
+            "fills_hollows": 0.375,
+            "grain": 3.484375,
+            "irregularity": 0.984375,
+            "reach": -0.140625,
+            "softness": 0.92578125
+          },
+          "2|1": {
+            "fills_hollows": 0.5625,
+            "grain": 4.29296875,
+            "irregularity": 0.734375,
+            "reach": -0.5,
+            "softness": 0.1984375
+          },
+          "2|3": {
+            "fills_hollows": 0.0625,
+            "grain": 4.0234375,
+            "irregularity": 0.625,
+            "reach": -0.203125,
+            "softness": 0.40625
+          },
+          "3|0": {
+            "fills_hollows": 0.15625,
+            "grain": 1.95703125,
+            "irregularity": 0.9375,
+            "reach": 0.140625,
+            "softness": 0.109375
+          },
+          "3|2": {
+            "fills_hollows": 0.984375,
+            "grain": 0.69921875,
+            "irregularity": 0.203125,
+            "reach": -0.40625,
+            "softness": 0.109375
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 38"
+    },
+    {
+      "expected": {
+        "alpha": 0.997316155650755,
+        "other": 1,
+        "owner": 0,
+        "s": 0.958703071672355,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          -1,
+          0,
+          -1,
+          -1,
+          -1,
+          2,
+          -1,
+          -1
+        ],
+        "f": [
+          0.609375,
+          0.171875,
+          0.828125
+        ],
+        "h": {
+          "0": 0.890625,
+          "1": 0.015625,
+          "2": 0.265625,
+          "3": 0.046875
+        },
+        "n": 0.78125,
+        "ranks": [
+          -1,
+          2,
+          0,
+          -1,
+          1,
+          -1,
+          2,
+          2
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.234375,
+            "grain": 4.203125,
+            "irregularity": 0.46875,
+            "reach": 0.125,
+            "softness": 0.8515625
+          },
+          "0|2": {
+            "fills_hollows": 0.484375,
+            "grain": 0.87890625,
+            "irregularity": 0.15625,
+            "reach": 0.078125,
+            "softness": 0.89609375
+          },
+          "1|0": {
+            "fills_hollows": 0.234375,
+            "grain": 0.4296875,
+            "irregularity": 0.453125,
+            "reach": 0.0,
+            "softness": 0.45078125
+          },
+          "1|2": {
+            "fills_hollows": 0.515625,
+            "grain": 3.6640625,
+            "irregularity": 0.96875,
+            "reach": -0.21875,
+            "softness": 0.53984375
+          },
+          "1|3": {
+            "fills_hollows": 0.53125,
+            "grain": 5.91015625,
+            "irregularity": 0.421875,
+            "reach": -0.203125,
+            "softness": 0.0796875
+          },
+          "2|0": {
+            "fills_hollows": 0.234375,
+            "grain": 3.3046875,
+            "irregularity": 0.75,
+            "reach": 0.234375,
+            "softness": 0.40625
+          },
+          "2|1": {
+            "fills_hollows": 0.71875,
+            "grain": 3.39453125,
+            "irregularity": 0.84375,
+            "reach": 0.46875,
+            "softness": 0.7921875
+          },
+          "2|3": {
+            "fills_hollows": 0.8125,
+            "grain": 5.8203125,
+            "irregularity": 0.296875,
+            "reach": 0.5,
+            "softness": 0.48046875
+          },
+          "3|1": {
+            "fills_hollows": 0.5625,
+            "grain": 2.5859375,
+            "irregularity": 0.625,
+            "reach": -0.234375,
+            "softness": 0.0796875
+          },
+          "3|2": {
+            "fills_hollows": 0.34375,
+            "grain": 2.49609375,
+            "irregularity": 0.296875,
+            "reach": 0.1875,
+            "softness": 0.86640625
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 39"
+    },
+    {
+      "expected": {
+        "alpha": 0.913819480590176,
+        "other": 2,
+        "owner": 0,
+        "s": 0.311827956989247,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          0
+        ],
+        "f": [
+          0.953125,
+          0.09375,
+          0.71875
+        ],
+        "h": {
+          "0": 0.890625,
+          "1": 0.546875,
+          "2": 0.859375,
+          "3": 0.921875
+        },
+        "n": 0.109375,
+        "ranks": [
+          -1,
+          -1,
+          3,
+          1,
+          2,
+          -1,
+          0,
+          0
+        ],
+        "table": {
+          "0|2": {
+            "fills_hollows": 0.0,
+            "grain": 4.11328125,
+            "irregularity": 0.296875,
+            "reach": -0.453125,
+            "softness": 0.940625
+          },
+          "0|3": {
+            "fills_hollows": 0.671875,
+            "grain": 3.39453125,
+            "irregularity": 0.8125,
+            "reach": -0.28125,
+            "softness": 0.9109375
+          },
+          "1|2": {
+            "fills_hollows": 0.046875,
+            "grain": 3.75390625,
+            "irregularity": 0.90625,
+            "reach": -0.078125,
+            "softness": 0.59921875
+          },
+          "1|3": {
+            "fills_hollows": 0.3125,
+            "grain": 4.921875,
+            "irregularity": 0.453125,
+            "reach": 0.171875,
+            "softness": 0.15390625
+          },
+          "2|0": {
+            "fills_hollows": 0.140625,
+            "grain": 5.01171875,
+            "irregularity": 0.59375,
+            "reach": -0.109375,
+            "softness": 0.71796875
+          },
+          "2|1": {
+            "fills_hollows": 0.125,
+            "grain": 4.3828125,
+            "irregularity": 0.875,
+            "reach": 0.046875,
+            "softness": 0.98515625
+          },
+          "3|0": {
+            "fills_hollows": 0.578125,
+            "grain": 0.609375,
+            "irregularity": 0.0,
+            "reach": -0.25,
+            "softness": 0.56953125
+          },
+          "3|1": {
+            "fills_hollows": 0.75,
+            "grain": 0.96875,
+            "irregularity": 0.796875,
+            "reach": 0.140625,
+            "softness": 0.7328125
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 40"
+    },
+    {
+      "expected": {
+        "alpha": 1.0,
+        "other": 2,
+        "owner": 0,
+        "s": 0.980347865371583,
+        "vote": 0.0035400390625
+      },
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          3,
+          -1,
+          -1,
+          3,
+          -1,
+          2
+        ],
+        "f": [
+          0.453125,
+          0.03125,
+          0.25
+        ],
+        "h": {
+          "0": 0.5,
+          "1": 0.859375,
+          "2": 0.875,
+          "3": 0.734375
+        },
+        "n": 0.5,
+        "ranks": [
+          2,
+          3,
+          -1,
+          0,
+          2,
+          3,
+          3,
+          3
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.484375,
+            "grain": 1.8671875,
+            "irregularity": 0.046875,
+            "reach": -0.328125,
+            "softness": 0.06484375
+          },
+          "0|2": {
+            "fills_hollows": 0.625,
+            "grain": 3.484375,
+            "irregularity": 0.546875,
+            "reach": -0.046875,
+            "softness": 0.71796875
+          },
+          "1|0": {
+            "fills_hollows": 0.640625,
+            "grain": 0.33984375,
+            "irregularity": 1.0,
+            "reach": -0.34375,
+            "softness": 0.7625
+          },
+          "1|2": {
+            "fills_hollows": 0.0625,
+            "grain": 1.41796875,
+            "irregularity": 0.46875,
+            "reach": -0.078125,
+            "softness": 0.7921875
+          },
+          "2|0": {
+            "fills_hollows": 0.4375,
+            "grain": 4.921875,
+            "irregularity": 0.546875,
+            "reach": -0.015625,
+            "softness": 0.06484375
+          },
+          "2|1": {
+            "fills_hollows": 0.140625,
+            "grain": 4.921875,
+            "irregularity": 0.0625,
+            "reach": -0.1875,
+            "softness": 0.83671875
+          },
+          "2|3": {
+            "fills_hollows": 0.59375,
+            "grain": 1.6875,
+            "irregularity": 0.09375,
+            "reach": 0.390625,
+            "softness": 0.98515625
+          },
+          "3|2": {
+            "fills_hollows": 0.03125,
+            "grain": 0.96875,
+            "irregularity": 0.96875,
+            "reach": 0.109375,
+            "softness": 0.703125
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 41"
+    },
+    {
+      "expected": {
+        "alpha": 0.265508006721471,
+        "other": 3,
+        "owner": 0,
+        "s": 0.71875,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          0,
+          -1,
+          -1,
+          0,
+          1
+        ],
+        "f": [
+          0.71875,
+          0.21875,
+          0.734375
+        ],
+        "h": {
+          "0": 0.578125,
+          "1": 0.078125,
+          "2": 0.515625,
+          "3": 0.5625
+        },
+        "n": 0.390625,
+        "ranks": [
+          -1,
+          2,
+          2,
+          2,
+          0,
+          3,
+          0,
+          3
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.25,
+            "grain": 4.5625,
+            "irregularity": 0.515625,
+            "reach": 0.296875,
+            "softness": 0.8515625
+          },
+          "0|2": {
+            "fills_hollows": 0.203125,
+            "grain": 2.49609375,
+            "irregularity": 0.03125,
+            "reach": 0.5,
+            "softness": 0.228125
+          },
+          "0|3": {
+            "fills_hollows": 0.796875,
+            "grain": 1.6875,
+            "irregularity": 0.375,
+            "reach": 0.484375,
+            "softness": 0.6140625
+          },
+          "1|0": {
+            "fills_hollows": 0.34375,
+            "grain": 2.046875,
+            "irregularity": 0.984375,
+            "reach": -0.3125,
+            "softness": 0.48046875
+          },
+          "1|2": {
+            "fills_hollows": 0.328125,
+            "grain": 0.69921875,
+            "irregularity": 0.609375,
+            "reach": -0.453125,
+            "softness": 0.39140625
+          },
+          "1|3": {
+            "fills_hollows": 0.59375,
+            "grain": 5.37109375,
+            "irregularity": 0.078125,
+            "reach": 0.125,
+            "softness": 0.228125
+          },
+          "2|0": {
+            "fills_hollows": 0.53125,
+            "grain": 0.7890625,
+            "irregularity": 0.265625,
+            "reach": -0.09375,
+            "softness": 0.525
+          },
+          "2|1": {
+            "fills_hollows": 0.015625,
+            "grain": 3.57421875,
+            "irregularity": 0.640625,
+            "reach": -0.03125,
+            "softness": 0.27265625
+          },
+          "2|3": {
+            "fills_hollows": 0.3125,
+            "grain": 1.23828125,
+            "irregularity": 0.328125,
+            "reach": -0.21875,
+            "softness": 0.7625
+          },
+          "3|0": {
+            "fills_hollows": 0.78125,
+            "grain": 0.609375,
+            "irregularity": 0.421875,
+            "reach": -0.046875,
+            "softness": 0.86640625
+          },
+          "3|1": {
+            "fills_hollows": 0.765625,
+            "grain": 2.2265625,
+            "irregularity": 0.9375,
+            "reach": -0.234375,
+            "softness": 0.24296875
+          },
+          "3|2": {
+            "fills_hollows": 0.59375,
+            "grain": 2.40625,
+            "irregularity": 0.625,
+            "reach": -0.15625,
+            "softness": 0.36171875
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 42"
+    },
+    {
+      "expected": {
+        "alpha": 0.0,
+        "other": 2,
+        "owner": 0,
+        "s": 0.109375,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          0,
+          -1,
+          3,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.140625,
+          1.0,
+          0.890625
+        ],
+        "h": {
+          "0": 0.4375,
+          "1": 0.234375,
+          "2": 0.4375,
+          "3": 0.59375
+        },
+        "n": 0.359375,
+        "ranks": [
+          0,
+          -1,
+          -1,
+          2,
+          0,
+          -1,
+          -1,
+          0
+        ],
+        "table": {
+          "0|2": {
+            "fills_hollows": 0.140625,
+            "grain": 2.5859375,
+            "irregularity": 0.734375,
+            "reach": -0.25,
+            "softness": 0.36171875
+          },
+          "0|3": {
+            "fills_hollows": 0.78125,
+            "grain": 4.47265625,
+            "irregularity": 0.375,
+            "reach": 0.078125,
+            "softness": 0.09453125
+          },
+          "1|3": {
+            "fills_hollows": 0.4375,
+            "grain": 4.203125,
+            "irregularity": 0.875,
+            "reach": -0.1875,
+            "softness": 0.9703125
+          },
+          "2|0": {
+            "fills_hollows": 0.4375,
+            "grain": 3.75390625,
+            "irregularity": 0.21875,
+            "reach": -0.390625,
+            "softness": 0.74765625
+          },
+          "2|3": {
+            "fills_hollows": 0.125,
+            "grain": 1.8671875,
+            "irregularity": 0.296875,
+            "reach": 0.078125,
+            "softness": 0.30234375
+          },
+          "3|0": {
+            "fills_hollows": 0.875,
+            "grain": 2.85546875,
+            "irregularity": 0.796875,
+            "reach": 0.09375,
+            "softness": 0.21328125
+          },
+          "3|1": {
+            "fills_hollows": 0.875,
+            "grain": 0.33984375,
+            "irregularity": 0.515625,
+            "reach": -0.421875,
+            "softness": 0.5546875
+          },
+          "3|2": {
+            "fills_hollows": 0.109375,
+            "grain": 1.59765625,
+            "irregularity": 0.578125,
+            "reach": 0.265625,
+            "softness": 0.89609375
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 43"
+    },
+    {
+      "expected": {
+        "alpha": 1.0,
+        "other": 2,
+        "owner": 1,
+        "s": 0.977224576271186,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          3,
+          -1,
+          -1,
+          3,
+          -1,
+          -1,
+          0,
+          0
+        ],
+        "f": [
+          0.9375,
+          0.78125,
+          0.328125
+        ],
+        "h": {
+          "0": 0.046875,
+          "1": 0.984375,
+          "2": 0.15625,
+          "3": 0.03125
+        },
+        "n": 0.609375,
+        "ranks": [
+          1,
+          2,
+          -1,
+          -1,
+          -1,
+          -1,
+          2,
+          2
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.171875,
+            "grain": 3.93359375,
+            "irregularity": 0.21875,
+            "reach": 0.0625,
+            "softness": 0.86640625
+          },
+          "0|3": {
+            "fills_hollows": 0.1875,
+            "grain": 0.69921875,
+            "irregularity": 0.90625,
+            "reach": -0.375,
+            "softness": 0.525
+          },
+          "1|0": {
+            "fills_hollows": 0.28125,
+            "grain": 2.2265625,
+            "irregularity": 0.375,
+            "reach": 0.0625,
+            "softness": 0.4953125
+          },
+          "1|2": {
+            "fills_hollows": 0.90625,
+            "grain": 1.23828125,
+            "irregularity": 0.078125,
+            "reach": 0.421875,
+            "softness": 0.4953125
+          },
+          "1|3": {
+            "fills_hollows": 0.484375,
+            "grain": 0.609375,
+            "irregularity": 0.40625,
+            "reach": 0.25,
+            "softness": 0.0796875
+          },
+          "2|1": {
+            "fills_hollows": 0.921875,
+            "grain": 4.203125,
+            "irregularity": 0.296875,
+            "reach": 0.078125,
+            "softness": 0.9703125
+          },
+          "3|0": {
+            "fills_hollows": 0.359375,
+            "grain": 5.28125,
+            "irregularity": 0.15625,
+            "reach": 0.03125,
+            "softness": 0.7921875
+          },
+          "3|1": {
+            "fills_hollows": 0.953125,
+            "grain": 3.84375,
+            "irregularity": 0.65625,
+            "reach": 0.0625,
+            "softness": 0.06484375
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 44"
+    },
+    {
+      "expected": {
+        "alpha": 0.000596479242457537,
+        "other": 1,
+        "owner": 0,
+        "s": 0.54564907275321,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          -1,
+          3,
+          0,
+          -1,
+          -1,
+          3,
+          2,
+          -1
+        ],
+        "f": [
+          0.796875,
+          0.234375,
+          0.234375
+        ],
+        "h": {
+          "0": 0.09375,
+          "1": 0.953125,
+          "2": 0.09375,
+          "3": 0.84375
+        },
+        "n": 0.125,
+        "ranks": [
+          0,
+          -1,
+          2,
+          1,
+          -1,
+          -1,
+          2,
+          -1
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.203125,
+            "grain": 3.3046875,
+            "irregularity": 0.015625,
+            "reach": 0.4375,
+            "softness": 0.59921875
+          },
+          "0|2": {
+            "fills_hollows": 0.53125,
+            "grain": 5.01171875,
+            "irregularity": 0.96875,
+            "reach": -0.140625,
+            "softness": 0.346875
+          },
+          "1|0": {
+            "fills_hollows": 0.90625,
+            "grain": 3.39453125,
+            "irregularity": 0.96875,
+            "reach": 0.265625,
+            "softness": 0.39140625
+          },
+          "1|2": {
+            "fills_hollows": 0.15625,
+            "grain": 3.484375,
+            "irregularity": 0.125,
+            "reach": -0.046875,
+            "softness": 0.92578125
+          },
+          "1|3": {
+            "fills_hollows": 0.140625,
+            "grain": 5.28125,
+            "irregularity": 0.890625,
+            "reach": 0.453125,
+            "softness": 0.39140625
+          },
+          "2|0": {
+            "fills_hollows": 0.671875,
+            "grain": 0.7890625,
+            "irregularity": 0.203125,
+            "reach": -0.40625,
+            "softness": 0.56953125
+          },
+          "2|1": {
+            "fills_hollows": 0.640625,
+            "grain": 2.2265625,
+            "irregularity": 0.171875,
+            "reach": -0.46875,
+            "softness": 0.86640625
+          },
+          "3|1": {
+            "fills_hollows": 0.125,
+            "grain": 3.93359375,
+            "irregularity": 0.46875,
+            "reach": 0.484375,
+            "softness": 0.7328125
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 45"
+    },
+    {
+      "expected": {
+        "alpha": 0.0,
+        "other": 2,
+        "owner": 0,
+        "s": 0.040092086188719,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          3,
+          -1,
+          -1,
+          -1,
+          -1,
+          0,
+          0,
+          -1
+        ],
+        "f": [
+          0.078125,
+          0.953125,
+          0.859375
+        ],
+        "h": {
+          "0": 0.1875,
+          "1": 0.25,
+          "2": 0.640625,
+          "3": 0.0625
+        },
+        "n": 0.03125,
+        "ranks": [
+          1,
+          -1,
+          0,
+          0,
+          2,
+          -1,
+          0,
+          -1
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 0.03125,
+            "grain": 5.4609375,
+            "irregularity": 0.671875,
+            "reach": 0.09375,
+            "softness": 0.584375
+          },
+          "0|2": {
+            "fills_hollows": 0.078125,
+            "grain": 2.67578125,
+            "irregularity": 0.859375,
+            "reach": 0.5,
+            "softness": 0.346875
+          },
+          "0|3": {
+            "fills_hollows": 0.578125,
+            "grain": 4.65234375,
+            "irregularity": 0.390625,
+            "reach": 0.03125,
+            "softness": 0.64375
+          },
+          "1|0": {
+            "fills_hollows": 0.1875,
+            "grain": 5.19140625,
+            "irregularity": 0.84375,
+            "reach": 0.078125,
+            "softness": 0.64375
+          },
+          "1|2": {
+            "fills_hollows": 0.265625,
+            "grain": 5.19140625,
+            "irregularity": 0.203125,
+            "reach": 0.171875,
+            "softness": 0.39140625
+          },
+          "1|3": {
+            "fills_hollows": 0.421875,
+            "grain": 0.609375,
+            "irregularity": 0.875,
+            "reach": -0.1875,
+            "softness": 0.39140625
+          },
+          "2|0": {
+            "fills_hollows": 0.90625,
+            "grain": 5.01171875,
+            "irregularity": 0.5,
+            "reach": 0.484375,
+            "softness": 0.51015625
+          },
+          "2|1": {
+            "fills_hollows": 0.203125,
+            "grain": 1.41796875,
+            "irregularity": 0.828125,
+            "reach": -0.4375,
+            "softness": 0.89609375
+          },
+          "2|3": {
+            "fills_hollows": 0.78125,
+            "grain": 2.31640625,
+            "irregularity": 0.125,
+            "reach": -0.453125,
+            "softness": 0.45078125
+          },
+          "3|0": {
+            "fills_hollows": 0.71875,
+            "grain": 1.328125,
+            "irregularity": 0.734375,
+            "reach": 0.296875,
+            "softness": 0.48046875
+          },
+          "3|1": {
+            "fills_hollows": 0.71875,
+            "grain": 2.9453125,
+            "irregularity": 0.296875,
+            "reach": -0.296875,
+            "softness": 0.5546875
+          },
+          "3|2": {
+            "fills_hollows": 0.625,
+            "grain": 4.3828125,
+            "irregularity": 0.125,
+            "reach": -0.359375,
+            "softness": 0.8515625
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 46"
+    },
+    {
+      "expected": {
+        "alpha": 1.0,
+        "other": 1,
+        "owner": 0,
+        "s": 0.801638530287984,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          -1,
+          2,
+          3,
+          -1,
+          3
+        ],
+        "f": [
+          0.25,
+          0.734375,
+          0.203125
+        ],
+        "h": {
+          "0": 0.28125,
+          "1": 0.796875,
+          "2": 0.09375,
+          "3": 0.796875
+        },
+        "n": 0.78125,
+        "ranks": [
+          2,
+          3,
+          1,
+          0,
+          1,
+          3,
+          1,
+          3
+        ],
+        "table": {
+          "0|1": {
+            "fills_hollows": 1.0,
+            "grain": 3.84375,
+            "irregularity": 0.375,
+            "reach": -0.46875,
+            "softness": 0.59921875
+          },
+          "0|2": {
+            "fills_hollows": 0.765625,
+            "grain": 1.77734375,
+            "irregularity": 0.609375,
+            "reach": -0.015625,
+            "softness": 0.21328125
+          },
+          "0|3": {
+            "fills_hollows": 0.90625,
+            "grain": 1.23828125,
+            "irregularity": 0.765625,
+            "reach": -0.171875,
+            "softness": 0.24296875
+          },
+          "1|0": {
+            "fills_hollows": 0.03125,
+            "grain": 0.33984375,
+            "irregularity": 0.8125,
+            "reach": -0.40625,
+            "softness": 0.56953125
+          },
+          "1|2": {
+            "fills_hollows": 0.546875,
+            "grain": 2.046875,
+            "irregularity": 0.328125,
+            "reach": 0.40625,
+            "softness": 0.465625
+          },
+          "1|3": {
+            "fills_hollows": 0.5,
+            "grain": 5.37109375,
+            "irregularity": 0.96875,
+            "reach": 0.3125,
+            "softness": 0.4359375
+          },
+          "2|0": {
+            "fills_hollows": 0.359375,
+            "grain": 5.19140625,
+            "irregularity": 0.03125,
+            "reach": 0.421875,
+            "softness": 0.3765625
+          },
+          "2|1": {
+            "fills_hollows": 0.609375,
+            "grain": 3.39453125,
+            "irregularity": 0.40625,
+            "reach": 0.1875,
+            "softness": 0.27265625
+          },
+          "3|0": {
+            "fills_hollows": 0.34375,
+            "grain": 4.7421875,
+            "irregularity": 0.5625,
+            "reach": -0.03125,
+            "softness": 0.42109375
+          },
+          "3|1": {
+            "fills_hollows": 0.34375,
+            "grain": 1.59765625,
+            "irregularity": 0.859375,
+            "reach": 0.40625,
+            "softness": 0.584375
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: generated 47"
+    },
+    {
+      "expected": {
+        "fills_hollows": 0.5,
+        "grain": 1.5,
+        "irregularity": 0.35,
+        "reach": 0.2,
+        "softness": 0.45
+      },
+      "input": {},
+      "kind": "settings",
+      "name": "settings: empty: every default"
+    },
+    {
+      "expected": {
+        "fills_hollows": 1.0,
+        "grain": 6.0,
+        "irregularity": 0.0,
+        "reach": -0.5,
+        "softness": 1.0
+      },
+      "input": {
+        "fills_hollows": 7.5,
+        "grain": 100.0,
+        "irregularity": -1.0,
+        "reach": -2.0,
+        "softness": 3.0
+      },
+      "kind": "settings",
+      "name": "settings: out of range: clamped"
+    },
+    {
+      "expected": {
+        "fills_hollows": 0.5,
+        "grain": 0.25,
+        "irregularity": 0.35,
+        "reach": 0.125,
+        "softness": 0.45
+      },
+      "input": {
+        "grain": 0.25,
+        "reach": 0.125
+      },
+      "kind": "settings",
+      "name": "settings: partial"
+    },
+    {
+      "expected": {
+        "fills_hollows": 0.0,
+        "grain": 6.0,
+        "irregularity": 1.0,
+        "reach": 0.5,
+        "softness": 0.05
+      },
+      "input": {
+        "fills_hollows": 0.0,
+        "grain": 6.0,
+        "irregularity": 1.0,
+        "reach": 0.5,
+        "softness": 0.05
+      },
+      "kind": "settings",
+      "name": "settings: exact bounds"
+    },
+    {
+      "expected": {
+        "0|2": {
+          "fills_hollows": 0.5,
+          "grain": 1.5,
+          "irregularity": 0.35,
+          "reach": 0.2,
+          "softness": 0.3
+        },
+        "2|0": {
+          "fills_hollows": 0.5,
+          "grain": 1.5,
+          "irregularity": 0.35,
+          "reach": 0.2,
+          "softness": 0.7
+        }
+      },
+      "input": {
+        "layers": 3,
+        "pairs": [
+          {
+            "a": 0,
+            "a_covers_b": {
+              "fills_hollows": 0.5,
+              "grain": 1.5,
+              "irregularity": 0.35,
+              "reach": 0.2,
+              "softness": 0.3
+            },
+            "active": true,
+            "b": 2,
+            "b_covers_a": {
+              "fills_hollows": 0.5,
+              "grain": 1.5,
+              "irregularity": 0.35,
+              "reach": 0.2,
+              "softness": 0.7
+            }
+          }
+        ]
+      },
+      "kind": "table",
+      "name": "table: an active pair"
+    },
+    {
+      "expected": {},
+      "input": {
+        "layers": 3,
+        "pairs": [
+          {
+            "a": 0,
+            "a_covers_b": {
+              "fills_hollows": 0.5,
+              "grain": 1.5,
+              "irregularity": 0.35,
+              "reach": 0.2,
+              "softness": 0.45
+            },
+            "active": false,
+            "b": 1,
+            "b_covers_a": {
+              "fills_hollows": 0.5,
+              "grain": 1.5,
+              "irregularity": 0.35,
+              "reach": 0.2,
+              "softness": 0.45
+            }
+          }
+        ]
+      },
+      "kind": "table",
+      "name": "table: an inactive pair gives nothing"
+    },
+    {
+      "expected": {
+        "0|1": {
+          "fills_hollows": 0.5,
+          "grain": 1.5,
+          "irregularity": 0.35,
+          "reach": 0.2,
+          "softness": 0.2
+        },
+        "1|0": {
+          "fills_hollows": 0.5,
+          "grain": 1.5,
+          "irregularity": 0.35,
+          "reach": 0.2,
+          "softness": 0.4
+        },
+        "1|3": {
+          "fills_hollows": 0.5,
+          "grain": 1.5,
+          "irregularity": 0.35,
+          "reach": -0.1,
+          "softness": 0.6
+        },
+        "3|1": {
+          "fills_hollows": 0.5,
+          "grain": 1.5,
+          "irregularity": 0.35,
+          "reach": 0.1,
+          "softness": 0.8
+        }
+      },
+      "input": {
+        "layers": 4,
+        "pairs": [
+          {
+            "a": 0,
+            "a_covers_b": {
+              "fills_hollows": 0.5,
+              "grain": 1.5,
+              "irregularity": 0.35,
+              "reach": 0.2,
+              "softness": 0.2
+            },
+            "active": true,
+            "b": 1,
+            "b_covers_a": {
+              "fills_hollows": 0.5,
+              "grain": 1.5,
+              "irregularity": 0.35,
+              "reach": 0.2,
+              "softness": 0.4
+            }
+          },
+          {
+            "a": 2,
+            "a_covers_b": {
+              "fills_hollows": 0.5,
+              "grain": 1.5,
+              "irregularity": 0.35,
+              "reach": 0.2,
+              "softness": 0.45
+            },
+            "active": false,
+            "b": 3,
+            "b_covers_a": {
+              "fills_hollows": 0.5,
+              "grain": 1.5,
+              "irregularity": 0.35,
+              "reach": 0.2,
+              "softness": 0.45
+            }
+          },
+          {
+            "a": 1,
+            "a_covers_b": {
+              "fills_hollows": 0.5,
+              "grain": 1.5,
+              "irregularity": 0.35,
+              "reach": -0.1,
+              "softness": 0.6
+            },
+            "active": true,
+            "b": 3,
+            "b_covers_a": {
+              "fills_hollows": 0.5,
+              "grain": 1.5,
+              "irregularity": 0.35,
+              "reach": 0.1,
+              "softness": 0.8
+            }
+          }
+        ]
+      },
+      "kind": "table",
+      "name": "table: two pairs, one off"
+    },
+    {
+      "expected": {
+        "13|14": {
+          "fills_hollows": 0.5,
+          "grain": 1.5,
+          "irregularity": 0.35,
+          "reach": 0.2,
+          "softness": 0.5
+        },
+        "14|13": {
+          "fills_hollows": 0.5,
+          "grain": 1.5,
+          "irregularity": 0.35,
+          "reach": 0.2,
+          "softness": 0.6
+        }
+      },
+      "input": {
+        "layers": 17,
+        "pairs": [
+          {
+            "a": 2,
+            "a_covers_b": {
+              "fills_hollows": 0.5,
+              "grain": 1.5,
+              "irregularity": 0.35,
+              "reach": 0.2,
+              "softness": 0.45
+            },
+            "active": true,
+            "b": 15,
+            "b_covers_a": {
+              "fills_hollows": 0.5,
+              "grain": 1.5,
+              "irregularity": 0.35,
+              "reach": 0.2,
+              "softness": 0.45
+            }
+          },
+          {
+            "a": 13,
+            "a_covers_b": {
+              "fills_hollows": 0.5,
+              "grain": 1.5,
+              "irregularity": 0.35,
+              "reach": 0.2,
+              "softness": 0.5
+            },
+            "active": true,
+            "b": 14,
+            "b_covers_a": {
+              "fills_hollows": 0.5,
+              "grain": 1.5,
+              "irregularity": 0.35,
+              "reach": 0.2,
+              "softness": 0.6
+            }
+          }
+        ]
+      },
+      "kind": "table",
+      "name": "table: a layer beyond the 15th blends nothing"
+    },
+    {
+      "expected": {
+        "bytes": [
+          [
+            9,
+            7,
+            6,
+            33
+          ],
+          [
+            10,
+            7,
+            6,
+            18
+          ],
+          [
+            6,
+            9,
+            11,
+            15
+          ]
+        ],
+        "origin": [-9, -7, -6],
+        "size": [18, 16, 18]
+      },
+      "input": {
+        "cells": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0,
+            1
+          ],
+          [
+            -3,
+            2,
+            5,
+            14
+          ],
+          [
+            2,
+            -1,
+            0,
+            15
+          ]
+        ],
+        "choices": [
+          [
+            0,
+            0,
+            0,
+            1
+          ],
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          [
+            40,
+            40,
+            40,
+            1
+          ],
+          [
+            -3,
+            2,
+            5,
+            16
+          ]
+        ]
+      },
+      "kind": "cell_texture",
+      "name": "cell_texture: ranks, a layer beyond the 15th, a choice outside the box, a choice beyond the 15th"
+    },
+    {
+      "expected": {
+        "choices": [
+          [
+            -1,
+            4,
+            0,
+            0
+          ],
+          [
+            3,
+            0,
+            -2,
+            1
+          ]
+        ],
+        "pairs": [
+          {
+            "a": 0,
+            "a_covers_b": {
+              "fills_hollows": 0.5,
+              "grain": 1.5,
+              "irregularity": 0.35,
+              "reach": 0.5,
+              "softness": 0.3
+            },
+            "active": true,
+            "b": 1,
+            "b_covers_a": {
+              "fills_hollows": 0.5,
+              "grain": 2.0,
+              "irregularity": 0.35,
+              "reach": 0.2,
+              "softness": 0.45
+            }
+          },
+          {
+            "a": 1,
+            "a_covers_b": {
+              "fills_hollows": 0.5,
+              "grain": 1.5,
+              "irregularity": 0.35,
+              "reach": 0.2,
+              "softness": 0.45
+            },
+            "active": false,
+            "b": 2,
+            "b_covers_a": {
+              "fills_hollows": 0.5,
+              "grain": 1.5,
+              "irregularity": 0.35,
+              "reach": 0.2,
+              "softness": 0.45
+            }
+          }
+        ],
+        "representatives": [
+          {
+            "color": [
+              1.0,
+              0.5,
+              0.25,
+              1.0
+            ],
+            "image": "transitions/representative_0.png",
+            "roughness": 0.7,
+            "scale": 2.0
+          },
+          {
+            "color": [
+              0.8,
+              0.7,
+              0.4,
+              1.0
+            ],
+            "image": null,
+            "roughness": 1.0,
+            "scale": 0.01
+          },
+          {
+            "color": [
+              1.0,
+              0.5,
+              0.25,
+              1.0
+            ],
+            "image": "transitions/representative_0.png",
+            "roughness": 0.7,
+            "scale": 2.0
+          }
+        ]
+      },
+      "input": {
+        "format": "marchingblocks-world",
+        "layers": [
+          {
+            "cells": [],
+            "name": "Rock",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Sand",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Snow",
+            "tileset": null,
+            "visible": false
+          }
+        ],
+        "transitions": {
+          "choices": [
+            3,
+            0,
+            -2,
+            1,
+            -1,
+            4,
+            0,
+            0
+          ],
+          "pairs": [
+            {
+              "a": 0,
+              "a_covers_b": {
+                "reach": 9,
+                "softness": 0.3
+              },
+              "active": true,
+              "b": 1,
+              "b_covers_a": {
+                "grain": 2
+              }
+            },
+            {
+              "a": 1,
+              "a_covers_b": {},
+              "active": false,
+              "b": 2,
+              "b_covers_a": {}
+            }
+          ],
+          "representatives": [
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            },
+            {
+              "color": [
+                0.8,
+                0.7,
+                0.4,
+                1
+              ],
+              "image": null,
+              "roughness": 3,
+              "scale": 0.001
+            },
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            }
+          ]
+        },
+        "version": 1
+      },
+      "kind": "read",
+      "name": "read: a good world: settings completed and clamped, scale at least 0.01"
+    },
+    {
+      "expected": {
+        "choices": [],
+        "pairs": [],
+        "representatives": []
+      },
+      "input": {
+        "format": "marchingblocks-world",
+        "layers": [
+          {
+            "cells": [],
+            "name": "Rock",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Sand",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Snow",
+            "tileset": null,
+            "visible": false
+          }
+        ],
+        "version": 1
+      },
+      "kind": "read",
+      "name": "read: a world without transitions: nothing"
+    },
+    {
+      "expected": {
+        "error": true
+      },
+      "input": {
+        "format": "marchingblocks-world",
+        "layers": [
+          {
+            "cells": [],
+            "name": "Rock",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Sand",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Snow",
+            "tileset": null,
+            "visible": false
+          }
+        ],
+        "transitions": [],
+        "version": 1
+      },
+      "kind": "read",
+      "name": "read: transitions not an object"
+    },
+    {
+      "expected": {
+        "error": true
+      },
+      "input": {
+        "format": "marchingblocks-world",
+        "layers": [
+          {
+            "cells": [],
+            "name": "Rock",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Sand",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Snow",
+            "tileset": null,
+            "visible": false
+          }
+        ],
+        "transitions": {
+          "choices": [
+            3,
+            0,
+            -2,
+            1,
+            -1,
+            4,
+            0,
+            0
+          ],
+          "pairs": {},
+          "representatives": [
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            },
+            {
+              "color": [
+                0.8,
+                0.7,
+                0.4,
+                1
+              ],
+              "image": null,
+              "roughness": 3,
+              "scale": 0.001
+            },
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            }
+          ]
+        },
+        "version": 1
+      },
+      "kind": "read",
+      "name": "read: pairs not an array"
+    },
+    {
+      "expected": {
+        "error": true
+      },
+      "input": {
+        "format": "marchingblocks-world",
+        "layers": [
+          {
+            "cells": [],
+            "name": "Rock",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Sand",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Snow",
+            "tileset": null,
+            "visible": false
+          }
+        ],
+        "transitions": {
+          "choices": [
+            3,
+            0,
+            -2,
+            1,
+            -1,
+            4,
+            0,
+            0
+          ],
+          "pairs": [
+            {
+              "a": 0,
+              "a_covers_b": {},
+              "b": 1,
+              "b_covers_a": {}
+            }
+          ],
+          "representatives": [
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            },
+            {
+              "color": [
+                0.8,
+                0.7,
+                0.4,
+                1
+              ],
+              "image": null,
+              "roughness": 3,
+              "scale": 0.001
+            },
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            }
+          ]
+        },
+        "version": 1
+      },
+      "kind": "read",
+      "name": "read: a pair without active"
+    },
+    {
+      "expected": {
+        "error": true
+      },
+      "input": {
+        "format": "marchingblocks-world",
+        "layers": [
+          {
+            "cells": [],
+            "name": "Rock",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Sand",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Snow",
+            "tileset": null,
+            "visible": false
+          }
+        ],
+        "transitions": {
+          "choices": [
+            3,
+            0,
+            -2,
+            1,
+            -1,
+            4,
+            0,
+            0
+          ],
+          "pairs": [
+            {
+              "a": 1,
+              "a_covers_b": {},
+              "active": true,
+              "b": 1,
+              "b_covers_a": {}
+            }
+          ],
+          "representatives": [
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            },
+            {
+              "color": [
+                0.8,
+                0.7,
+                0.4,
+                1
+              ],
+              "image": null,
+              "roughness": 3,
+              "scale": 0.001
+            },
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            }
+          ]
+        },
+        "version": 1
+      },
+      "kind": "read",
+      "name": "read: a pair a = b"
+    },
+    {
+      "expected": {
+        "error": true
+      },
+      "input": {
+        "format": "marchingblocks-world",
+        "layers": [
+          {
+            "cells": [],
+            "name": "Rock",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Sand",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Snow",
+            "tileset": null,
+            "visible": false
+          }
+        ],
+        "transitions": {
+          "choices": [
+            3,
+            0,
+            -2,
+            1,
+            -1,
+            4,
+            0,
+            0
+          ],
+          "pairs": [
+            {
+              "a": 2,
+              "a_covers_b": {},
+              "active": true,
+              "b": 1,
+              "b_covers_a": {}
+            }
+          ],
+          "representatives": [
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            },
+            {
+              "color": [
+                0.8,
+                0.7,
+                0.4,
+                1
+              ],
+              "image": null,
+              "roughness": 3,
+              "scale": 0.001
+            },
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            }
+          ]
+        },
+        "version": 1
+      },
+      "kind": "read",
+      "name": "read: a pair a > b"
+    },
+    {
+      "expected": {
+        "error": true
+      },
+      "input": {
+        "format": "marchingblocks-world",
+        "layers": [
+          {
+            "cells": [],
+            "name": "Rock",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Sand",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Snow",
+            "tileset": null,
+            "visible": false
+          }
+        ],
+        "transitions": {
+          "choices": [
+            3,
+            0,
+            -2,
+            1,
+            -1,
+            4,
+            0,
+            0
+          ],
+          "pairs": [
+            {
+              "a": 0,
+              "a_covers_b": {},
+              "active": true,
+              "b": 3,
+              "b_covers_a": {}
+            }
+          ],
+          "representatives": [
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            },
+            {
+              "color": [
+                0.8,
+                0.7,
+                0.4,
+                1
+              ],
+              "image": null,
+              "roughness": 3,
+              "scale": 0.001
+            },
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            }
+          ]
+        },
+        "version": 1
+      },
+      "kind": "read",
+      "name": "read: a pair beyond the layers"
+    },
+    {
+      "expected": {
+        "error": true
+      },
+      "input": {
+        "format": "marchingblocks-world",
+        "layers": [
+          {
+            "cells": [],
+            "name": "Rock",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Sand",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Snow",
+            "tileset": null,
+            "visible": false
+          }
+        ],
+        "transitions": {
+          "choices": [
+            3,
+            0,
+            -2,
+            1,
+            -1,
+            4,
+            0,
+            0
+          ],
+          "pairs": [
+            {
+              "a": 0,
+              "a_covers_b": {},
+              "active": true,
+              "b": 1,
+              "b_covers_a": {}
+            },
+            {
+              "a": 0,
+              "a_covers_b": {},
+              "active": false,
+              "b": 1,
+              "b_covers_a": {}
+            }
+          ],
+          "representatives": [
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            },
+            {
+              "color": [
+                0.8,
+                0.7,
+                0.4,
+                1
+              ],
+              "image": null,
+              "roughness": 3,
+              "scale": 0.001
+            },
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            }
+          ]
+        },
+        "version": 1
+      },
+      "kind": "read",
+      "name": "read: a pair twice"
+    },
+    {
+      "expected": {
+        "error": true
+      },
+      "input": {
+        "format": "marchingblocks-world",
+        "layers": [
+          {
+            "cells": [],
+            "name": "Rock",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Sand",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Snow",
+            "tileset": null,
+            "visible": false
+          }
+        ],
+        "transitions": {
+          "choices": [
+            3,
+            0,
+            -2,
+            1,
+            -1,
+            4,
+            0,
+            0
+          ],
+          "pairs": [
+            {
+              "a": 0,
+              "a_covers_b": {},
+              "active": true,
+              "b": 1
+            }
+          ],
+          "representatives": [
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            },
+            {
+              "color": [
+                0.8,
+                0.7,
+                0.4,
+                1
+              ],
+              "image": null,
+              "roughness": 3,
+              "scale": 0.001
+            },
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            }
+          ]
+        },
+        "version": 1
+      },
+      "kind": "read",
+      "name": "read: a direction missing"
+    },
+    {
+      "expected": {
+        "error": true
+      },
+      "input": {
+        "format": "marchingblocks-world",
+        "layers": [
+          {
+            "cells": [],
+            "name": "Rock",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Sand",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Snow",
+            "tileset": null,
+            "visible": false
+          }
+        ],
+        "transitions": {
+          "choices": [
+            3,
+            0,
+            -2,
+            1,
+            -1,
+            4,
+            0,
+            0
+          ],
+          "pairs": [
+            {
+              "a": 0,
+              "a_covers_b": {
+                "reach": "far"
+              },
+              "active": true,
+              "b": 1,
+              "b_covers_a": {}
+            }
+          ],
+          "representatives": [
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            },
+            {
+              "color": [
+                0.8,
+                0.7,
+                0.4,
+                1
+              ],
+              "image": null,
+              "roughness": 3,
+              "scale": 0.001
+            },
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            }
+          ]
+        },
+        "version": 1
+      },
+      "kind": "read",
+      "name": "read: a setting not a number"
+    },
+    {
+      "expected": {
+        "error": true
+      },
+      "input": {
+        "format": "marchingblocks-world",
+        "layers": [
+          {
+            "cells": [],
+            "name": "Rock",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Sand",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Snow",
+            "tileset": null,
+            "visible": false
+          }
+        ],
+        "transitions": {
+          "choices": [
+            3,
+            0,
+            -2,
+            1,
+            -1,
+            4,
+            0,
+            0
+          ],
+          "pairs": [
+            {
+              "a": 0.5,
+              "a_covers_b": {},
+              "active": true,
+              "b": 1,
+              "b_covers_a": {}
+            }
+          ],
+          "representatives": [
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            },
+            {
+              "color": [
+                0.8,
+                0.7,
+                0.4,
+                1
+              ],
+              "image": null,
+              "roughness": 3,
+              "scale": 0.001
+            },
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            }
+          ]
+        },
+        "version": 1
+      },
+      "kind": "read",
+      "name": "read: a fractional layer index"
+    },
+    {
+      "expected": {
+        "error": true
+      },
+      "input": {
+        "format": "marchingblocks-world",
+        "layers": [
+          {
+            "cells": [],
+            "name": "Rock",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Sand",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Snow",
+            "tileset": null,
+            "visible": false
+          }
+        ],
+        "transitions": {
+          "choices": [
+            3,
+            0,
+            -2,
+            1,
+            -1,
+            4,
+            0,
+            0
+          ],
+          "pairs": [
+            {
+              "a": 0,
+              "a_covers_b": {
+                "reach": 9,
+                "softness": 0.3
+              },
+              "active": true,
+              "b": 1,
+              "b_covers_a": {
+                "grain": 2
+              }
+            },
+            {
+              "a": 1,
+              "a_covers_b": {},
+              "active": false,
+              "b": 2,
+              "b_covers_a": {}
+            }
+          ],
+          "representatives": [
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            },
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            }
+          ]
+        },
+        "version": 1
+      },
+      "kind": "read",
+      "name": "read: representatives not one per layer"
+    },
+    {
+      "expected": {
+        "error": true
+      },
+      "input": {
+        "format": "marchingblocks-world",
+        "layers": [
+          {
+            "cells": [],
+            "name": "Rock",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Sand",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Snow",
+            "tileset": null,
+            "visible": false
+          }
+        ],
+        "transitions": {
+          "choices": [
+            3,
+            0,
+            -2,
+            1,
+            -1,
+            4,
+            0,
+            0
+          ],
+          "pairs": [
+            {
+              "a": 0,
+              "a_covers_b": {
+                "reach": 9,
+                "softness": 0.3
+              },
+              "active": true,
+              "b": 1,
+              "b_covers_a": {
+                "grain": 2
+              }
+            },
+            {
+              "a": 1,
+              "a_covers_b": {},
+              "active": false,
+              "b": 2,
+              "b_covers_a": {}
+            }
+          ],
+          "representatives": [
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            },
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            },
+            {
+              "color": [1, 1, 1],
+              "image": null,
+              "roughness": 0.5,
+              "scale": 1
+            }
+          ]
+        },
+        "version": 1
+      },
+      "kind": "read",
+      "name": "read: a representative's color of three numbers"
+    },
+    {
+      "expected": {
+        "error": true
+      },
+      "input": {
+        "format": "marchingblocks-world",
+        "layers": [
+          {
+            "cells": [],
+            "name": "Rock",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Sand",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Snow",
+            "tileset": null,
+            "visible": false
+          }
+        ],
+        "transitions": {
+          "choices": [
+            3,
+            0,
+            -2,
+            1,
+            -1,
+            4,
+            0,
+            0
+          ],
+          "pairs": [
+            {
+              "a": 0,
+              "a_covers_b": {
+                "reach": 9,
+                "softness": 0.3
+              },
+              "active": true,
+              "b": 1,
+              "b_covers_a": {
+                "grain": 2
+              }
+            },
+            {
+              "a": 1,
+              "a_covers_b": {},
+              "active": false,
+              "b": 2,
+              "b_covers_a": {}
+            }
+          ],
+          "representatives": [
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            },
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            },
+            {
+              "color": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "image": 4,
+              "roughness": 0.5,
+              "scale": 1
+            }
+          ]
+        },
+        "version": 1
+      },
+      "kind": "read",
+      "name": "read: a representative's image not a path"
+    },
+    {
+      "expected": {
+        "error": true
+      },
+      "input": {
+        "format": "marchingblocks-world",
+        "layers": [
+          {
+            "cells": [],
+            "name": "Rock",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Sand",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Snow",
+            "tileset": null,
+            "visible": false
+          }
+        ],
+        "transitions": {
+          "choices": [0, 0, 0],
+          "pairs": [
+            {
+              "a": 0,
+              "a_covers_b": {
+                "reach": 9,
+                "softness": 0.3
+              },
+              "active": true,
+              "b": 1,
+              "b_covers_a": {
+                "grain": 2
+              }
+            },
+            {
+              "a": 1,
+              "a_covers_b": {},
+              "active": false,
+              "b": 2,
+              "b_covers_a": {}
+            }
+          ],
+          "representatives": [
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            },
+            {
+              "color": [
+                0.8,
+                0.7,
+                0.4,
+                1
+              ],
+              "image": null,
+              "roughness": 3,
+              "scale": 0.001
+            },
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            }
+          ]
+        },
+        "version": 1
+      },
+      "kind": "read",
+      "name": "read: choices not in fours"
+    },
+    {
+      "expected": {
+        "error": true
+      },
+      "input": {
+        "format": "marchingblocks-world",
+        "layers": [
+          {
+            "cells": [],
+            "name": "Rock",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Sand",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Snow",
+            "tileset": null,
+            "visible": false
+          }
+        ],
+        "transitions": {
+          "choices": [
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "pairs": [
+            {
+              "a": 0,
+              "a_covers_b": {
+                "reach": 9,
+                "softness": 0.3
+              },
+              "active": true,
+              "b": 1,
+              "b_covers_a": {
+                "grain": 2
+              }
+            },
+            {
+              "a": 1,
+              "a_covers_b": {},
+              "active": false,
+              "b": 2,
+              "b_covers_a": {}
+            }
+          ],
+          "representatives": [
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            },
+            {
+              "color": [
+                0.8,
+                0.7,
+                0.4,
+                1
+              ],
+              "image": null,
+              "roughness": 3,
+              "scale": 0.001
+            },
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            }
+          ]
+        },
+        "version": 1
+      },
+      "kind": "read",
+      "name": "read: a vertex chosen twice"
+    },
+    {
+      "expected": {
+        "error": true
+      },
+      "input": {
+        "format": "marchingblocks-world",
+        "layers": [
+          {
+            "cells": [],
+            "name": "Rock",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Sand",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Snow",
+            "tileset": null,
+            "visible": false
+          }
+        ],
+        "transitions": {
+          "choices": [
+            0,
+            0,
+            0,
+            3
+          ],
+          "pairs": [
+            {
+              "a": 0,
+              "a_covers_b": {
+                "reach": 9,
+                "softness": 0.3
+              },
+              "active": true,
+              "b": 1,
+              "b_covers_a": {
+                "grain": 2
+              }
+            },
+            {
+              "a": 1,
+              "a_covers_b": {},
+              "active": false,
+              "b": 2,
+              "b_covers_a": {}
+            }
+          ],
+          "representatives": [
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            },
+            {
+              "color": [
+                0.8,
+                0.7,
+                0.4,
+                1
+              ],
+              "image": null,
+              "roughness": 3,
+              "scale": 0.001
+            },
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            }
+          ]
+        },
+        "version": 1
+      },
+      "kind": "read",
+      "name": "read: a choice of a layer that does not exist"
+    },
+    {
+      "expected": {
+        "error": true
+      },
+      "input": {
+        "format": "marchingblocks-world",
+        "layers": [
+          {
+            "cells": [],
+            "name": "Rock",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Sand",
+            "tileset": null,
+            "visible": true
+          },
+          {
+            "cells": [],
+            "name": "Snow",
+            "tileset": null,
+            "visible": false
+          }
+        ],
+        "transitions": {
+          "choices": [
+            0,
+            0.5,
+            0,
+            1
+          ],
+          "pairs": [
+            {
+              "a": 0,
+              "a_covers_b": {
+                "reach": 9,
+                "softness": 0.3
+              },
+              "active": true,
+              "b": 1,
+              "b_covers_a": {
+                "grain": 2
+              }
+            },
+            {
+              "a": 1,
+              "a_covers_b": {},
+              "active": false,
+              "b": 2,
+              "b_covers_a": {}
+            }
+          ],
+          "representatives": [
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            },
+            {
+              "color": [
+                0.8,
+                0.7,
+                0.4,
+                1
+              ],
+              "image": null,
+              "roughness": 3,
+              "scale": 0.001
+            },
+            {
+              "color": [
+                1,
+                0.5,
+                0.25,
+                1
+              ],
+              "image": "transitions/representative_0.png",
+              "roughness": 0.7,
+              "scale": 2
+            }
+          ]
+        },
+        "version": 1
+      },
+      "kind": "read",
+      "name": "read: a fractional choice"
+    }
+  ],
+  "format": "marchingblocks-transitions-conformance",
+  "limits": {
+    "layers_max": 15,
+    "margin": 6
+  },
+  "rules_text": [
+    "Every case: {name, kind, input, expected}. Integers are exact. Floats: compare with an absolute tolerance of 1e-6",
+    "(1e-5 for anything that went through a sine or a cosine). Cells and vertices are integer [x, y, z] in FORMAT space",
+    "(right-handed, +Y up, cell c covers [c, c + 1]); a set of cells is sorted by x, then y, then z.",
+    "transitions   (optional) how two tile layers blend where they meet. The GEOMETRY never changes (the tiles are",
+    "              the ones the tileset rule places); only the LOOK of the surface does. Absent: nothing blends.",
+    "  pairs             an array of {a, b, active, a_covers_b, b_covers_a}: a < b are layer indices (in layers), active a",
+    "                    bool, the two settings say how the first layer covers the second. The same pair never twice.",
+    "  settings          softness in [0.05, 1] (default 0.45), reach in [-0.5, 0.5] (0.2), irregularity in [0, 1] (0.35),",
+    "                    grain in [0.25, 6] (1.5), fills_hollows in [0, 1] (0.5). A missing setting takes its default,",
+    "                    one out of range is clamped.",
+    "  representatives   one per layer, in layer order: {image, color, scale, roughness}. image: a PNG path RELATIVE to",
+    "                    world.json, or null (plain colour). color [r, g, b, a] multiplies the image AS IS (no sRGB",
+    "                    conversion of the colour). scale: world cells per repeat of the image (at least 0.01). The image is",
+    "                    projected in a box: weights w = |n|^4 / sum (n the world normal), samples at p.zy/scale, p.xz/scale,",
+    "                    p.xy/scale. A layer's representative is what is laid over the OTHER layer's surface.",
+    "  choices           a flat array x y z L per vertex (FORMAT space): at that vertex, layer L covers. The same vertex",
+    "                    never twice. A choice of a layer that is not in the blending pair counts as no choice.",
+    "  Only layers 0 to 14 blend (a pair with a larger index blends nothing). Hidden layers place no cell.",
+    "  Refuse the whole file, and say why, if any of these does not hold.",
+    "THE BLEND at a point p of the surface of the tile of vertex v (that tile covers [v + 1/2, v + 3/2]; take v from the",
+    "  TILE, never from p: on a joint, p belongs to two tiles):",
+    "  f = clamp(p - v - 1/2, 0, 1) on each axis. Corner k = dx + 2 dy + 4 dz (d in {0, 1}^3) is the cell v + d: rank_k",
+    "    = its layer index (-1 empty), choice_k = the layer chosen at VERTEX v + d (-1 none), weight w_k =",
+    "    (dx ? f.x : 1 - f.x) (dy ? f.y : 1 - f.y) (dz ? f.z : 1 - f.z).",
+    "  owner = the smallest rank among the corners; none: nothing. For every other rank r, part_r = the sum of its",
+    "    weights; other = the rank with the largest part, ties to the first corner in k order; none: nothing.",
+    "  The pair {owner, other} must be active (both directions known), else nothing. s = part_other / (part_other +",
+    "    w_owner), where w_owner = the sum of the owner's weights.",
+    "  covering_k = choice_k if it is owner or other, else owner (the higher priority). vote = the sum of w_k where",
+    "    covering_k = other.",
+    "  visible(S, x, h, n) = smoothstep(0.5 - S.softness / 2, 0.5 + S.softness / 2, x + (S.reach + S.fills_hollows (0.5",
+    "    - h) + S.irregularity (n - 0.5)) 4 x (1 - x)) — the shift is ZERO at both ends.",
+    "  alpha = vote visible(other covers owner, s, h_owner, n) + (1 - vote) (1 - visible(owner covers other, 1 - s,",
+    "    h_other, n)): draw the OTHER layer's representative over the surface with that alpha (nothing below 0.004).",
+    "  h_L = the luminance (0.299 r + 0.587 g + 0.114 b) of layer L's representative at p. n = a value noise in [0, 1]",
+    "    at p times the grain of the direction (the conformance cases give n, the same for both directions).",
+    "CASES — blend: input ranks[8], f, choices[8] (k = dx + 2 dy + 4 dz), table {\"C|D\": settings when C covers D},",
+    "h {rank: luminance of its representative at p, 0.5 when absent}, n; expected {} (nothing drawn) or {owner,",
+    "other, s, vote, alpha}. settings: read one direction's settings. table: from world.json pairs to the active",
+    "directions. cell_texture: the RECOMMENDED packing (what the app's shader reads; an engine may store the same",
+    "facts otherwise): one byte per cell over the box of the cells grown by 6, low nibble rank + 1 (0 empty or",
+    "rank >= 15), high nibble chosen rank + 1 at that vertex (0 none); a choice outside the box is dropped; only",
+    "non-zero bytes are listed, at texel (x, y, z) = cell - origin. read: world.json in, the normalized transitions",
+    "out, or {\"error\": true} (the reason is free)."
+  ],
+  "settings": {
+    "bounds": {
+      "fills_hollows": [
+        0.0,
+        1.0
+      ],
+      "grain": [
+        0.25,
+        6.0
+      ],
+      "irregularity": [
+        0.0,
+        1.0
+      ],
+      "reach": [
+        -0.5,
+        0.5
+      ],
+      "softness": [
+        0.05,
+        1.0
+      ]
+    },
+    "defaults": {
+      "fills_hollows": 0.5,
+      "grain": 1.5,
+      "irregularity": 0.35,
+      "reach": 0.2,
+      "softness": 0.45
+    }
+  },
+  "version": 1
+}

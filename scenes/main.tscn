@@ -1,0 +1,267 @@
+[gd_scene format=4 uid="uid://db2fi0lvdma3f"]
+
+[ext_resource type="Script" uid="uid://jqm6v5x2rufw" path="res://player/camera_rig.gd" id="camrig"]
+[ext_resource type="Script" uid="uid://cj4nysgw030mm" path="res://world/day_night.gd" id="daynight"]
+[ext_resource type="Script" uid="uid://drodr3trnc0us" path="res://ui/hud.gd" id="hud"]
+[ext_resource type="Script" uid="uid://c7jj8gwnumx4l" path="res://world/interior.gd" id="interior"]
+[ext_resource type="PackedScene" path="res://world/prefabs/lit.tscn" id="lit"]
+[ext_resource type="PackedScene" path="res://player/player.tscn" id="player"]
+[ext_resource type="PackedScene" path="res://world/prefabs/pnj.tscn" id="pnj"]
+[ext_resource type="Script" uid="uid://q31y6scjq11v" path="res://world/region.gd" id="region"]
+[ext_resource type="Script" path="res://world/chunk_streamer.gd" id="streamer"]
+
+[sub_resource type="Environment" id="env"]
+background_mode = 1
+background_color = Color(0.55, 0.7, 0.95, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.55, 0.7, 0.95, 1)
+ambient_light_energy = 0.35
+tonemap_mode = 2
+
+[sub_resource type="BoxShape3D" id="secours"]
+size = Vector3(400, 1, 400)
+
+[sub_resource type="StandardMaterial3D" id="murs"]
+albedo_color = Color(0.75, 0.68, 0.55, 1)
+
+[sub_resource type="BoxShape3D" id="r_Capitale"]
+size = Vector3(70, 40, 70)
+
+[sub_resource type="BoxShape3D" id="r_BoisJoli"]
+size = Vector3(36, 40, 36)
+
+[sub_resource type="BoxShape3D" id="r_LaSabliere"]
+size = Vector3(36, 40, 36)
+
+[sub_resource type="BoxShape3D" id="r_LesJoncs"]
+size = Vector3(34, 40, 34)
+
+[sub_resource type="BoxShape3D" id="r_PiedMont"]
+size = Vector3(34, 40, 34)
+
+[sub_resource type="BoxShape3D" id="r_ForetOuest"]
+size = Vector3(252, 60, 784)
+
+[sub_resource type="BoxShape3D" id="r_Marais"]
+size = Vector3(190, 40, 190)
+
+[sub_resource type="BoxShape3D" id="r_Desert"]
+size = Vector3(262, 60, 352)
+
+[sub_resource type="BoxShape3D" id="r_Montagnes"]
+size = Vector3(784, 140, 150)
+
+[sub_resource type="BoxShape3D" id="r_Volcan"]
+size = Vector3(170, 160, 170)
+
+[sub_resource type="BoxShape3D" id="r_LacDuVal"]
+size = Vector3(56, 40, 56)
+
+[sub_resource type="BoxShape3D" id="salle"]
+size = Vector3(7.4, 3.6, 7.4)
+
+[node name="Main" type="Node3D" unique_id=21625982]
+
+[node name="Environment" type="WorldEnvironment" parent="." unique_id=602184815]
+environment = SubResource("env")
+
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=2000682026]
+transform = Transform3D(1, 0, 0, 0, 0.500011, 0.86601907, 0, -0.86601907, 0.500011, 0, 20, 0)
+shadow_enabled = true
+
+[node name="DayNight" type="Node3D" parent="." unique_id=36851288 node_paths=PackedStringArray("sun", "environment")]
+script = ExtResource("daynight")
+sun = NodePath("../Sun")
+environment = NodePath("../Environment")
+
+[node name="Monde" type="Node3D" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("streamer")
+baked_dir = "res://cuit/val_de_resolve"
+target = NodePath("../Player")
+
+[node name="FilDeSecours" type="StaticBody3D" parent="." unique_id=101237503]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6, 0)
+
+[node name="Shape" type="CollisionShape3D" parent="FilDeSecours" unique_id=792065170]
+shape = SubResource("secours")
+
+[node name="Regions" type="Node3D" parent="." unique_id=1526089926]
+
+[node name="Capitale" type="Area3D" parent="Regions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("region")
+region_id = "haute_resolve"
+region_type = "capitale"
+
+[node name="Shape" type="CollisionShape3D" parent="Regions/Capitale"]
+shape = SubResource("r_Capitale")
+
+[node name="BoisJoli" type="Area3D" parent="Regions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -230, 0, -30)
+script = ExtResource("region")
+region_id = "bois_joli"
+region_type = "village"
+
+[node name="Shape" type="CollisionShape3D" parent="Regions/BoisJoli"]
+shape = SubResource("r_BoisJoli")
+
+[node name="LaSabliere" type="Area3D" parent="Regions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 190, 0, 160)
+script = ExtResource("region")
+region_id = "la_sabliere"
+region_type = "village"
+
+[node name="Shape" type="CollisionShape3D" parent="Regions/LaSabliere"]
+shape = SubResource("r_LaSabliere")
+
+[node name="LesJoncs" type="Area3D" parent="Regions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -130, 0, 190)
+script = ExtResource("region")
+region_id = "les_joncs"
+region_type = "village"
+
+[node name="Shape" type="CollisionShape3D" parent="Regions/LesJoncs"]
+shape = SubResource("r_LesJoncs")
+
+[node name="PiedMont" type="Area3D" parent="Regions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, -200)
+script = ExtResource("region")
+region_id = "pied_mont"
+region_type = "village"
+
+[node name="Shape" type="CollisionShape3D" parent="Regions/PiedMont"]
+shape = SubResource("r_PiedMont")
+
+[node name="ForetOuest" type="Area3D" parent="Regions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -266, 0, 0)
+script = ExtResource("region")
+region_id = "foret_de_l_ouest"
+region_type = "foret"
+
+[node name="Shape" type="CollisionShape3D" parent="Regions/ForetOuest"]
+shape = SubResource("r_ForetOuest")
+
+[node name="Marais" type="Area3D" parent="Regions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -210, 0, 230)
+script = ExtResource("region")
+region_id = "marais_du_sud"
+region_type = "marais"
+
+[node name="Shape" type="CollisionShape3D" parent="Regions/Marais"]
+shape = SubResource("r_Marais")
+
+[node name="Desert" type="Area3D" parent="Regions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 261, 0, 216)
+script = ExtResource("region")
+region_id = "desert_du_sud_est"
+region_type = "desert"
+
+[node name="Shape" type="CollisionShape3D" parent="Regions/Desert"]
+shape = SubResource("r_Desert")
+
+[node name="Montagnes" type="Area3D" parent="Regions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -325)
+script = ExtResource("region")
+region_id = "montagnes_du_nord"
+region_type = "montagne"
+
+[node name="Shape" type="CollisionShape3D" parent="Regions/Montagnes"]
+shape = SubResource("r_Montagnes")
+
+[node name="Volcan" type="Area3D" parent="Regions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 260, 0, -230)
+script = ExtResource("region")
+region_id = "volcan_du_nord_est"
+region_type = "montagne"
+
+[node name="Shape" type="CollisionShape3D" parent="Regions/Volcan"]
+shape = SubResource("r_Volcan")
+
+[node name="LacDuVal" type="Area3D" parent="Regions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, 140)
+script = ExtResource("region")
+region_id = "lac_du_val"
+region_type = "lac"
+
+[node name="Shape" type="CollisionShape3D" parent="Regions/LacDuVal"]
+shape = SubResource("r_LacDuVal")
+
+[node name="Auberge" type="Node3D" parent="." unique_id=1227503352]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.75, 6)
+
+[node name="Batisse" type="CSGCombiner3D" parent="Auberge" unique_id=715279669]
+use_collision = true
+
+[node name="Dehors" type="CSGBox3D" parent="Auberge/Batisse" unique_id=771851584]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+size = Vector3(8, 4, 8)
+material = SubResource("murs")
+
+[node name="Dedans" type="CSGBox3D" parent="Auberge/Batisse" unique_id=2126015841]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+operation = 2
+size = Vector3(7.4, 3.6, 7.4)
+
+[node name="Porte" type="CSGBox3D" parent="Auberge/Batisse" unique_id=1858030067]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.45, -3.8)
+operation = 2
+size = Vector3(1.6, 2.5, 1)
+
+[node name="Salle" type="Area3D" parent="Auberge" unique_id=246985648]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+script = ExtResource("interior")
+interior_id = "auberge_bourg"
+interior_type = "auberge"
+owner_id = "aubergiste_bourg"
+
+[node name="Shape" type="CollisionShape3D" parent="Auberge/Salle" unique_id=2016286622]
+shape = SubResource("salle")
+
+[node name="Aubergiste" parent="Auberge" unique_id=393526835 instance=ExtResource("pnj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.2, 2)
+entity_id = "aubergiste_bourg"
+display_name = "L'aubergiste"
+
+[node name="LitAuberge" parent="Auberge" unique_id=1318144826 instance=ExtResource("lit")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4, 0.2, 1.5)
+spot_id = "lit_auberge_bourg"
+
+[node name="Bourg" type="Node3D" parent="." unique_id=20216741]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+
+[node name="Marchande" parent="Bourg" unique_id=501302696 instance=ExtResource("pnj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -4)
+entity_id = "marchande_bourg"
+display_name = "La marchande"
+
+[node name="Mendiant" parent="Bourg" unique_id=1579297860 instance=ExtResource("pnj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -6)
+entity_id = "mendiant_bourg"
+display_name = "Le mendiant"
+
+[node name="Puits" parent="Bourg" unique_id=1045599293 instance=ExtResource("pnj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+entity_id = "puits_bourg"
+display_name = "Le puits"
+kind = "lieu"
+problem_chance = 0.8
+
+[node name="LitMaison" parent="Bourg" unique_id=1796581828 instance=ExtResource("lit")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 5)
+spot_id = "lit_maison_joueur"
+spot_kind = "lit_maison"
+is_player_home = true
+
+[node name="Player" parent="." unique_id=583380518 instance=ExtResource("player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -9)
+
+[node name="CameraRig" type="Node3D" parent="." unique_id=1356432466 node_paths=PackedStringArray("target")]
+script = ExtResource("camrig")
+target = NodePath("../Player")
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig" unique_id=1130050325]
+current = true
+fov = 55.0
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1672253199]
+script = ExtResource("hud")

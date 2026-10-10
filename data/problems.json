@@ -1,0 +1,25 @@
+{
+  "_doc": "Les problèmes que le moteur donne aux entités. when = conditions sur le contexte de la rencontre ; weight = chance relative ; duration_days = le temps de répondre ; on_expire = les effets si personne ne s'en est occupé.",
+  "problems": [
+    {"id": "fievre", "type": "maladie", "label": "a de la fièvre", "severity": 2, "duration_days": 3, "weight": 2,
+     "when": [{"path": "target.kind", "op": "==", "value": "personne"}],
+     "on_expire": [{"op": "add", "path": "target.disposition", "value": -1}, {"op": "push", "path": "target.state.marques", "value": "fievre_passee"}]},
+    {"id": "blessure", "type": "blessure", "label": "est blessé·e", "severity": 2, "duration_days": 2, "weight": 1,
+     "when": [{"path": "target.kind", "op": "in", "value": ["personne", "animal"]}]},
+    {"id": "dette", "type": "pauvrete", "label": "ne peut pas payer sa dette", "severity": 1, "duration_days": 5, "weight": 2,
+     "when": [{"path": "target.kind", "op": "==", "value": "personne"}, {"path": "place.region_type", "op": "in", "value": ["ville", "capitale", "village"]}],
+     "on_expire": [{"op": "push", "path": "target.state.marques", "value": "ruine"}]},
+    {"id": "outil_casse", "type": "casse", "label": "a cassé son outil", "severity": 1, "duration_days": 4, "weight": 1,
+     "when": [{"path": "target.tags", "op": "has", "value": "artisan"}]},
+    {"id": "puits_tari", "type": "secheresse", "label": "est tari", "severity": 2, "duration_days": 6, "weight": 2,
+     "when": [{"path": "target.kind", "op": "==", "value": "lieu"}, {"path": "place.region_type", "op": "in", "value": ["desert", "village"]}],
+     "on_expire": [{"op": "set", "path": "flags.secheresse", "value": true}]},
+    {"id": "lac_pollue", "type": "pollution", "label": "est pollué", "severity": 2, "duration_days": 8, "weight": 2,
+     "when": [{"path": "target.kind", "op": "==", "value": "lieu"}, {"path": "place.region_type", "op": "in", "value": ["lac", "foret"]}]},
+    {"id": "feu_de_foret", "type": "incendie", "label": "brûle", "severity": 3, "duration_days": 1, "weight": 1,
+     "when": [{"path": "target.kind", "op": "==", "value": "lieu"}, {"path": "place.region_type", "op": "==", "value": "foret"}, {"path": "time.season", "op": "==", "value": "ete"}],
+     "on_expire": [{"op": "push", "path": "target.state.marques", "value": "brule"}]},
+    {"id": "eboulement", "type": "panne", "label": "est bloqué par un éboulement", "severity": 2, "duration_days": 4, "weight": 1,
+     "when": [{"path": "target.kind", "op": "==", "value": "lieu"}, {"path": "place.region_type", "op": "==", "value": "montagne"}]}
+  ]
+}
