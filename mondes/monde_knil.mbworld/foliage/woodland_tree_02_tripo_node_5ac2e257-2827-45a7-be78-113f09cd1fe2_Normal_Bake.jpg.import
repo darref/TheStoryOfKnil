@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dqcq3e7hrnip"
-path="res://.godot/imported/woodland_tree_02_tripo_node_5ac2e257-2827-45a7-be78-113f09cd1fe2_Normal_Bake.jpg-5183274e45827e8d210ef00ad2edb7a3.ctex"
+path.s3tc="res://.godot/imported/woodland_tree_02_tripo_node_5ac2e257-2827-45a7-be78-113f09cd1fe2_Normal_Bake.jpg-5183274e45827e8d210ef00ad2edb7a3.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "eee28344958c615d09dccca9842018d2"
@@ -14,17 +15,17 @@ generator_parameters={
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/foliage/woodland_tree_02_tripo_node_5ac2e257-2827-45a7-be78-113f09cd1fe2_Normal_Bake.jpg"
-dest_files=["res://.godot/imported/woodland_tree_02_tripo_node_5ac2e257-2827-45a7-be78-113f09cd1fe2_Normal_Bake.jpg-5183274e45827e8d210ef00ad2edb7a3.ctex"]
+dest_files=["res://.godot/imported/woodland_tree_02_tripo_node_5ac2e257-2827-45a7-be78-113f09cd1fe2_Normal_Bake.jpg-5183274e45827e8d210ef00ad2edb7a3.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
 compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
-compress/normal_map=0
+compress/normal_map=1
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
@@ -40,4 +41,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

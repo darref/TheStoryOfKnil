@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bjqh0vr7uvicn"
-path="res://.godot/imported/plains_tree_04_tripo_node_34b39d31-68d9-498f-b69d-02f0d17c0e45_BaseColor.jpg-afca04054efa693bb4416d851da7d19c.ctex"
+path.s3tc="res://.godot/imported/plains_tree_04_tripo_node_34b39d31-68d9-498f-b69d-02f0d17c0e45_BaseColor.jpg-afca04054efa693bb4416d851da7d19c.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "109f08ee11f07989cb40b9d253d699fd"
@@ -14,11 +15,11 @@ generator_parameters={
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/foliage/plains_tree_04_tripo_node_34b39d31-68d9-498f-b69d-02f0d17c0e45_BaseColor.jpg"
-dest_files=["res://.godot/imported/plains_tree_04_tripo_node_34b39d31-68d9-498f-b69d-02f0d17c0e45_BaseColor.jpg-afca04054efa693bb4416d851da7d19c.ctex"]
+dest_files=["res://.godot/imported/plains_tree_04_tripo_node_34b39d31-68d9-498f-b69d-02f0d17c0e45_BaseColor.jpg-afca04054efa693bb4416d851da7d19c.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -40,4 +41,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

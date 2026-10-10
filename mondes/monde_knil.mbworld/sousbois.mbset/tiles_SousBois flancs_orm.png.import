@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dhxuuremdld8v"
-path="res://.godot/imported/tiles_SousBois flancs_orm.png-5d0afe3d67bf88c0b872f40f816cda42.ctex"
+path.s3tc="res://.godot/imported/tiles_SousBois flancs_orm.png-5d0afe3d67bf88c0b872f40f816cda42.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "832174092c79f04767db2baa9965904f"
@@ -14,11 +15,11 @@ generator_parameters={
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/sousbois.mbset/tiles_SousBois flancs_orm.png"
-dest_files=["res://.godot/imported/tiles_SousBois flancs_orm.png-5d0afe3d67bf88c0b872f40f816cda42.ctex"]
+dest_files=["res://.godot/imported/tiles_SousBois flancs_orm.png-5d0afe3d67bf88c0b872f40f816cda42.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -28,8 +29,8 @@ compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
-roughness/mode=0
-roughness/src_normal=""
+roughness/mode=8
+roughness/src_normal="res://mondes/monde_knil.mbworld/sousbois.mbset/tiles_SousBois flancs_normal.png"
 process/channel_remap/red=0
 process/channel_remap/green=1
 process/channel_remap/blue=2
@@ -40,4 +41,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

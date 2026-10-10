@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dwx258ustkk1w"
-path="res://.godot/imported/tiles_Chemins flancs_albedo.png-e05029da82ef04e8d0e20cf6d59980b0.ctex"
+path.s3tc="res://.godot/imported/tiles_Chemins flancs_albedo.png-e05029da82ef04e8d0e20cf6d59980b0.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "5d430239457af07f4d4c02aed43ac3fa"
@@ -14,11 +15,11 @@ generator_parameters={
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/chemins.mbset/tiles_Chemins flancs_albedo.png"
-dest_files=["res://.godot/imported/tiles_Chemins flancs_albedo.png-e05029da82ef04e8d0e20cf6d59980b0.ctex"]
+dest_files=["res://.godot/imported/tiles_Chemins flancs_albedo.png-e05029da82ef04e8d0e20cf6d59980b0.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -40,4 +41,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bc5f4f8gus64f"
-path="res://.godot/imported/tiles_Basalte dessus_albedo.png-b624be40c364ca1bebb6e7f897fdadcf.ctex"
+path.s3tc="res://.godot/imported/tiles_Basalte dessus_albedo.png-b624be40c364ca1bebb6e7f897fdadcf.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "d064dc6cb4499fed43c584a541813fde"
@@ -14,11 +15,11 @@ generator_parameters={
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/volcan.mbset/tiles_Basalte dessus_albedo.png"
-dest_files=["res://.godot/imported/tiles_Basalte dessus_albedo.png-b624be40c364ca1bebb6e7f897fdadcf.ctex"]
+dest_files=["res://.godot/imported/tiles_Basalte dessus_albedo.png-b624be40c364ca1bebb6e7f897fdadcf.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -40,4 +41,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

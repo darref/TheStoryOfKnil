@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://7b4gen0od5qp"
-path="res://.godot/imported/tiles_Marais flancs_albedo.png-60c8517fff85be226c9c70791e595296.ctex"
+path.s3tc="res://.godot/imported/tiles_Marais flancs_albedo.png-60c8517fff85be226c9c70791e595296.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "2e3d57e8e9ec1d7b8e1ace850f1cc430"
@@ -14,11 +15,11 @@ generator_parameters={
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/marais.mbset/tiles_Marais flancs_albedo.png"
-dest_files=["res://.godot/imported/tiles_Marais flancs_albedo.png-60c8517fff85be226c9c70791e595296.ctex"]
+dest_files=["res://.godot/imported/tiles_Marais flancs_albedo.png-60c8517fff85be226c9c70791e595296.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -40,4 +41,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0
