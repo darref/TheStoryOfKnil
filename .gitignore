@@ -5,3 +5,13 @@
 /cuit/
 # Le grand monde d'essai ne sert qu'aux bancs de mesure.
 /mondes/grand.mbworld/
+
+# Règles Godot reprises du .gitignore initial de GitHub
+.nomedia
+.import/
+export.cfg
+export_credentials.cfg
+*.translation
+.mono/
+mono_crash.*.json
+~*.dll
