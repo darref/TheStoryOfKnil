@@ -15,6 +15,11 @@ d'actions, « Mépriser », le sommeil obligatoire toutes les 72 h). Tout cela e
 - **LE TON** : la touche disgracieuse, l'humour, le gore. **Knil** : un bully au gros ventre, avec des dents en moins
   et une coupe militaire dégradée. Sa singularité vient du PERSONNAGE (« qu'est-ce qu'un bully porterait, vénérerait,
   casserait ? »), pas d'un objet de Zelda transformé un à un.
+- **SON ALLURE — DESSINÉE (Jordan, 10 octobre 2026)** : `assets/concept/knil_reference_tpose.png` (planche en T, la
+  référence pour le modèle 3D) et `assets/icone/knil_icone.png` (l'icône du jeu, `config/icon`). Tunique écrue
+  déchirée trop courte (le ventre dépasse), lacée au col, poils au torse et aux bras ; pantalon brun rapiécé tenu par
+  une corde nouée ; bottes avachies ; deux brassards cloutés de pointes (l'un cuir brun, l'autre fer gris) ; coupe
+  militaire dégradée sur les côtés, nez rouge, joues roses, une dent en moins au sourire, sourcils épais.
 - ⚠ **LE DROIT — à garder en tête (ce n'est pas un avis juridique)** : AUCUN élément propre à Zelda (tunique verte et
   bonnet, oreilles pointues, Triforce, Master Sword, bouclier hylien, Hyrule, Ganon, musiques et bruitages) ; JAMAIS
   « Link » ni « Zelda » dans la communication du jeu ; peu de clins d'œil, et assumés comme des gags (la
@@ -469,7 +474,14 @@ galerie → souterrain, troisième personne, torche allumée.
 - **LES RÉGIONS** sont des volumes posés à la main (`Region`). Alternative : les déduire des couches MB (une couche
   « sable » = désert). À trancher quand le vrai monde existe.
 - **LE PERSONNAGE ANIMÉ** : `Player` attend un `AnimationTree` (`parameters/move/blend_position`,
-  `parameters/conditions/sleeping`) ou un `AnimationPlayer` (`idle`, `walk`, `run`, `sleep`). Pas de modèle encore.
+  `parameters/conditions/sleeping`) ou un `AnimationPlayer` (`idle`, `walk`, `run`, `sleep`).
+  **LE MODÈLE EST LÀ (10 octobre 2026)** : `assets/personnages/knil/knil.glb` (Tripo, ~20 700 triangles, squelette
+  MIXAMO de 65 os `mixamorig_*`), posé dans `player.tscn` (`Modele`, échelle 1,9 : 0,92 m → ~1,75 m, la taille de
+  la capsule de collision ; il regarde vers +Z, le sens d'avance). Le Player trouve l'AnimationPlayer DANS le modèle
+  et les noms se règlent (`anim_idle`, `anim_walk`, `anim_run`, `anim_jump`). ⚠ **UNE SEULE ANIMATION** :
+  `complain_01_001` (6,3 s, sur place, mise en boucle dans `knil.glb.import`), jouée comme « idle » — et donc aussi en
+  marchant, faute de mieux. Il manque marche, course, saut : le squelette étant celui de Mixamo, on les prend sur
+  Mixamo (« without skin ») et on les ajoute à la bibliothèque. Vu à l'image : texturé, debout, à la bonne taille.
 - **LES PNJ** sont immobiles. Leurs routines (horaires, déplacements, foyers) se brancheront sur `GameClock` et
   le GameState, comme le reste.
 - La collision en formes CONCAVES par tuile est la plus fidèle et la plus chère ; à mesurer sur le vrai monde.

@@ -2,39 +2,25 @@
 
 [ext_resource type="Script" path="res://player/player.gd" id="1"]
 [ext_resource type="Script" path="res://player/torche.gd" id="2"]
+[ext_resource type="PackedScene" path="res://assets/personnages/knil/knil.glb" id="3"]
 
 [sub_resource type="CapsuleShape3D" id="body"]
 radius = 0.35
 height = 1.8
-
-[sub_resource type="CapsuleMesh" id="mesh"]
-radius = 0.35
-height = 1.8
-
-[sub_resource type="StandardMaterial3D" id="mat"]
-albedo_color = Color(0.85, 0.7, 0.3, 1)
-
-[sub_resource type="BoxMesh" id="nose"]
-size = Vector3(0.2, 0.2, 0.4)
 
 [sub_resource type="SphereShape3D" id="sense"]
 radius = 2.2
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1")
+anim_idle = "complain_01_001"
 
 [node name="Shape" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 shape = SubResource("body")
 
-[node name="Body" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
-mesh = SubResource("mesh")
-surface_material_override/0 = SubResource("mat")
-
-[node name="Nose" type="MeshInstance3D" parent="Body"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.35)
-mesh = SubResource("nose")
+[node name="Modele" parent="." instance=ExtResource("3")]
+transform = Transform3D(1.9, 0, 0, 0, 1.9, 0, 0, 0, 1.9, 0, 0, 0)
 
 [node name="Sense" type="Area3D" parent="."]
 

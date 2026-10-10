@@ -13,7 +13,8 @@ extends CharacterBody3D
 ## `interact` fait parler l'Interactable le plus proche (`Interactable.interact`) ; pendant un dialogue, il ne bouge
 ## pas. L'ANIMATION est un branchement : un AnimationTree enfant reçoit `parameters/move/blend_position`
 ## (0 arrêt, 0,5 marche, 1 course) et `parameters/conditions/airborne` ; sans lui, un AnimationPlayer enfant joue
-## « idle » / « walk » / « run » / « jump » s'il les a.
+## « idle » / « walk » / « run » / « jump » s'il les a — cherché aussi DANS le modèle (`Modele`, le .glb importé),
+## et ces noms se changent (`anim_idle`…) : un export de Mixamo ou de Tripo a les siens.
 
 @export var walk_speed := 3.5
 @export var run_speed := 7.0
@@ -26,6 +27,11 @@ extends CharacterBody3D
 ## La part de la commande gardée en l'air (0 : aucune, 1 : comme au sol).
 @export var air_control := 0.6
 @export var fall_limit := 30.0
+@export_group("Animation")
+@export var anim_idle := "idle"
+@export var anim_walk := "walk"
+@export var anim_run := "run"
+@export var anim_jump := "jump"
 @export_group("")
 
 const Triche := preload("res://core/triche.gd")
@@ -34,7 +40,7 @@ const WORLD_MASK := 1 | 16
 
 @onready var _sense: Area3D = $Sense
 @onready var _anim_tree: AnimationTree = get_node_or_null("AnimationTree")
-@onready var _anim_player: AnimationPlayer = get_node_or_null("AnimationPlayer")
+@onready var _anim_player: AnimationPlayer = _find_anim_player()
 
 var focus: Interactable = null
 var _gravity := float(ProjectSettings.get_setting("physics/3d/default_gravity", 9.8))
@@ -184,8 +190,16 @@ func _animate(speed_ratio: float, airborne := false) -> void:
 		return
 	if _anim_player == null:
 		return
-	var want := "jump" if airborne and _jumped else \
-		("run" if speed_ratio > 0.6 else ("walk" if speed_ratio > 0.05 else "idle"))
+	var want := anim_jump if airborne and _jumped else \
+		(anim_run if speed_ratio > 0.6 else (anim_walk if speed_ratio > 0.05 else anim_idle))
 	if want != _anim_current and _anim_player.has_animation(want):
 		_anim_current = want
 		_anim_player.play(want, 0.2)
+
+
+func _find_anim_player() -> AnimationPlayer:
+	var own := get_node_or_null("AnimationPlayer") as AnimationPlayer
+	if own:
+		return own
+	var model := get_node_or_null("Modele")
+	return model.find_child("AnimationPlayer", true, false) as AnimationPlayer if model else null
