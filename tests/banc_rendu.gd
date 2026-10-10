@@ -1,7 +1,7 @@
 extends Node3D
 ## BANC DE RENDU — avec fenêtre : un monde de N × N colonnes posé par le greffon (GridMap), vu de la caméra de
 ## jeu (vue de dessus) puis de très haut. Appels de dessin, objets, triangles, images par seconde.
-##   Godot --path D:/Resolve res://tests/banc_rendu.tscn
+##   Godot --path D:/Knil res://tests/banc_rendu.tscn
 
 const MBWorld := preload("res://addons/marchingblocks_paint/mb_world.gd")
 const N := 256

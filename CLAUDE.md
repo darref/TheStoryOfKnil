@@ -1,27 +1,31 @@
-# Resolve — charte du jeu
+# The Story of Knil — charte du jeu
 
-## 1. Le jeu en une phrase — DÉCIDÉ (Jordan, 8 octobre 2026)
+## 1. Le jeu en une phrase — DÉCIDÉ (Jordan, 10 octobre 2026)
 
-> **Explorer un grand monde de tuiles MarchingBlocks, et choisir — ou non — de résoudre les problèmes des gens et
-> du monde, par une barre d'actions que le contexte compose.**
+> **Un action-aventure vu de dessus, dans la veine des Zelda : Knil, un anti-héros SANS AUCUNE VERTU — un vrai
+> bourrin qui ne respecte rien de ce qui est sacré — sauve le monde quand même.**
 
-Le principe général change peu ; c'est l'expression visuelle et le gameplay qui viendront par-dessus. D'où la règle
-d'architecture : **le backend ne connaît pas la présentation.** Il émet sur l'`EventBus` ; caméra, UI, animations,
-lumière écoutent.
+« The Story of Knil » : le titre fait un clin d'œil (Knil, c'est Link à l'envers). Le projet s'appelait **Resolve**
+jusqu'au 10 octobre 2026 : il a été vidé de ce qui en faisait la singularité (le moteur de décision et sa barre
+d'actions, « Mépriser », le sommeil obligatoire toutes les 72 h). Tout cela est gardé dans git : le commit `7c1506d`,
+étiquette **`resolve-final`**.
 
-- **Le monde** : des tuiles 3D MarchingBlocks ; des régions — villes, une capitale, villages, forêts, lacs,
-  montagnes, désert, côte, marais…
-- **La vue** : un personnage animé, vu **de dessus** dehors ; **troisième personne** dans un intérieur (bâtiment,
-  grotte) ; la bascule est AUTOMATIQUE (`Interior` → `CameraRig`).
-- **Les rencontres** : une barre horizontale de boutons CARRÉS, un par action ; l'icône dit le but de l'action.
-  **« Mépriser » est toujours là** (en dernier) : la barre n'est jamais vide.
-- **Le moteur de décision** compose la barre depuis : qui je suis, mon patrimoine, où nous sommes, la date et
-  l'heure, et l'historique de mes rencontres avec la cible (personnage ou objet). Ses tirages sont déterministes
-  au **germe de la partie** : deux parties ne se ressemblent jamais, **la divergence est gratuite par
-  construction**, sans scénario écrit.
-- **Le sommeil rythme le jeu** : au plus tous les **3 jours** (72 h), sinon effondrement où que l'on soit. Le cycle
-  jour / nuit défile en accéléré pendant le sommeil. On se réveille au même endroit ou ailleurs selon le couchage
-  et TOUS les choix de la partie. Préconisé : un lit (chez soi, chez quelqu'un, à l'auberge).
+- **LE GAMEPLAY** : celui d'un Zelda vu de dessus (exploration, donjons, objets qui ouvrent le monde, cœurs).
+  Une mécanique de jeu ne se protège pas : c'est libre.
+- **LE TON** : la touche disgracieuse, l'humour, le gore. **Knil** : un bully au gros ventre, avec des dents en moins
+  et une coupe militaire dégradée. Sa singularité vient du PERSONNAGE (« qu'est-ce qu'un bully porterait, vénérerait,
+  casserait ? »), pas d'un objet de Zelda transformé un à un.
+- ⚠ **LE DROIT — à garder en tête (ce n'est pas un avis juridique)** : AUCUN élément propre à Zelda (tunique verte et
+  bonnet, oreilles pointues, Triforce, Master Sword, bouclier hylien, Hyrule, Ganon, musiques et bruitages) ; JAMAIS
+  « Link » ni « Zelda » dans la communication du jeu ; peu de clins d'œil, et assumés comme des gags (la
+  « Quadriforce » : quatre CARRÉS — pas en 2 × 2 avec quatre couleurs, c'est le logo de Windows). Avant la sortie
+  commerciale : chercher « Knil » dans les bases de marques (INPI, EUIPO, USPTO) et voir un avocat en propriété
+  intellectuelle.
+- **LA VUE** (gardée) : de dessus dehors ; troisième personne dans un intérieur (bâtiment, grotte, galerie) ; la
+  bascule est AUTOMATIQUE (`Interior` → `CameraRig`).
+- **LA RÈGLE D'ARCHITECTURE** (gardée) : **le backend ne connaît pas la présentation.** Il émet sur l'`EventBus` ;
+  caméra, UI, animations, lumière écoutent.
+- **LA CARTE SE PEINT À LA MAIN** dans le logiciel MarchingBlocks (Jordan). On ne la regénère pas par script.
 
 ## 2. MarchingBlocks dans ce projet — VÉRIFIÉ (8 octobre 2026)
 
@@ -65,7 +69,7 @@ du jeu** : ouverte dans l'éditeur, la scène enregistre les grilles générées
 
 ### LE MONDE SE FAIT DANS LE LOGICIEL MB — DÉCIDÉ (Jordan, 8 octobre 2026)
 
-« On laissera le greffon pour les acheteurs de MB. » Le monde de Resolve se peint dans l'appli MarchingBlocks, pas
+« On laissera le greffon pour les acheteurs de MB. » Le monde de Knil se peint dans l'appli MarchingBlocks, pas
 dans Godot. ⚠ Il faut quand même LIRE son export (`.mbworld`) côté jeu : le greffon reste la référence de lecture,
 mais seulement dans la CHAÎNE DE CUISSON (outil d'éditeur, §6) — le jeu livré n'embarque ni le greffon ni la règle
 de pose, il charge des morceaux cuits. À terme, un « Export baked world » dans l'appli MB elle-même ferait la
@@ -73,7 +77,7 @@ cuisson à la source (une fonction utile aussi aux acheteurs) : à proposer à M
 
 ### LES COUCHES DU MONDE — DÉCIDÉ (Jordan, 8 octobre 2026), ÉCRIT LE MÊME JOUR
 
-Le monde de Resolve est **UN `.mbworld` à plusieurs COUCHES**, peintes dans le logiciel MB :
+Le monde de Knil est **UN `.mbworld` à plusieurs COUCHES**, peintes dans le logiciel MB :
 
 | Couche MB (nom) | Rôle (`tools/cuisson/couches.json`) | Ce qu'elle porte | Piste, distance |
 |---|---|---|---|
@@ -107,22 +111,22 @@ Le monde de Resolve est **UN `.mbworld` à plusieurs COUCHES**, peintes dans le 
   faux), profondeur 1 (l'arche devient souterraine). `sonde_scene` : dans la galerie, souterrain, troisième personne,
   torche allumée. Vu à l'image (`capture_couches`).
 
-### LE VAL DE RÉSOLVE — LE PREMIER MONDE, FAIT PAR LE LOGICIEL MB (Jordan, 8 octobre 2026 : « utilise l'exemple de test
+### LE MONDE DE KNIL (ex-« Val de Résolve ») — LE PREMIER MONDE, FAIT PAR LE LOGICIEL MB (Jordan, 8 octobre 2026 : « utilise l'exemple de test
 ### qui a déjà 3 matières, rajoute 7 matières bien pensées et fais un monde à thème »)
 
-**`Resolve_MB_project/`** (un `.gdignore` : le projet Resolve ne le lit pas) — le projet MarchingBlocks du jeu :
-**`val_de_resolve.mbproj`, UN SEUL PROJET** (Jordan, 9 octobre 2026 : « je ne veux pas avoir plusieurs sous-maps »), à
+**`Knil_MB_project/`** (un `.gdignore` : le projet Godot ne le lit pas) — le projet MarchingBlocks du jeu :
+**`monde_knil.mbproj`, UN SEUL PROJET** (Jordan, 9 octobre 2026 : « je ne veux pas avoir plusieurs sous-maps »), à
 ouvrir dans MB pour repeindre ; `matieres/` (l'exemple de MB et les sept matières neuves), `modeles/arbres/` (les arbres
 de HEARTWORLD), `outils/fabriquer_val.gd` (le script qui l'a fait, LANCÉ DANS LE PROJET MB — rien du format n'est
 réécrit), `outils/banc_ouverture_mb.gd` (ouvre un projet dans la fenêtre de MB et mesure : `--tenir=s`, `--vues=26;60;
 monde@300`, `--sans-feuillage`, `--octant=n`, `--sans-physique`, `--chronos` ; remet les réglages de MB) :
 
 ```
-"$GODOT" --headless --path D:/MarchingBlocks --script D:/Resolve/Resolve_MB_project/outils/fabriquer_val.gd [-- --taille=784]
-"$GODOT" --path D:/MarchingBlocks --script D:/Resolve/Resolve_MB_project/outils/banc_ouverture_mb.gd -- --projet=<.mbproj>
-"$GODOT" --headless --path D:/Resolve --import
-"$GODOT" --headless --path D:/Resolve res://tools/cuisson/cuire.tscn -- --monde=res://mondes/val_de_resolve.mbworld/world.json
-"$GODOT" --headless --path D:/Resolve res://tests/sonde_collision.tscn -- --monde=res://cuit/val_de_resolve
+"$GODOT" --headless --path D:/MarchingBlocks --script D:/Knil/Knil_MB_project/outils/fabriquer_val.gd [-- --taille=784]
+"$GODOT" --path D:/MarchingBlocks --script D:/Knil/Knil_MB_project/outils/banc_ouverture_mb.gd -- --projet=<.mbproj>
+"$GODOT" --headless --path D:/Knil --import
+"$GODOT" --headless --path D:/Knil res://tools/cuisson/cuire.tscn -- --monde=res://mondes/monde_knil.mbworld/world.json
+"$GODOT" --headless --path D:/Knil res://tests/sonde_collision.tscn -- --monde=res://cuit/monde_knil
 ```
 
 - ⚠ **MB PLANTAIT SUR LE VAL — RÉPARÉ DANS MB (9 octobre 2026, Jordan : « il ne doit pas planter »)**, deux fichiers et
@@ -218,15 +222,15 @@ monde@300`, `--sans-feuillage`, `--octant=n`, `--sans-physique`, `--chronos` ; r
 - ⚠ **UN MONDE CUIT NE SE DÉPLACE PAS** : ses morceaux renvoient à `partage/` par un chemin `res://` ABSOLU — renommé,
   plus rien ne se charge (vu : « Cannot call method 'instantiate' on a null value »). On recuit dans le bon dossier.
 - **LE WORKFLOW — PEINDRE DANS MB, JOUER DANS GODOT (Jordan, 9 octobre 2026 : « le plus simplement possible »)** :
-  1. MB : ouvrir `Resolve_MB_project/val_de_resolve.mbproj`, peindre, enregistrer (Ctrl+S) ;
-  2. MB : World → « Export the world… » → le dossier `D:\Resolve\mondes` (l'export s'appelle comme le projet :
-     `mondes/val_de_resolve.mbworld`, réécrit sur place) ;
-  3. **double-clic sur `D:\Resolve\recuire.bat`** (le jeu fermé ; l'éditeur Godot peut rester ouvert) : l'import, la
+  1. MB : ouvrir `Knil_MB_project/monde_knil.mbproj`, peindre, enregistrer (Ctrl+S) ;
+  2. MB : World → « Export the world… » → le dossier `D:\Knil\mondes` (l'export s'appelle comme le projet :
+     `mondes/monde_knil.mbworld`, réécrit sur place) ;
+  3. **double-clic sur `D:\Knil\recuire.bat`** (le jeu fermé ; l'éditeur Godot peut rester ouvert) : l'import, la
      cuisson (~8 min), la sonde de collision ; il dit « C'EST PRÊT » ou ce qui ne va pas (`cuit/derniere_cuisson.txt`) ;
   4. lancer le jeu. Oublié l'étape 3 ? Le jeu le DIT (`ChunkStreamer._warn_if_stale` : l'export plus récent que la
      cuisson → un message à l'écran et un avertissement).
-  ⚠ `fabriquer_val.gd` refait TOUT le projet : il refuse d'écraser un `val_de_resolve.mbproj` existant (`--ecraser`).
-  ⚠ Les LIMITES du monde (±385 m) sont dans `mondes/val_de_resolve.limites.json`, hors du dossier que MB réécrit : un
+  ⚠ `fabriquer_val.gd` refait TOUT le projet : il refuse d'écraser un `monde_knil.mbproj` existant (`--ecraser`).
+  ⚠ Les LIMITES du monde (±385 m) sont dans `mondes/monde_knil.limites.json`, hors du dossier que MB réécrit : un
   cadre repeint ailleurs → les y changer. ⚠ Les RÉGIONS, PNJ, lits, l'auberge sont posés dans `scenes/main.tscn` : une
   ville déplacée dans MB → les déplacer dans Godot.
 - La piste « gros » est ramenée à 200 m (400 chargeait 114 morceaux de la chaîne du nord au départ).
@@ -276,8 +280,8 @@ commande. Tombé à plus de 30 m sous le dernier sol touché : retour à ce sol.
 sous `mondes/` → **cuit** → `cuit/<nom>/` → chargé en jeu par `ChunkStreamer` (le nœud `Monde` de `main.tscn`).
 
 ```
-"$GODOT" --headless --path D:/Resolve --import      # après avoir copié un .mbworld (ses .glb s'importent)
-"$GODOT" --headless --path D:/Resolve res://tools/cuisson/cuire.tscn -- --monde=res://mondes/<nom>.mbworld/world.json
+"$GODOT" --headless --path D:/Knil --import      # après avoir copié un .mbworld (ses .glb s'importent)
+"$GODOT" --headless --path D:/Knil res://tools/cuisson/cuire.tscn -- --monde=res://mondes/<nom>.mbworld/world.json
          [--sortie=res://cuit/<nom>] [--morceau=32] [--sans-lod] [--compression] [--sans-collision]
 ```
 
@@ -314,24 +318,21 @@ sous `mondes/` → **cuit** → `cuit/<nom>/` → chargé en jeu par `ChunkStrea
   (`physics/3d/run_on_separate_thread`) : 3 au lieu de 4 — PAS activée (elle change le fil des rappels physiques du
   jeu ; à décider).
 
-## 3. L'architecture — ÉCRITE (8 octobre 2026)
+
+## 3. L'architecture — ÉCRITE (8 octobre 2026, recentrée sur Knil le 10)
 
 Godot 4.7, GDScript. Commentaires et données en français, identifiants en anglais (l'API de Godot l'est).
 
 ```
 core/        LE BACKEND — autoloads, sans aucune présentation
-  event_bus.gd        EventBus : tous les signaux (lieux, rencontres, temps, sommeil, partie)
+  event_bus.gd        EventBus : tous les signaux (lieux, vue, dialogue, temps, partie)
   game_clock.gd       GameClock : LE temps (minutes depuis le début), phases, saisons, avance accélérée
-  game_state.gd       GameState : l'état lu par le moteur et sauvé — par CHEMINS (« player.wealth.gold »)
-  rules.gd            le langage des données : conditions, effets, tirage déterministe
-  decision_engine.gd  DecisionEngine : propose la barre, applique un choix, donne et fait expirer les problèmes
-  sleep_system.gd     SleepSystem : fatigue, effondrement à 72 h, sommeil accéléré, règles de réveil
+  game_state.gd       GameState : l'état sauvé, par CHEMINS (« player.money ») — Knil (vie en demi-cœurs, argent,
+                      objets), le lieu, l'état des entités du monde, les faits
   save_system.gd      SaveSystem : un JSON par emplacement (F5 / F9)
-  inputs.gd           les touches (PHYSIQUES : W A S D = Z Q S D en AZERTY), déclarées en code
-data/        CE QUI FAIT LE JEU — sans code
-  actions.json        les actions de la barre
-  problems.json       les problèmes que le moteur donne aux entités
-  sleep.json          couchages, limites, règles de réveil
+  inputs.gd           les touches (PHYSIQUES : W A S D = Z Q S D en AZERTY) et la manette, déclarées en code
+  triche.gd           la triche (§4)
+data/        triche.json
 tools/cuisson/  la cuisson d'un .mbworld en morceaux (§2), et `couches.json` : le rôle de chaque couche — outil,
              ne part pas dans le jeu
 mondes/      les .mbworld exportés par le logiciel MB (les SOURCES) · cuit/ : les mondes cuits (générés, hors git)
@@ -339,60 +340,33 @@ world/       les nœuds posés dans le monde
   region.gd           Region (Area3D) : ville, capitale, forêt, lac, montagne, désert… — emboîtables
   interior.gd         Interior (Area3D) : maison, auberge… — passe la caméra en 3e personne ; « souterrain » :
                       l'intérieur AUTOMATIQUE des galeries (`set_underground`, dit par le ChunkStreamer)
-  interactable.gd     Interactable (Area3D) : l'objet d'une décision — personne, animal, objet, lieu
-  sleep_spot.gd       SleepSpot (Area3D) : lit maison / auberge / autre, camp
+  interactable.gd     Interactable (Area3D) : ce à quoi on parle — ses répliques (`lines`), une par appui
   chunk_streamer.gd   ChunkStreamer : les morceaux cuits chargés autour du joueur (le visible, puis la collision)
   feuillage_morceau.gd  les plants d'un morceau, faits MultiMesh au chargement
   souterrain_morceau.gd  le sous-sol d'un morceau (l'air enfoui) : le joueur est-il sous terre ?
   day_night.gd        le soleil et le ciel suivent l'horloge ; la nuit, une LUNE (ombrée : sans ombre elle éclairait
                       l'auberge à travers le toit, vu) et un plancher d'ambiante ; dans un intérieur l'ambiante baisse
-  prefabs/            pnj.tscn, lit.tscn (provisoires)
-player/      player.gd/.tscn (CharacterBody3D), camera_rig.gd (les deux vues et leur fondu), torche.gd (la torche :
-             allumée d'elle-même hors du plein jour et dans un intérieur, T la force)
-ui/          hud.gd (provisoire), action_bar.gd (la barre de boutons carrés)
-scenes/      main.tscn — le bac à sable : le monde d'essai cuit (Sol et galeries, Obstacles autour de la place, un
-             volcan), un village, une auberge, un lac, quatre rencontres, deux lits
+  prefabs/            pnj.tscn (provisoire)
+player/      player.gd/.tscn (CharacterBody3D : Knil), camera_rig.gd (les deux vues et leur fondu), torche.gd (la
+             torche : allumée d'elle-même hors du plein jour et dans un intérieur, T la force)
+ui/          hud.gd (provisoire) : cœurs, argent, heure, lieu ; la boîte de dialogue
+scenes/      main.tscn — le bac à sable : le monde cuit, les régions, une auberge, quatre PNJ qui parlent
 tests/       les épreuves (§5)
 ```
 
-**Couches physiques** : 1 le monde (tuiles, bâtiments) · 2 le joueur · 4 les interactables · 8 les couchages.
+**Couches physiques** : 1 le monde (tuiles, bâtiments) · 2 le joueur · 4 les interactables · 5 (valeur 16) les troncs.
 
-### Le moteur de décision — le cœur du jeu
-
-- **LE CONTEXTE** d'une rencontre (`DecisionEngine.build_context`) — tout ce qu'une condition peut lire :
-  `player.*` (identity, wealth, home) · `place.*` (region_id, region_type, tags, interior, interior_type,
-  interior_owner) · `time.*` (day, hour, phase, weekday, season) · `target.*` (ce que l'Interactable déclare +
-  son état persistant : problem, disposition, state) · `history.*` (count, actions, categories, last_action,
-  days_since_last, disposition — avec CETTE cible) · `karma.*` (le bilan de toute la partie) · `flags.*`.
-- **LE LANGAGE** (`core/rules.gd`, et nulle part ailleurs) — condition `{"path", "op", "value"}`, ops
-  `== != < <= > >= in not_in has not_has exists missing`, `{"any": […]}`, `{"not": …}` ; effets `add set push
-  erase stamp resolve_problem` ; un chemin `target.*` écrit dans l'état persistant de la cible.
-- **LA BARRE** : filtrer (`when`), pondérer (`weight` × `weight_mods`), tirer au plus `max_choices − 1` actions,
-  ranger par `order`, puis **« Mépriser » en dernier, toujours**.
-- **LE TIRAGE EST DÉTERMINISTE** : germe de la partie + cible + jour + nombre de rencontres. Même partie, même
-  moment → même barre (on ne « relance » pas une rencontre en partant et revenant) ; autre partie → autre monde.
-- **LES PROBLÈMES** naissent au même germe (`problems.json`), durent `duration_days`, et s'ils sont laissés sans
-  réponse, `on_expire` laisse ses traces (marques sur l'entité, faits du monde). C'est là que la partie diverge.
-- Ajouter du contenu = écrire du JSON. Une nouvelle sorte de valeur dans le contexte = l'ajouter dans
-  `build_context` (UN endroit).
-
-### Le sommeil
-
-`awake_hours` = depuis `player.last_wake_minutes`. Avertissements à 48, 60, 68 h ; à 72 h, `sleep(null, forced)`.
-On ne peut dormir qu'après `min_awake_hours` (10). Le sommeil avance l'horloge en accéléré (`real_seconds` : 8 s
-réelles), jusqu'au matin. Puis les `wake_rules` (dans l'ordre ; conditions + chance) donnent la destination :
-`same`, `home`, `nearest:<couchage>`, `tag:<étiquette>` — une règle qui veut un lieu que le monde n'a pas passe la
-main à la suivante. Un couchage qui n'est pas « à soi » (auberge non payée, lit d'un inconnu) compte comme le sol.
+**LE DIALOGUE** : `E` / `X` près d'un Interactable → `interact()` montre la réplique suivante
+(`EventBus.dialogue_shown`) ; après la dernière, ou `Échap` / `B`, la boîte se ferme (`dialogue_closed`). Pendant un
+dialogue, Knil ne bouge pas et ne saute pas.
 
 ## 4. Commandes de jeu (provisoires)
 
-À LA MANETTE (Xbox) : stick gauche se déplacer · clic du stick ou RB courir · A sauter (et valider dans la barre) ·
-X parler / partir · B fermer · Y torche · LB dormir · croix ← → choisir dans la barre · stick droit ← → tourner la
-troisième personne, ↑ ↓ zoomer · Back vue haute. Les textes à l'écran suivent le dernier appareil touché
-(`core/inputs.gd`, la table des deux). ⚠ Sur une manette, A SAUTE et VALIDE : barre ouverte — ou fermée à l'image
-même — A ne fait pas sauter (`DecisionEngine.closed_frame`) ; vu par mutation : sans cela, choisir faisait sauter de
-1,44 m. ÉPROUVÉ par de faux événements (`sonde_manette`, 15) — PAS ENCORE TENU EN MAIN avec une vraie manette.
-AU CLAVIER : W A S D (Z Q S D en AZERTY) se déplacer · Maj courir · Espace sauter (1,4 m) · E parler / partir · 1–8 choisir · F dormir · T torche
+À LA MANETTE (Xbox) : stick gauche se déplacer · clic du stick ou RB courir · A sauter · X parler · B fermer ·
+Y torche · stick droit ← → tourner la troisième personne, ↑ ↓ zoomer · Back vue haute. Les textes à l'écran suivent
+le dernier appareil touché (`core/inputs.gd`, la table des deux). ÉPROUVÉ par de faux événements (`sonde_manette`,
+13) — PAS ENCORE TENU EN MAIN avec une vraie manette.
+AU CLAVIER : W A S D (Z Q S D en AZERTY) se déplacer · Maj courir · Espace sauter (1,4 m) · E parler · T torche
 (automatique → allumée → éteinte) · molette : zoom · Ctrl + molette : vue haute / retour · Échap fermer ·
 F5 / F9 sauvegarde rapide · clic droit + souris : tourner la vue en troisième personne.
 
@@ -402,43 +376,40 @@ F1 / Start le VOL (Espace / A monte, C / gâchette gauche descend, pas de gravit
 vol compris) · F3 / clic du stick droit la VITESSE ×1, ×3, ×8 · F4 +1 h. Le HUD l'affiche en orange. Éteinte, ses
 touches ne font rien. ÉPROUVÉE : `sonde_triche_limites` (11).
 
-**LES LIMITES DU MONDE — RADICALES (même demande).** Le monde cuit porte `play_bounds` (±385 m, écrites par le
-générateur dans `resolve_limites.json`, à côté du `world.json`) ; le ChunkStreamer en fait QUATRE MURS invisibles de 600 m de haut (`Monde/Limites`) et les donne au
-joueur (`Player.world_bounds`), qui est ramené en dedans À CHAQUE IMAGE (position et vitesse), en marchant, en
-volant, en fantôme : grimper sur le cadre par un bug ne fait sortir de rien. Les troncs d'arbre sont sur la couche
-physique 5 (valeur 16) : le joueur les heurte, la caméra non.
+**LES LIMITES DU MONDE — RADICALES (même demande).** Le monde cuit porte `play_bounds` (±385 m, lues dans
+`mondes/<nom>.limites.json`, à côté du dossier `.mbworld`) ; le ChunkStreamer en fait QUATRE MURS invisibles de 600 m
+de haut (`Monde/Limites`) et les donne au joueur (`Player.world_bounds`), qui est ramené en dedans À CHAQUE IMAGE
+(position et vitesse), en marchant, en volant, en fantôme : grimper sur le cadre par un bug ne fait sortir de rien.
+Les troncs d'arbre sont sur la couche physique 5 (valeur 16) : le joueur les heurte, la caméra non.
 
 ## 5. Les épreuves
 
 ```
 GODOT=/c/Users/jorda/Desktop/Godot_v4.7-stable_win64.exe/Godot_v4.7-stable_win64_console.exe
-"$GODOT" --headless --path D:/Resolve --import                          # la première fois
-"$GODOT" --headless --path D:/Resolve res://tests/test_backend.tscn     # le backend : 141 vérifications
-"$GODOT" --headless --path D:/Resolve res://tests/fabriquer_monde_essai.tscn   # le monde d'essai (.mbworld)
-"$GODOT" --headless --path D:/Resolve res://tests/test_cuisson.tscn     # la cuisson par couches et fenêtres, le chargement, le sous-sol : 94
-"$GODOT" --headless --path D:/Resolve res://tests/sonde_scene.tscn      # la scène : morceaux, sol, région, caméra
-"$GODOT" --path D:/Resolve --windowed res://tests/banc_marche.tscn       # la traversée du grand monde : à-coups
-"$GODOT" --path D:/Resolve --windowed res://tests/capture_nuit.tscn      # la nuit : lune, ambiante, torche (user://captures)
-"$GODOT" --path D:/Resolve --windowed res://tests/capture_couches.tscn   # la place et ses massifs, le volcan, une galerie
-"$GODOT" --path D:/Resolve --windowed res://tests/capture_monde.tscn -- --monde=res://cuit/val_de_resolve [--lieux=x,y,z;…]
-"$GODOT" --headless --path D:/Resolve res://tests/sonde_collision.tscn -- --monde=…  # collision cuite = rendu ?
-"$GODOT" --headless --path D:/Resolve res://tests/sonde_galerie.tscn -- --monde=… [--escalier=x,z]  # la galerie se parcourt ?
-"$GODOT" --path D:/Resolve --windowed res://tests/capture_zoom.tscn       # molette, Ctrl + molette, ce qui se charge
-"$GODOT" --headless --path D:/Resolve res://tests/sonde_manette.tscn     # la manette (faux événements) : 15 vérifications
-"$GODOT" --headless --path D:/Resolve res://tests/sonde_triche_limites.tscn   # la triche et les limites : 11 vérifications
-"$GODOT" --path D:/Resolve --windowed res://tests/capture_reference.tscn -- --monde=… --lieu=x,y,z  # le GREFFON, pour comparer
-"$GODOT" --headless --path D:/Resolve res://tests/banc_taille.tscn      # le temps de pose selon la taille du monde
-"$GODOT" --path D:/Resolve res://tests/capture_scene.tscn                # deux captures (user://captures)
-"$GODOT" --path D:/Resolve res://tests/banc_rendu.tscn --disable-vsync [-- --cuit]   # le rendu, GridMap ou cuit
+"$GODOT" --headless --path D:/Knil --import                          # la première fois
+"$GODOT" --headless --path D:/Knil res://tests/fabriquer_monde_essai.tscn   # le monde d'essai (.mbworld)
+"$GODOT" --headless --path D:/Knil res://tests/test_cuisson.tscn     # la cuisson par couches et fenêtres, le chargement, le sous-sol : 94
+"$GODOT" --headless --path D:/Knil res://tests/sonde_scene.tscn      # la scène : morceaux, sol, région, caméra, dialogue, saut, galerie
+"$GODOT" --path D:/Knil --windowed res://tests/banc_marche.tscn       # la traversée du grand monde : à-coups
+"$GODOT" --path D:/Knil --windowed res://tests/capture_nuit.tscn      # la nuit : lune, ambiante, torche (user://captures)
+"$GODOT" --path D:/Knil --windowed res://tests/capture_couches.tscn   # la place et ses massifs, le volcan, une galerie
+"$GODOT" --path D:/Knil --windowed res://tests/capture_monde.tscn -- --monde=res://cuit/monde_knil [--lieux=x,y,z;…]
+"$GODOT" --headless --path D:/Knil res://tests/sonde_collision.tscn -- --monde=…  # collision cuite = rendu ?
+"$GODOT" --headless --path D:/Knil res://tests/sonde_galerie.tscn -- --monde=… [--escalier=x,z]  # la galerie se parcourt ?
+"$GODOT" --path D:/Knil --windowed res://tests/capture_zoom.tscn       # molette, Ctrl + molette, ce qui se charge
+"$GODOT" --headless --path D:/Knil res://tests/sonde_manette.tscn     # la manette (faux événements) : 13 vérifications
+"$GODOT" --headless --path D:/Knil res://tests/sonde_triche_limites.tscn   # la triche et les limites : 11 vérifications
+"$GODOT" --path D:/Knil --windowed res://tests/capture_reference.tscn -- --monde=… --lieu=x,y,z  # le GREFFON, pour comparer
+"$GODOT" --headless --path D:/Knil res://tests/banc_taille.tscn      # le temps de pose selon la taille du monde
+"$GODOT" --path D:/Knil res://tests/capture_scene.tscn                # des captures (user://captures)
+"$GODOT" --path D:/Knil res://tests/banc_rendu.tscn --disable-vsync [-- --cuit]   # le rendu, GridMap ou cuit
 ```
 
-**MESURÉ le 8 octobre 2026** : `test_backend` 141 / 141 (Mépriser toujours dernier et unique ; même germe → même
-partie, autre germe → autre ; l'or conditionne les actions ; historique et disposition ; expiration d'un problème
-et sa conséquence ; effondrement à 72 h et pas à 71 ; réveil et fatigue remise à zéro ; sauvegarde aller-retour).
-Deux mutations, deux rouges (barre sans place pour Mépriser ; effondrement décalé d'une heure).
-`sonde_scene` : 10 048 tuiles posées, 52 formes de collision, le joueur au sol (y = 0,75) dans la région « bourg »
-en vue de dessus ; téléporté dans l'auberge → intérieur « auberge », caméra en TROISIÈME PERSONNE, l'aubergiste en
-vue, barre : Écouter · Donner 5 or · Commercer · Louer une chambre · Voler · Mépriser. Vu à l'image (captures).
+**MESURÉ le 10 octobre 2026, après le passage à Knil** : `sonde_manette` 13 / 13 (le stick avance, A saute, X fait
+parler la marchande, on ne bouge pas pendant le dialogue, B ferme, zoom, vue haute, retour au clavier) ;
+`sonde_triche_limites` 11 / 11 ; `sonde_scene` : le joueur au sol (y = 0,75) dans la région « capitale » en vue de
+dessus ; dans l'auberge → intérieur « auberge », TROISIÈME PERSONNE, l'aubergiste parle ; saut +1,44 m ; dans une
+galerie → souterrain, troisième personne, torche allumée.
 
 ## 6. OUVERT
 
@@ -456,8 +427,7 @@ vue, barre : Écouter · Donner 5 or · Commercer · Louer une chambre · Voler 
   intérieurs et grottes dans leurs propres morceaux, montrés seulement quand on y est (la vue de dessus cache le
   sous-sol, la 3e personne est enfermée) ; (5) l'eau cuite par morceaux, l'OCÉAN au loin en un seul plan de shader ;
   (6) le feuillage en MultiMesh PAR MORCEAU, avec `visibility_range` et fondu ; (7) les PNJ n'existent comme nœuds
-  qu'autour du joueur — au loin ils vivent dans le GameState seul (le backend est déjà fait pour : il ne lit que
-  des données), animation coupée hors champ. Et à mesurer avec le VRAI jeu de tuiles : le nombre de matériaux
+  qu'autour du joueur — au loin ils vivent dans le GameState seul, animation coupée hors champ. Et à mesurer avec le VRAI jeu de tuiles : le nombre de matériaux
   (l'export MB en donne un par maillage — « sand », « sand2 »… — à fusionner, sinon les appels remontent).
 - **LE MONDE DE 2048² — À DÉCIDER AVANT DE LE PEINDRE (mesuré le 8 octobre 2026).** Sur le monde d'essai en
   **512²** (Sol épais de 10 cases, galeries sous presque toute la carte : 2,5 M cases, 834 000 tuiles) : `world.json`
@@ -500,9 +470,9 @@ vue, barre : Écouter · Donner 5 or · Commercer · Louer une chambre · Voler 
   « sable » = désert). À trancher quand le vrai monde existe.
 - **LE PERSONNAGE ANIMÉ** : `Player` attend un `AnimationTree` (`parameters/move/blend_position`,
   `parameters/conditions/sleeping`) ou un `AnimationPlayer` (`idle`, `walk`, `run`, `sleep`). Pas de modèle encore.
-- **LES ICÔNES** de la barre sont des glyphes ; chaque action prend `icon_path` quand l'art existe.
 - **LES PNJ** sont immobiles. Leurs routines (horaires, déplacements, foyers) se brancheront sur `GameClock` et
   le GameState, comme le reste.
-- **QUI JE SUIS** : `player.identity` (origine, métier, traits, réputation) est en place mais fixe ; sa création
-  (choix au début, ou déduite des actes) est à décider.
 - La collision en formes CONCAVES par tuile est la plus fidèle et la plus chère ; à mesurer sur le vrai monde.
+
+- **TOUT LE GAMEPLAY DE KNIL EST À FAIRE** : combat (coups, recul, ennemis), cœurs et dégâts, objets et inventaire,
+  coffres, donjons et clés, boutiques. Le GameState a déjà `player.health` (demi-cœurs), `max_health`, `money`, `items`.

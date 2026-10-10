@@ -1,6 +1,6 @@
 extends Node
 ## SONDE DE LA SCÈNE PRINCIPALE — headless : les morceaux cuits chargés, le joueur dessus, la région, la caméra.
-##   Godot --headless --path D:/Resolve res://tests/sonde_scene.tscn
+##   Godot --headless --path D:/Knil res://tests/sonde_scene.tscn
 
 func _ready() -> void:
 	var main: Node = load("res://scenes/main.tscn").instantiate()
@@ -19,9 +19,10 @@ func _ready() -> void:
 		await get_tree().physics_frame
 	print("dans l'auberge : intérieur=%s · caméra=%s · focus=%s" % [GameState.get_value("place.interior_type"),
 		CameraRig.Mode.keys()[rig.mode], player.focus.entity_id if player.focus else "-"])
-	var acts := DecisionEngine.open_encounter(main.get_node("Auberge/Aubergiste").describe())
-	print("barre : ", acts.map(func(a): return a["label"]))
-	DecisionEngine.close_encounter()
+	var aubergiste: Interactable = main.get_node("Auberge/Aubergiste")
+	aubergiste.interact()
+	print("dialogue : parle=%s · HUD=%s" % [aubergiste.is_talking(), main.get_node("HUD")._line.text])
+	aubergiste.close()
 	# LE SAUT : sur la place, un appui d'Espace — la hauteur atteinte, puis le retour au sol.
 	player.teleport(Vector3(0.5, 1.0, 14.0))
 	for i in 30:

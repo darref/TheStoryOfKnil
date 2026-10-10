@@ -3,7 +3,7 @@ extends Node
 ## (simplifiée, couche 1) est comparée, rayon par rayon, à une collision COMPLÈTE bâtie sur les maillages affichés
 ## (couche 16) — depuis le ciel, et depuis le niveau des galeries. Un écart de plus de `TOL` est un trou (ou un
 ## mur) que le joueur sentirait et ne verrait pas.
-##   Godot --headless --path D:/Resolve res://tests/sonde_collision.tscn -- --monde=res://cuit/val_de_resolve
+##   Godot --headless --path D:/Knil res://tests/sonde_collision.tscn -- --monde=res://cuit/monde_knil
 ##         [--points=x,z;x,z…] [--pas=1.3] [--galerie=-3.6]
 ## Sort avec 0 si aucun écart.
 
@@ -14,7 +14,7 @@ var _fails := 0
 
 
 func _ready() -> void:
-	var dir := "res://cuit/val_de_resolve"
+	var dir := "res://cuit/monde_knil"
 	var points: Array = [Vector2(0.5, 0.5), Vector2(24.5, 40.5), Vector2(-150, -20), Vector2(150, 140)]
 	var step := 1.3
 	var gallery_y := -3.6

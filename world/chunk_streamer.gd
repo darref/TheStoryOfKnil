@@ -326,7 +326,7 @@ func _warn_if_stale() -> void:
 	if src == "" or not FileAccess.file_exists(src) or not manifest.has("source_mtime"):
 		return
 	if FileAccess.get_modified_time(src) > int(manifest["source_mtime"]):
-		var msg := "La carte a changé dans MB depuis la cuisson : lance recuire.bat (D:\\Resolve) pour la voir en jeu."
+		var msg := "La carte a changé dans MB depuis la cuisson : lance recuire.bat (D:\\Knil) pour la voir en jeu."
 		push_warning("ChunkStreamer : " + msg)
 		EventBus.notice.emit(msg, 12.0)
 

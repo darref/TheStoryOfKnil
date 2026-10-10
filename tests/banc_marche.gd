@@ -1,7 +1,7 @@
 extends Node3D
 ## BANC DE MARCHE — avec fenêtre : une cible traverse le grand monde cuit en courant (8 cases/s), caméra de jeu en
 ## vue de dessus ; le chargement en fond doit suivre SANS À-COUP. Images/s moyennes, pire image, morceaux chargés.
-##   Godot --path D:/Resolve --windowed res://tests/banc_marche.tscn [-- --monde=res://cuit/grand]
+##   Godot --path D:/Knil --windowed res://tests/banc_marche.tscn [-- --monde=res://cuit/grand]
 ## (le grand monde : fabriquer_monde_essai -- --taille=512 --nom=grand, --import, puis la cuisson)
 
 const SPEED := 8.0

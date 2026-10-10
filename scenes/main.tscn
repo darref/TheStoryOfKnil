@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://cj4nysgw030mm" path="res://world/day_night.gd" id="daynight"]
 [ext_resource type="Script" uid="uid://drodr3trnc0us" path="res://ui/hud.gd" id="hud"]
 [ext_resource type="Script" uid="uid://c7jj8gwnumx4l" path="res://world/interior.gd" id="interior"]
-[ext_resource type="PackedScene" path="res://world/prefabs/lit.tscn" id="lit"]
 [ext_resource type="PackedScene" path="res://player/player.tscn" id="player"]
 [ext_resource type="PackedScene" path="res://world/prefabs/pnj.tscn" id="pnj"]
 [ext_resource type="Script" uid="uid://q31y6scjq11v" path="res://world/region.gd" id="region"]
@@ -76,7 +75,7 @@ environment = NodePath("../Environment")
 
 [node name="Monde" type="Node3D" parent="." node_paths=PackedStringArray("target")]
 script = ExtResource("streamer")
-baked_dir = "res://cuit/val_de_resolve"
+baked_dir = "res://cuit/monde_knil"
 target = NodePath("../Player")
 
 [node name="FilDeSecours" type="StaticBody3D" parent="." unique_id=101237503]
@@ -90,7 +89,7 @@ shape = SubResource("secours")
 [node name="Capitale" type="Area3D" parent="Regions"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 script = ExtResource("region")
-region_id = "haute_resolve"
+region_id = "capitale"
 region_type = "capitale"
 
 [node name="Shape" type="CollisionShape3D" parent="Regions/Capitale"]
@@ -221,10 +220,7 @@ shape = SubResource("salle")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.2, 2)
 entity_id = "aubergiste_bourg"
 display_name = "L'aubergiste"
-
-[node name="LitAuberge" parent="Auberge" unique_id=1318144826 instance=ExtResource("lit")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4, 0.2, 1.5)
-spot_id = "lit_auberge_bourg"
+lines = PackedStringArray("Encore toi ? La dernière fois, tu as bu le tonneau et mangé le chat.")
 
 [node name="Bourg" type="Node3D" parent="." unique_id=20216741]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
@@ -233,24 +229,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -4)
 entity_id = "marchande_bourg"
 display_name = "La marchande"
+lines = PackedStringArray("Tu touches, tu paies. Tu casses, tu paies. Tu respires... bon, ça va.")
 
 [node name="Mendiant" parent="Bourg" unique_id=1579297860 instance=ExtResource("pnj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -6)
 entity_id = "mendiant_bourg"
 display_name = "Le mendiant"
+lines = PackedStringArray("Une pièce, mon bon seigneur ? ... Non, pas un coup de pied, une PIÈCE.")
 
 [node name="Puits" parent="Bourg" unique_id=1045599293 instance=ExtResource("pnj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 entity_id = "puits_bourg"
 display_name = "Le puits"
+lines = PackedStringArray("Un puits. Quelqu'un a gravé « KNIL PU » sur la margelle.")
 kind = "lieu"
-problem_chance = 0.8
-
-[node name="LitMaison" parent="Bourg" unique_id=1796581828 instance=ExtResource("lit")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 5)
-spot_id = "lit_maison_joueur"
-spot_kind = "lit_maison"
-is_player_home = true
 
 [node name="Player" parent="." unique_id=583380518 instance=ExtResource("player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -9)

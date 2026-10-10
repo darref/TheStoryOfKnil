@@ -19,11 +19,11 @@ func _ready() -> void:
 	_stats("lac")
 	var player: Player = main.get_node("Player")
 	player.teleport(main.get_node("Auberge").global_position + Vector3(-1, 0.5, -1))
-	DecisionEngine.open_encounter(main.get_node("Auberge/Aubergiste").describe())
+	(main.get_node("Auberge/Aubergiste") as Interactable).interact()
 	for i in 150:
 		await get_tree().process_frame
 	get_viewport().get_texture().get_image().save_png(OUT + "/interieur.png")
-	DecisionEngine.close_encounter()
+	(main.get_node("Auberge/Aubergiste") as Interactable).close()
 	player.teleport(Vector3(24, 1.5, -30))  # l'entrée du tunnel
 	for i in 150:
 		await get_tree().process_frame

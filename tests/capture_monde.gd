@@ -1,12 +1,12 @@
 extends Node
 ## UN MONDE CUIT À L'IMAGE — avec fenêtre : la scène principale sur le monde demandé, la caméra de jeu en quelques
 ## lieux. Images dans user://captures/<monde>_<lieu>.png.
-##   Godot --path D:/Resolve --windowed res://tests/capture_monde.tscn -- --monde=res://cuit/val_de_resolve
+##   Godot --path D:/Knil --windowed res://tests/capture_monde.tscn -- --monde=res://cuit/monde_knil
 ##         [--lieux=x,y,z;x,y,z…] [--heure=10]
 const OUT := "user://captures"
 
 func _ready() -> void:
-	var dir := "res://cuit/val_de_resolve"
+	var dir := "res://cuit/monde_knil"
 	var spots: Array = [Vector3(0.5, 3, 12), Vector3(-30, 6, 0), Vector3(-160, 8, -20), Vector3(150, 8, 130)]
 	var hour := 10.0
 	for a in OS.get_cmdline_user_args():

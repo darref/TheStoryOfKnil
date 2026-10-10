@@ -6,7 +6,7 @@ extends RefCounted
 ## son `instances()`. On récolte ce qu'il poserait — l'épreuve le compare, triangle pour triangle, au monde bâti par le
 ## greffon lui-même (`WorldFile.build`). Le jeu livré ne charge que les morceaux : ni le greffon, ni la règle.
 ##
-## LES COUCHES ONT UN RÔLE (`couches.json`) : le monde de Resolve est UN .mbworld à plusieurs couches — Sol (le relief
+## LES COUCHES ONT UN RÔLE (`couches.json`) : le monde de Knil est UN .mbworld à plusieurs couches — Sol (le relief
 ## et ses galeries), Obstacles (les massifs des chemins et des places), GrosObstacles (un volcan…), Batiments (l'atelier
 ## Houses de MB 1.0.0). La règle les lit ENSEMBLE (aucun mur où elles se touchent) ; la cuisson les RANGE à part :
 ## chaque rôle a sa piste de chargement et sa distance d'affichage.
@@ -36,7 +36,7 @@ const CollisionChunk := preload("res://world/collision_morceau.gd")
 const TransitionsData := preload("res://world/transitions_cuites.gd")
 const UndergroundChunk := preload("res://world/souterrain_morceau.gd")
 const CONFIG := "res://tools/cuisson/couches.json"
-const FORMAT := "resolve-monde-cuit"
+const FORMAT := "knil-monde-cuit"
 const VERSION := 2
 const COLLISION_TRACK := "collision"
 
@@ -56,7 +56,7 @@ var collision := true
 ## La collision se bâtit sur le LOD le plus simple dont l'ERREUR reste sous cette distance (en mètres ; 0 : le maillage
 ## plein). ⚠ MESURÉ (256², témoin) : la forme concave PLEINE d'un morceau coûte ~55 ms à construire au chargement, et
 ## elle bloque le fil principal même bâtie en fond — d'où une forme simplifiée. ⚠ MAIS PAS PAR UNE PART DE TRIANGLES :
-## « au plus 25 % » a SUPPRIMÉ le sol d'une galerie de deux cases (vu sur le Val de Résolve, 8 octobre 2026 : le joueur
+## « au plus 25 % » a SUPPRIMÉ le sol d'une galerie de deux cases (vu sur le premier Val, 8 octobre 2026 : le joueur
 ## passait au travers, le rendu, lui, avait son sol). L'erreur de chaque LOD est bornée, pas son nombre de triangles.
 var collision_max_error := 0.05
 
@@ -240,13 +240,11 @@ static func _resolve(base: String, p: String) -> String:
 	return p if p.is_absolute_path() else base.path_join(p).simplify_path()
 
 
-## Les limites de la zone jouable, si le monde les donne (`resolve_limites.json`, écrit par le générateur du Val) :
+## Les limites de la zone jouable, si le monde les donne (`mondes/<nom>.limites.json`) :
 ## {"min": [x, z], "max": [x, z]} en mètres — le joueur n'en sort jamais. {} : aucune.
 static func _play_bounds(base: String) -> Dictionary:
-	# `mondes/<nom>.limites.json`, À CÔTÉ du dossier `.mbworld` (MB le réécrit à chaque export) ; l'ancienne place, dedans.
+	# À CÔTÉ du dossier `.mbworld` : MB le réécrit à chaque export.
 	var f := base.get_base_dir().path_join(base.get_file().get_basename() + ".limites.json")
-	if not FileAccess.file_exists(f):
-		f = base.path_join("resolve_limites.json")
 	if not FileAccess.file_exists(f):
 		return {}
 	var d: Variant = JSON.parse_string(FileAccess.get_file_as_string(f))

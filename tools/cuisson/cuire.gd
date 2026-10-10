@@ -1,6 +1,6 @@
 extends Node
 ## LANCER LA CUISSON — en ligne de commande, sans fenêtre :
-##   Godot --headless --path D:/Resolve res://tools/cuisson/cuire.tscn -- --monde=res://mondes/x.mbworld/world.json
+##   Godot --headless --path D:/Knil res://tools/cuisson/cuire.tscn -- --monde=res://mondes/x.mbworld/world.json
 ##        [--sortie=res://cuit/x] [--morceau=16] [--sans-lod] [--compression] [--sans-collision] [--erreur-collision=0.05]
 ## Le .mbworld vient du logiciel MarchingBlocks (World, « Export the world… ») ; le copier sous `mondes/`.
 

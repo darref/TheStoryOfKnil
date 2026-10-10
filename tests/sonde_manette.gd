@@ -1,8 +1,8 @@
 extends Node
 ## LA MANETTE — headless : la scène principale menée par de faux événements de manette (ceux qu'une vraie enverrait) :
-## le stick gauche déplace, A saute, X ouvre une rencontre, la croix choisit, A valide SANS sauter, le stick droit
+## le stick gauche déplace, A saute, X fait parler (et on ne bouge pas pendant le dialogue), B ferme, le stick droit
 ## zoome, Back bascule la vue haute ; et les textes à l'écran passent à la manette.
-##   Godot --headless --path D:/Resolve res://tests/sonde_manette.tscn
+##   Godot --headless --path D:/Knil res://tests/sonde_manette.tscn
 ## Sort avec 0 si tout est vert.
 const Inputs := preload("res://core/inputs.gd")
 
@@ -40,7 +40,7 @@ func _ready() -> void:
 		top = maxf(top, player.global_position.y)
 	check(top - y0 > 1.2, "A fait sauter (+%.2f m)" % (top - y0))
 	await _frames(60)
-	# X : une rencontre ; la croix choisit ; A valide sans sauter.
+	# X : la marchande parle ; le stick ne fait pas bouger pendant le dialogue ; B ferme.
 	player.teleport(main.get_node("Bourg/Marchande").global_position + Vector3(1.0, 0.3, 0))
 	await _frames(30)
 	check(player.focus != null, "la marchande est à portée")
@@ -48,25 +48,16 @@ func _ready() -> void:
 	check(str(hud._prompt.text).begins_with("X —"), "l'invite dit X (%s)" % hud._prompt.text)
 	_button(JOY_BUTTON_X)
 	await _frames(5)
-	check(DecisionEngine.is_open(), "X ouvre la rencontre")
-	var acts: Array = DecisionEngine._open_actions
-	_button(JOY_BUTTON_DPAD_RIGHT)
-	await _frames(2)
-	var bar: ActionBar = hud._bar
-	check(bar._sel == 1, "la croix → passe à la deuxième case (%d)" % bar._sel)
-	check(str(bar._caption.text).contains("A valider"), "la légende parle manette (%s)" % bar._caption.text)
-	var before: int = int(GameState.history_with("marchande_bourg")["count"])
-	var floor_y := player.global_position.y
-	_button(JOY_BUTTON_A)
-	var highest := floor_y
-	for i in 40:
-		await get_tree().physics_frame
-		highest = maxf(highest, player.global_position.y)
-	check(not DecisionEngine.is_open(), "A valide : la rencontre se ferme")
-	var h := GameState.history_with("marchande_bourg")
-	check(int(h["count"]) == before + 1 and h["last_action"] == acts[1]["id"],
-		"le choix est celui de la case choisie (%s)" % h["last_action"])
-	check(highest - floor_y < 0.1, "A, en validant, ne fait PAS sauter (+%.2f m)" % (highest - floor_y))
+	check(player.focus != null and player.focus.is_talking(), "X fait parler")
+	check(hud._box.visible and str(hud._line.text) != "", "la boîte de dialogue montre la réplique")
+	var x0 := player.global_position.x
+	_axis(JOY_AXIS_LEFT_X, 1.0)
+	await _frames(30)
+	_axis(JOY_AXIS_LEFT_X, 0.0)
+	check(absf(player.global_position.x - x0) < 0.1, "pendant le dialogue, on ne bouge pas")
+	_button(JOY_BUTTON_B)
+	await _frames(5)
+	check(not player.focus.is_talking() and not hud._box.visible, "B ferme le dialogue")
 	# Le stick droit : le zoom ; Back : la vue haute.
 	var z := rig.zoom
 	_axis(JOY_AXIS_RIGHT_Y, 1.0)

@@ -1,7 +1,7 @@
 extends Node
 ## LA NUIT — avec fenêtre : à 23 h dehors (la lune, l'ambiante de nuit, la torche), dans l'auberge, puis à midi
 ## (la torche éteinte d'elle-même). Les images dans user://captures ; l'état de la torche dans la sortie.
-##   Godot --path D:/Resolve --windowed res://tests/capture_nuit.tscn
+##   Godot --path D:/Knil --windowed res://tests/capture_nuit.tscn
 const OUT := "user://captures"
 
 func _ready() -> void:

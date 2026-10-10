@@ -27,7 +27,6 @@ func load_slot(slot := "rapide") -> bool:
 	if json.parse(FileAccess.get_file_as_string(path_of(slot))) != OK:
 		push_error("SaveSystem: %s illisible" % path_of(slot))
 		return false
-	DecisionEngine.close_encounter()
 	GameClock.from_save(json.data.get("clock", {}))
 	GameState.from_save(json.data.get("state", {}))
 	return true

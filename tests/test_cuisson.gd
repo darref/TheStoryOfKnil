@@ -1,7 +1,7 @@
 extends Node
 ## LES ÉPREUVES DE LA CUISSON ET DU CHARGEMENT EN MORCEAUX — headless, sur le monde d'essai
 ## (`fabriquer_monde_essai.tscn` puis `--import` d'abord) :
-##   Godot --headless --path D:/Resolve res://tests/test_cuisson.tscn
+##   Godot --headless --path D:/Knil res://tests/test_cuisson.tscn
 ## Sort avec 0 si tout est vert.
 
 const Cuisson := preload("res://tools/cuisson/cuisson.gd")

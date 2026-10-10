@@ -1,6 +1,6 @@
 class_name Player
 extends CharacterBody3D
-## LE JOUEUR — se déplace, SAUTE, sent ce qui l'entoure, ouvre les rencontres, s'endort.
+## KNIL — se déplace, SAUTE, sent ce qui l'entoure, parle à ce qui est à portée.
 ##
 ## LA TRICHE (`core/triche.gd`) : le vol, le fantôme (on traverse tout), la vitesse.
 ## LES LIMITES DU MONDE (`world_bounds`, posées par le ChunkStreamer depuis le monde cuit) : quoi qu'il arrive — un bug,
@@ -10,10 +10,10 @@ extends CharacterBody3D
 ## `jump_buffer` avant de toucher le sol est retenu. Tombé SOUS le monde (`fall_limit` sous le dernier sol touché),
 ## le joueur revient à ce sol.
 ##
-## Il ne décide rien : `interact` ouvre une rencontre au moteur de décision, `sleep` demande au système de
-## sommeil. L'ANIMATION est un branchement : un AnimationTree enfant reçoit `parameters/move/blend_position`
-## (0 arrêt, 0,5 marche, 1 course), `parameters/conditions/sleeping` et `parameters/conditions/airborne` ; sans lui,
-## un AnimationPlayer enfant joue « idle » / « walk » / « run » / « jump » / « sleep » s'il les a.
+## `interact` fait parler l'Interactable le plus proche (`Interactable.interact`) ; pendant un dialogue, il ne bouge
+## pas. L'ANIMATION est un branchement : un AnimationTree enfant reçoit `parameters/move/blend_position`
+## (0 arrêt, 0,5 marche, 1 course) et `parameters/conditions/airborne` ; sans lui, un AnimationPlayer enfant joue
+## « idle » / « walk » / « run » / « jump » s'il les a.
 
 @export var walk_speed := 3.5
 @export var run_speed := 7.0
@@ -52,18 +52,17 @@ func _ready() -> void:
 	collision_layer = 2
 	collision_mask = WORLD_MASK
 	_sense.collision_layer = 0
-	_sense.collision_mask = 4 | 8
-	EventBus.sleep_finished.connect(_on_wake)
+	_sense.collision_mask = 4
 	EventBus.game_loaded.connect(_on_loaded)
 
 
 func _physics_process(delta: float) -> void:
-	var asleep := SleepSystem.sleeping
-	var input := Vector2.ZERO if asleep else Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	var talking := focus != null and focus.is_talking()
+	var input := Vector2.ZERO if talking else Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var dir := _camera_relative(input)
 	var speed := (run_speed if Input.is_action_pressed("run") else walk_speed) * Triche.vitesse
 	var target := dir * speed
-	if Triche.vol and not asleep:
+	if Triche.vol and not talking:
 		_fly(target, delta)
 		return
 	var grip := 1.0 if is_on_floor() else air_control
@@ -77,9 +76,7 @@ func _physics_process(delta: float) -> void:
 		_since_floor += delta
 		velocity.y -= _gravity * delta
 	_jump_wanted += delta
-	# Barre ouverte (ou fermée à l'instant) : A choisit, il ne fait pas sauter.
-	if not asleep and not Triche.vol and Input.is_action_just_pressed("jump") and not DecisionEngine.is_open() \
-			and Engine.get_physics_frames() - DecisionEngine.closed_frame > 2:
+	if not talking and not Triche.vol and Input.is_action_just_pressed("jump"):
 		_jump_wanted = 0.0
 	if _jump_wanted <= jump_buffer and _since_floor <= coyote_time and not _jumped:
 		velocity.y = sqrt(2.0 * _gravity * jump_height)
@@ -95,7 +92,7 @@ func _physics_process(delta: float) -> void:
 		rotation.y = lerp_angle(rotation.y, yaw, clampf(turn_speed * delta, 0.0, 1.0))
 	GameState.data["place"]["position"] = [global_position.x, global_position.y, global_position.z]
 	_update_focus()
-	_animate(Vector2(velocity.x, velocity.z).length() / run_speed, asleep, not is_on_floor())
+	_animate(Vector2(velocity.x, velocity.z).length() / run_speed, not is_on_floor())
 
 
 ## LE VOL (triche) : pas de gravité, Espace / A monte, C / gâchette gauche descend ; le fantôme traverse tout.
@@ -109,7 +106,7 @@ func _fly(target: Vector3, delta: float) -> void:
 		rotation.y = lerp_angle(rotation.y, atan2(velocity.x, velocity.z), clampf(turn_speed * delta, 0.0, 1.0))
 	GameState.data["place"]["position"] = [global_position.x, global_position.y, global_position.z]
 	_update_focus()
-	_animate(Vector2(velocity.x, velocity.z).length() / run_speed, false, true)
+	_animate(Vector2(velocity.x, velocity.z).length() / run_speed, true)
 
 
 ## Ramené en dedans des limites du monde — radicalement : la position, et la vitesse qui pousse dehors.
@@ -133,20 +130,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	if Triche.touche(event):
 		get_viewport().set_input_as_handled()
 		return
-	if SleepSystem.sleeping:
-		return
-	if event.is_action_pressed("interact"):
-		if DecisionEngine.is_open():
-			DecisionEngine.close_encounter()
-		elif focus != null:
-			DecisionEngine.open_encounter(focus.describe())
-	elif event.is_action_pressed("cancel") and DecisionEngine.is_open():
-		DecisionEngine.close_encounter()
-	elif event.is_action_pressed("sleep"):
-		if SleepSystem.can_sleep():
-			SleepSystem.sleep(nearest_sleep_spot())
-		else:
-			EventBus.sleep_warning.emit(-1.0)  # « pas encore fatigué » : la présentation le dit
+	if event.is_action_pressed("interact") and focus != null:
+		focus.interact()
+		get_viewport().set_input_as_handled()
+	elif event.is_action_pressed("cancel") and focus != null and focus.is_talking():
+		focus.close()
+		get_viewport().set_input_as_handled()
 
 
 ## Le déplacement suit la caméra : vue de dessus ou troisième personne, « avant » est ce qu'elle regarde.
@@ -170,28 +159,10 @@ func _update_focus() -> void:
 				best = a
 				best_d = d
 	if best != focus:
+		if focus != null:
+			focus.close()
 		focus = best
-		if DecisionEngine.is_open():
-			DecisionEngine.close_encounter()
 		EventBus.focus_changed.emit(focus)
-
-
-func nearest_sleep_spot() -> SleepSpot:
-	var best: SleepSpot = null
-	var best_d := INF
-	for a in _sense.get_overlapping_areas():
-		if a is SleepSpot:
-			var d := global_position.distance_squared_to(a.global_position)
-			if d < best_d:
-				best = a
-				best_d = d
-	return best
-
-
-func _on_wake(outcome: Dictionary) -> void:
-	var dest: Node3D = outcome.get("destination")
-	if dest != null:
-		teleport(dest.global_position + Vector3.UP * 0.5)
 
 
 func _on_loaded() -> void:
@@ -206,16 +177,15 @@ func teleport(p: Vector3) -> void:
 	reset_physics_interpolation()
 
 
-func _animate(speed_ratio: float, asleep: bool, airborne := false) -> void:
+func _animate(speed_ratio: float, airborne := false) -> void:
 	if _anim_tree:
 		_anim_tree.set("parameters/move/blend_position", speed_ratio)
-		_anim_tree.set("parameters/conditions/sleeping", asleep)
 		_anim_tree.set("parameters/conditions/airborne", airborne)
 		return
 	if _anim_player == null:
 		return
-	var want := "sleep" if asleep else ("jump" if airborne and _jumped else
-		("run" if speed_ratio > 0.6 else ("walk" if speed_ratio > 0.05 else "idle")))
+	var want := "jump" if airborne and _jumped else \
+		("run" if speed_ratio > 0.6 else ("walk" if speed_ratio > 0.05 else "idle"))
 	if want != _anim_current and _anim_player.has_animation(want):
 		_anim_current = want
 		_anim_player.play(want, 0.2)

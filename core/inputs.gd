@@ -10,8 +10,6 @@ extends RefCounted
 ##   parler / partir  E                         X
 ##   fermer           Échap                     B
 ##   torche           T                         Y
-##   dormir           F                         LB
-##   la barre         1 à 8, clic               croix ← → pour choisir, A pour valider
 ##   la vue           clic droit + souris       stick droit ← → (troisième personne)
 ##   zoom             molette                   stick droit ↑ ↓
 ##   vue haute        Ctrl + molette            Back
@@ -26,14 +24,11 @@ const KEYS := {
 	"run": [KEY_SHIFT],
 	"jump": [KEY_SPACE],
 	"interact": [KEY_E],
-	"sleep": [KEY_F],
 	"torch": [KEY_T],
 	"cancel": [KEY_ESCAPE],
 	"quicksave": [KEY_F5],
 	"quickload": [KEY_F9],
-	"choice_1": [KEY_1], "choice_2": [KEY_2], "choice_3": [KEY_3], "choice_4": [KEY_4],
-	"choice_5": [KEY_5], "choice_6": [KEY_6], "choice_7": [KEY_7], "choice_8": [KEY_8],
-	"bar_prev": [], "bar_next": [], "bar_confirm": [], "high_view": [],
+	"high_view": [],
 	"camera_left": [], "camera_right": [], "zoom_in": [], "zoom_out": [],
 	# La triche (core/triche.gd) : sans effet quand elle est éteinte.
 	"cheat_fly": [KEY_F1], "cheat_ghost": [KEY_F2], "cheat_speed": [KEY_F3], "cheat_time": [KEY_F4], "fly_down": [KEY_C],
@@ -45,10 +40,6 @@ const PAD_BUTTONS := {
 	"interact": [JOY_BUTTON_X],
 	"cancel": [JOY_BUTTON_B],
 	"torch": [JOY_BUTTON_Y],
-	"sleep": [JOY_BUTTON_LEFT_SHOULDER],
-	"bar_prev": [JOY_BUTTON_DPAD_LEFT],
-	"bar_next": [JOY_BUTTON_DPAD_RIGHT],
-	"bar_confirm": [JOY_BUTTON_A],
 	"high_view": [JOY_BUTTON_BACK],
 	"cheat_fly": [JOY_BUTTON_START],
 	"cheat_speed": [JOY_BUTTON_RIGHT_STICK],
@@ -69,8 +60,8 @@ const PAD_AXES := {
 
 ## Ce que l'on montre à l'écran, par appareil : [clavier, manette].
 const LABELS := {
-	"interact": ["E", "X"], "cancel": ["Échap", "B"], "jump": ["Espace", "A"], "sleep": ["F", "LB"],
-	"torch": ["T", "Y"], "bar_confirm": ["1–8", "A"],
+	"interact": ["E", "X"], "cancel": ["Échap", "B"], "jump": ["Espace", "A"],
+	"torch": ["T", "Y"],
 }
 
 const DEADZONE := 0.25

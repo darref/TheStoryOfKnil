@@ -1,7 +1,7 @@
 extends Node
 ## LES COUCHES À L'IMAGE — avec fenêtre : la place et son anneau de massifs (Obstacles), le volcan (GrosObstacles)
 ## vu de loin, et une galerie (Sol, souterrain) à la torche. Images dans user://captures.
-##   Godot --path D:/Resolve --windowed res://tests/capture_couches.tscn
+##   Godot --path D:/Knil --windowed res://tests/capture_couches.tscn
 const OUT := "user://captures"
 
 func _ready() -> void:
