@@ -1,0 +1,91 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/livre/cell.gd" id="1_i1b0f"]
+[ext_resource type="PackedScene" path="res://ui/livre/preview_sticker.tscn" id="2_3ux4u"]
+[ext_resource type="PackedScene" path="res://ui/livre/cell_key_overlay.tscn" id="3_keyov"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_liylq"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0, 0, 0, 1)
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i1b0f"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.27387288, 0.2738727, 0.27387273, 1)
+corner_detail = 5
+
+[node name="Book_Cell" type="Control" unique_id=186332564 node_paths=PackedStringArray("reduced_preview")]
+clip_contents = true
+custom_minimum_size = Vector2(450, 450)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -225.0
+offset_top = -225.0
+offset_right = 225.0
+offset_bottom = 225.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 1
+script = ExtResource("1_i1b0f")
+reduced_preview = NodePath("Cell_Preview")
+enlarged_z_index = 3000
+
+[node name="Cell_Background" type="Panel" parent="." unique_id=995480138]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_liylq")
+
+[node name="Cell_Contain" type="Control" parent="." unique_id=1029148535]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Cell_Preview" type="Control" parent="." unique_id=1250209884]
+z_index = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Preview_Sticker" parent="Cell_Preview" unique_id=901373217 instance=ExtResource("2_3ux4u")]
+layout_mode = 1
+mouse_filter = 1
+
+[node name="PreviewBackground" type="Panel" parent="Cell_Preview" unique_id=1180894176]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_i1b0f")
+
+[node name="Cell_Key_Overlay" parent="." unique_id=771204811 instance=ExtResource("3_keyov")]
+
+[editable path="Cell_Preview/Preview_Sticker"]

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Touche de clavier vierge, copiée de Spirit3D : les lettres (ESC / MNU / B / START) sont posées par le Label de cell_key_overlay.tscn. -->
+  <defs>
+    <linearGradient id="cap" gradientUnits="userSpaceOnUse" x1="32" y1="4" x2="32" y2="60">
+      <stop offset="0%" stop-color="#3E4150"/>
+      <stop offset="55%" stop-color="#22242E"/>
+      <stop offset="100%" stop-color="#101219"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Corps de la touche -->
+  <rect x="3" y="3" width="58" height="58" rx="12" fill="url(#cap)" fill-opacity="0.88"/>
+  <!-- Bord extérieur sombre (détache la touche des fonds clairs) -->
+  <rect x="3" y="3" width="58" height="58" rx="12" fill="none" stroke="#05060A" stroke-opacity="0.75" stroke-width="2"/>
+  <!-- Face supérieure (creux du capuchon) -->
+  <rect x="8" y="7" width="48" height="46" rx="8" fill="#EEF1F8" fill-opacity="0.06" stroke="#EEF1F8" stroke-opacity="0.8" stroke-width="1.8"/>
+  <!-- Reflet haut -->
+  <path d="M13 14 q0-5 6-5 h26 q6 0 6 5 v3 q-19 4 -38 0 z" fill="#FFFFFF" opacity="0.09"/>
+  <!-- Ombre basse (relief) -->
+  <path d="M12 52 q20 4 40 0 v1 q0 4 -6 4 h-28 q-6 0 -6 -4 z" fill="#000000" opacity="0.25"/>
+</svg>

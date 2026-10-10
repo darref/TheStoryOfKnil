@@ -3,9 +3,10 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dnqh5ve5s02fj"
-path="res://.godot/imported/knil_tripo_rgb_27e8b914-f9ef-4104-8920-823b8a7fa35c.jpg-3a8f7710b37473b8841e39b0bee64dbc.ctex"
+path.s3tc="res://.godot/imported/knil_tripo_rgb_27e8b914-f9ef-4104-8920-823b8a7fa35c.jpg-3a8f7710b37473b8841e39b0bee64dbc.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 generator_parameters={
 "md5": "7f4c80215da9e958d1ffa893126c5e9b"
@@ -14,11 +15,11 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/personnages/knil/knil_tripo_rgb_27e8b914-f9ef-4104-8920-823b8a7fa35c.jpg"
-dest_files=["res://.godot/imported/knil_tripo_rgb_27e8b914-f9ef-4104-8920-823b8a7fa35c.jpg-3a8f7710b37473b8841e39b0bee64dbc.ctex"]
+dest_files=["res://.godot/imported/knil_tripo_rgb_27e8b914-f9ef-4104-8920-823b8a7fa35c.jpg-3a8f7710b37473b8841e39b0bee64dbc.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
@@ -40,4 +41,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

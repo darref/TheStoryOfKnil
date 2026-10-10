@@ -16,10 +16,16 @@ d'actions, « Mépriser », le sommeil obligatoire toutes les 72 h). Tout cela e
   et une coupe militaire dégradée. Sa singularité vient du PERSONNAGE (« qu'est-ce qu'un bully porterait, vénérerait,
   casserait ? »), pas d'un objet de Zelda transformé un à un.
 - **SON ALLURE — DESSINÉE (Jordan, 10 octobre 2026)** : `assets/concept/knil_reference_tpose.png` (planche en T, la
-  référence pour le modèle 3D) et `assets/icone/knil_icone.png` (l'icône du jeu, `config/icon`). Tunique écrue
+  référence pour le modèle 3D) et `assets/icone/knil_icone.png` (l'icône du jeu). Tunique écrue
   déchirée trop courte (le ventre dépasse), lacée au col, poils au torse et aux bras ; pantalon brun rapiécé tenu par
   une corde nouée ; bottes avachies ; deux brassards cloutés de pointes (l'un cuir brun, l'autre fer gris) ; coupe
   militaire dégradée sur les côtés, nez rouge, joues roses, une dent en moins au sourire, sourcils épais.
+- **L'ICÔNE — DÉTOURÉE (10 octobre 2026)** : `knil_icone.png` est Knil SEUL sur fond transparent (le fond gris et
+  l'anneau blanc retirés : `tools/detoure_icone.py`, un remplissage depuis les bords qui ne prend que le gris NEUTRE
+  et clair — la tunique écrue n'est pas neutre, le trait noir l'arrête ; l'original : `knil_icone_fond_gris.png`).
+  Elle est PARTOUT : `config/icon` (fenêtre, éditeur), `knil_icone.ico` (16 à 256 px : `config/windows_native_icon`
+  et l'icône de l'EXE, `application/icon` du preset), `knil_splash.png` (l'écran de démarrage, sur brun très sombre),
+  la vignette « Jouer » du livre. Une nouvelle icône : refaire les trois depuis le PNG (le script, puis PIL).
 - ⚠ **LE DROIT — à garder en tête (ce n'est pas un avis juridique)** : AUCUN élément propre à Zelda (tunique verte et
   bonnet, oreilles pointues, Triforce, Master Sword, bouclier hylien, Hyrule, Ganon, musiques et bruitages) ; JAMAIS
   « Link » ni « Zelda » dans la communication du jeu ; peu de clins d'œil, et assumés comme des gags (la
@@ -352,10 +358,21 @@ world/       les nœuds posés dans le monde
   day_night.gd        le soleil et le ciel suivent l'horloge ; la nuit, une LUNE (ombrée : sans ombre elle éclairait
                       l'auberge à travers le toit, vu) et un plancher d'ambiante ; dans un intérieur l'ambiante baisse
   prefabs/            pnj.tscn (provisoire)
+  contour/            LE CONTOUR NOIR, repris de Spirit3D (HEART_WORLD) tel quel : `OutlineHull` (la coque inversée,
+                      2 px d'écran, enfant INTERNE sans ombre, liée au squelette ; normales recuites aux arêtes vives)
+                      et `SubtreeOutline` (un nœud sous un objet : tout son sous-arbre souligné). Posé sur Knil
+                      (`player.tscn`, `Contour` → `Modele`) et de lui-même par CHAQUE `Interactable` — un objet
+                      d'intérêt neuf : en faire un Interactable, ou lui poser un `SubtreeOutline`. Méta
+                      `_outline_skip` : un nœud et son sous-arbre exclus. Le monde et les bâtiments : jamais.
 player/      player.gd/.tscn (CharacterBody3D : Knil), camera_rig.gd (les deux vues et leur fondu), torche.gd (la
              torche : allumée d'elle-même hors du plein jour et dans un intérieur, T la force)
 ui/          hud.gd (provisoire) : cœurs, argent, heure, lieu ; la boîte de dialogue
-scenes/      main.tscn — le bac à sable : le monde cuit, les régions, une auberge, quatre PNJ qui parlent
+  livre/              LE LIVRE, le menu copié de Spirit3D (§4) : book.gd, cell.gd, la cellule de base, les flèches,
+                      la touche de coin ; cells/ : game_cell (le jeu), page_cell et ses pages (commandes, options,
+                      sauvegardes, quitter)
+scenes/      livre.tscn — LA SCÈNE PRINCIPALE : le livre, le monde (main.tscn) dans la cellule « Jouer »
+             main.tscn — le bac à sable : le monde cuit, les régions, une auberge, quatre PNJ qui parlent (les
+             épreuves le chargent seul, sans le livre)
 tests/       les épreuves (§5)
 ```
 
@@ -368,16 +385,46 @@ dialogue, Knil ne bouge pas et ne saute pas.
 ## 4. Commandes de jeu (provisoires)
 
 À LA MANETTE (Xbox) : stick gauche se déplacer · clic du stick ou RB courir · A sauter · X parler · B fermer ·
-Y torche · stick droit ← → tourner la troisième personne, ↑ ↓ zoomer · Back vue haute. Les textes à l'écran suivent
+Y torche · stick droit ← → tourner la troisième personne, ↑ ↓ zoomer · Back vue haute · Start le livre. Les textes à l'écran suivent
 le dernier appareil touché (`core/inputs.gd`, la table des deux). ÉPROUVÉ par de faux événements (`sonde_manette`,
 13) — PAS ENCORE TENU EN MAIN avec une vraie manette.
 AU CLAVIER : W A S D (Z Q S D en AZERTY) se déplacer · Maj courir · Espace sauter (1,4 m) · E parler · T torche
 (automatique → allumée → éteinte) · molette : zoom · Ctrl + molette : vue haute / retour · Échap fermer ·
-F5 / F9 sauvegarde rapide · clic droit + souris : tourner la vue en troisième personne.
+F5 / F9 sauvegarde rapide · clic droit + souris : tourner la vue en troisième personne · Échap (hors dialogue) le livre.
+
+**LE LIVRE — LE MENU DE SPIRIT3D, COPIÉ ET BRANCHÉ (Jordan, 10 octobre 2026 : « copie le menu de spirit3d (le système
+de book) et branche-le au jeu, PC et manette »)** — `ui/livre/`, `scenes/livre.tscn` (la scène principale). Copié de
+`D:/Spirit3D/BOOKS` : `Book`, `Cell`, `BOOKCELL_BASE` (→ `cell_base.tscn`), la vignette brillante, les flèches, la
+touche de coin ESC / MNU. Une planche de 1600 × 900 (16:9 : le jeu remplit l'écran ; Spirit3D est en 2:1), huit
+cellules de 400 × 450 : **Jouer** (le monde, dans un SubViewport rendu à la résolution de l'ÉCRAN, l'icône de Knil
+dessus), **Commandes**, **Options** (plein écran, synchro verticale, volume, résolution 3D ; `user://options.cfg`),
+**Sauvegardes** (la rapide et trois emplacements ; charger rend le jeu), **Quitter** ; trois emplacements vides.
+- Le jeu DÉMARRE agrandi. Échap / Start / la touche MNU : le livre s'ouvre, **le jeu est EN PAUSE**
+  (`get_tree().paused` ; le livre est PROCESS_MODE_ALWAYS), le HUD caché, le monde figé derrière « Jouer ».
+- Livre ouvert : croix / stick gauche / flèches choisissent une cellule (la souris aussi, au survol), A / Entrée /
+  clic l'ouvrent, B / Échap referment une page ; Start, Échap ou B rendent le jeu ; F1–F8 ouvrent la cellule n° N.
+- ⚠ **F1–F8 NE MARCHENT QUE LIVRE OUVERT** (dans Spirit3D, partout) : en jeu, F1–F5 et F9 sont à la triche et à la
+  sauvegarde. ⚠ Échap EN DIALOGUE ferme le dialogue, PAS le jeu (`GameCell._should_reset_on_escape`).
+- ⚠ **START EST AU LIVRE** : le vol de triche est passé sur **LB**. Et Godot ne met pas A dans `ui_accept` (ni B dans
+  `ui_cancel`) : `Inputs.ensure()` les ajoute — sans eux, la manette ne presse aucun bouton des pages.
+- ⚠ La cellule de base de Spirit3D donnait à `Cell_Contain` une taille minimale de 450 (leurs cellules) : en 400, le
+  monde débordait de 25 de chaque côté — retirée.
+- Retiré de Spirit3D (sans objet ici) : la session et les comptes, la cellule ADMIN, la chaîne d'accueil
+  (`BookCellsSystem`, le voile, le bouton « Jouer »), le double appui des touches de fonction.
+- ÉPROUVÉ : `sonde_livre` (29). Vu à l'image : le jeu, le livre (le monde figé derrière Knil), Options, Commandes.
+
+**L'EXPORT WINDOWS — PRÊT (10 octobre 2026)** : `export_presets.cfg`, preset « Windows PC » (x86_64, release, le
+`.pck` à côté de l'exe, l'icône de Knil dans l'exe). `"$GODOT" --headless --path D:/TheStoryOfKnil --export-release
+"Windows PC" export/windows/TheStoryOfKnil.exe` (`export/` est hors git) : **exe 109 Mo + pck 1,8 Go** (presque tout :
+`cuit/monde_knil`), ~2 min. Lancé : le monde se charge, aucune erreur, ~560 img/s. Dehors : les autres cuissons
+(`cuit/val_e12`, `cuit/essai` : 1,75 Go), les sources `mondes/`, `tests/`, `tools/`, `addons/` (le greffon : le jeu
+ne le charge jamais), la planche de référence. Dedans en plus des ressources : `data/*.json`, `cuit/monde_knil/
+monde.json`, l'`.ico`. ⚠ Un AUTRE monde cuit à livrer : l'ajouter aux filtres. ⚠ **LA TRICHE PART DANS L'EXPORT**
+tant que `data/triche.json` dit `"actif": true`. ⚠ `application/company_name` et `copyright` sont VIDES : à remplir.
 
 **LA TRICHE — ACTIVE (Jordan, 9 octobre 2026 : « active le cheat et tu le désactiveras quand je te le demanderai »).**
 `data/triche.json` → `"actif": true` ; À ÉTEINDRE (`false`) QUAND JORDAN LE DEMANDE, pas avant. `core/triche.gd` :
-F1 / Start le VOL (Espace / A monte, C / gâchette gauche descend, pas de gravité) · F2 le FANTÔME (on traverse tout ;
+F1 / LB le VOL (Espace / A monte, C / gâchette gauche descend, pas de gravité) · F2 le FANTÔME (on traverse tout ;
 vol compris) · F3 / clic du stick droit la VITESSE ×1, ×3, ×8 · F4 +1 h. Le HUD l'affiche en orange. Éteinte, ses
 touches ne font rien. ÉPROUVÉE : `sonde_triche_limites` (11).
 
@@ -404,6 +451,8 @@ GODOT=/c/Users/jorda/Desktop/Godot_v4.7-stable_win64.exe/Godot_v4.7-stable_win64
 "$GODOT" --path D:/TheStoryOfKnil --windowed res://tests/capture_zoom.tscn       # molette, Ctrl + molette, ce qui se charge
 "$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_manette.tscn     # la manette (faux événements) : 13 vérifications
 "$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_triche_limites.tscn   # la triche et les limites : 11 vérifications
+"$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_livre.tscn       # le livre (menu) : pause, sélection, pages, manette : 29
+"$GODOT" --path D:/TheStoryOfKnil --windowed res://tests/sonde_contour.tscn   # le contour noir : 15 (headless aussi ; avec fenêtre, des captures)
 "$GODOT" --path D:/TheStoryOfKnil --windowed res://tests/capture_reference.tscn -- --monde=… --lieu=x,y,z  # le GREFFON, pour comparer
 "$GODOT" --headless --path D:/TheStoryOfKnil res://tests/banc_taille.tscn      # le temps de pose selon la taille du monde
 "$GODOT" --path D:/TheStoryOfKnil res://tests/capture_scene.tscn                # des captures (user://captures)
@@ -476,12 +525,23 @@ galerie → souterrain, troisième personne, torche allumée.
 - **LE PERSONNAGE ANIMÉ** : `Player` attend un `AnimationTree` (`parameters/move/blend_position`,
   `parameters/conditions/sleeping`) ou un `AnimationPlayer` (`idle`, `walk`, `run`, `sleep`).
   **LE MODÈLE EST LÀ (10 octobre 2026)** : `assets/personnages/knil/knil.glb` (Tripo, ~20 700 triangles, squelette
-  MIXAMO de 65 os `mixamorig_*`), posé dans `player.tscn` (`Modele`, échelle 1,9 : 0,92 m → ~1,75 m, la taille de
-  la capsule de collision ; il regarde vers +Z, le sens d'avance). Le Player trouve l'AnimationPlayer DANS le modèle
-  et les noms se règlent (`anim_idle`, `anim_walk`, `anim_run`, `anim_jump`). ⚠ **UNE SEULE ANIMATION** :
-  `complain_01_001` (6,3 s, sur place, mise en boucle dans `knil.glb.import`), jouée comme « idle » — et donc aussi en
-  marchant, faute de mieux. Il manque marche, course, saut : le squelette étant celui de Mixamo, on les prend sur
-  Mixamo (« without skin ») et on les ajoute à la bibliothèque. Vu à l'image : texturé, debout, à la bonne taille.
+  MIXAMO de 65 os `mixamorig_*`, 22 animations PRÉRÉGLÉES de Tripo — idle, walk, run, jump, swagger, angry, laugh,
+  hit_to_side, defeat, dive, swim…), posé dans `player.tscn` (`Modele`, échelle 1,9 : 0,92 m → ~1,75 m, la taille
+  de la capsule ; il regarde vers +Z, le sens d'avance). Le Player trouve l'AnimationPlayer DANS le modèle ; les noms
+  se règlent (`anim_idle` = `idle_001`, `anim_walk` = `walk_001`, `anim_run` = `run_001`, `anim_jump` = `saut`).
+  **REMISES EN ÉTAT À L'IMPORT** (`tools/import/knil_animations.gd`, le script d'import du .glb) : les boucles
+  (idle, walk, run, swagger) bouclées, coupées au plus près du début et FONDUES sur 0,15 s (`run_001` sautait de
+  0,2 m aux pieds) ; hanches ramenées sur place (`run_001` courait 0,78 m DEVANT la capsule) ; `saut` = UN bond de
+  `jump_001` (qui en fait cinq), 0,5 → 0,8 s, hanches tenues — la physique monte le corps, la pose du sommet tient
+  jusqu'au sol. ⚠ Un nouvel export de Tripo : le recopier sous le MÊME nom (`knil.glb`), l'import refait tout.
+  **LES PIEDS ET LE SOL** : la marche est animée à 0,91 m/s, la course à 3,09 m/s (mesuré, à l'échelle) ; la lecture
+  suit la vitesse réelle, bornée à ×2 (`anim_max_speed_scale`). ⚠ Avec `walk_speed` 3,5 et `run_speed` 7, la marche
+  GLISSE (il faudrait ×3,8) et la course un peu (×2,3) — à trancher : des vitesses plus lentes (~1,8 et ~6,2) ou le
+  glissement. Vu à l'image : attente, marche, course, saut (+1,44 m), retour à l'attente.
+  **LES PROMPTS POUR TRIPO** (text to motion), s'il en faut d'autres : en ANGLAIS, < 60 mots, « A person … », la
+  mécanique du corps SEULE (ni « gros », ni « arrogant », ni décor) — l'attitude se traduit en gestes (« chest pushed
+  out, arms held away from the body » : le ventre de Knil se fait traverser par des bras le long du corps) ; ni boucle
+  ni « sur place » ne se demandent (le modèle ne sait pas) : des pas droits à vitesse constante, l'import fait le reste.
 - **LES PNJ** sont immobiles. Leurs routines (horaires, déplacements, foyers) se brancheront sur `GameClock` et
   le GameState, comme le reste.
 - La collision en formes CONCAVES par tuile est la plus fidèle et la plus chère ; à mesurer sur le vrai monde.

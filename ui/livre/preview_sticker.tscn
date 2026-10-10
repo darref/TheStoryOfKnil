@@ -1,0 +1,49 @@
+[gd_scene format=3]
+
+[ext_resource type="Shader" path="res://ui/livre/reduced_preview.gdshader" id="1_n65d4"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nhob0"]
+shader = ExtResource("1_n65d4")
+shader_parameter/speed = 0.4
+shader_parameter/shine_strength = 0.2000000095
+shader_parameter/band_width = 0.08000000310148
+shader_parameter/band_center_peak = 5.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_ssuv5"]
+font_size = 30
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Preview_Sticker" type="Panel" unique_id=901373217]
+z_index = 4095
+material = SubResource("ShaderMaterial_nhob0")
+custom_minimum_size = Vector2(200, 200)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Preview_Sticker_Label" type="Label" parent="." unique_id=1893551724]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -63.5
+offset_top = -21.0
+offset_right = 63.5
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "BookCell"
+label_settings = SubResource("LabelSettings_ssuv5")
+horizontal_alignment = 1
+vertical_alignment = 1

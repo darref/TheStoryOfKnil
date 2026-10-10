@@ -3,7 +3,7 @@ extends RefCounted
 ## pas de l'éteindre (Jordan, 9 octobre 2026 : « active le cheat et tu le désactiveras quand je te le demanderai ») :
 ## `data/triche.json`, « actif ». Éteinte, aucune de ses touches ne fait rien.
 ##
-##   F1 · Start (manette)         le VOL — Espace / A monte, C / gâchette gauche descend, pas de gravité
+##   F1 · LB (manette)            le VOL — Espace / A monte, C / gâchette gauche descend, pas de gravité
 ##   F2                           le FANTÔME — on traverse tout (vol compris) ; les LIMITES du monde, elles, tiennent
 ##   F3 · clic du stick droit     la VITESSE : ×1, ×3, ×8
 ##   F4                           avancer l'heure d'une heure

@@ -1,0 +1,43 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/livre/cell_key_overlay.gd" id="1_keyov"]
+[ext_resource type="Texture2D" path="res://ui/livre/key_cap.svg" id="2_keycap"]
+
+[node name="Cell_Key_Overlay" type="CanvasLayer" unique_id=771204811]
+layer = 110
+script = ExtResource("1_keyov")
+
+[node name="Root" type="Control" parent="." unique_id=771204812]
+custom_minimum_size = Vector2(50, 50)
+offset_right = 50.0
+offset_bottom = 50.0
+mouse_filter = 0
+
+[node name="KeyCap" type="TextureRect" parent="Root" unique_id=771204813]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_keycap")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Root" unique_id=771204814]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.93, 0.95, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.65)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 15
+text = "ESC"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -22,6 +22,18 @@ func _ready() -> void:
 	monitoring = false
 	if entity_id == "":
 		push_warning("Interactable sans entity_id : %s" % get_path())
+	_add_outline()
+
+
+## Le contour noir de la charte : tout ce à quoi on parle est souligné (sauf s'il en porte déjà un).
+func _add_outline() -> void:
+	for child in get_children():
+		if child is SubtreeOutline:
+			return
+	var outline := SubtreeOutline.new()
+	outline.name = "Contour"
+	outline.target_root = self
+	add_child(outline)
 
 
 func title() -> String:

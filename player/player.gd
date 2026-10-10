@@ -32,6 +32,11 @@ extends CharacterBody3D
 @export var anim_walk := "walk"
 @export var anim_run := "run"
 @export var anim_jump := "jump"
+## La vitesse au sol de la marche et de la course TELLES QU'ANIMÉES (m/s, à l'échelle du modèle) : la lecture
+## s'accélère ou ralentit pour que les pieds suivent le sol, jusqu'à `anim_max_speed_scale` (au-delà, ils glissent).
+@export var anim_walk_ground_speed := 0.0
+@export var anim_run_ground_speed := 0.0
+@export var anim_max_speed_scale := 2.0
 @export_group("")
 
 const Triche := preload("res://core/triche.gd")
@@ -195,6 +200,9 @@ func _animate(speed_ratio: float, airborne := false) -> void:
 	if want != _anim_current and _anim_player.has_animation(want):
 		_anim_current = want
 		_anim_player.play(want, 0.2)
+	# les pieds suivent le sol : la marche et la course jouées à la vitesse réelle (bornée)
+	var ground := anim_run_ground_speed if _anim_current == anim_run else 		(anim_walk_ground_speed if _anim_current == anim_walk else 0.0)
+	_anim_player.speed_scale = clampf(speed_ratio * run_speed / ground, 0.5, anim_max_speed_scale) if ground > 0.0 else 1.0
 
 
 func _find_anim_player() -> AnimationPlayer:

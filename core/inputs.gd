@@ -13,6 +13,7 @@ extends RefCounted
 ##   la vue           clic droit + souris       stick droit ← → (troisième personne)
 ##   zoom             molette                   stick droit ↑ ↓
 ##   vue haute        Ctrl + molette            Back
+##   le livre (menu)  Échap                     Start      (ui/livre : le jeu se met en pause, voir GameCell)
 ##
 ## `pad` dit le DERNIER appareil touché (la présentation montre « E » ou « X » selon lui) : `note()` le tient à jour.
 
@@ -29,6 +30,8 @@ const KEYS := {
 	"quicksave": [KEY_F5],
 	"quickload": [KEY_F9],
 	"high_view": [],
+	# Le livre : Échap y mène aussi, mais il est lu par le livre lui-même (il ferme d'abord un dialogue).
+	"menu": [],
 	"camera_left": [], "camera_right": [], "zoom_in": [], "zoom_out": [],
 	# La triche (core/triche.gd) : sans effet quand elle est éteinte.
 	"cheat_fly": [KEY_F1], "cheat_ghost": [KEY_F2], "cheat_speed": [KEY_F3], "cheat_time": [KEY_F4], "fly_down": [KEY_C],
@@ -41,9 +44,13 @@ const PAD_BUTTONS := {
 	"cancel": [JOY_BUTTON_B],
 	"torch": [JOY_BUTTON_Y],
 	"high_view": [JOY_BUTTON_BACK],
-	"cheat_fly": [JOY_BUTTON_START],
+	"menu": [JOY_BUTTON_START],
+	"cheat_fly": [JOY_BUTTON_LEFT_SHOULDER],
 	"cheat_speed": [JOY_BUTTON_RIGHT_STICK],
 }
+
+## Les actions d'interface de Godot (boutons, curseurs) et leur bouton de manette.
+const UI_PAD := {"ui_accept": JOY_BUTTON_A, "ui_cancel": JOY_BUTTON_B}
 
 ## action -> [axe, sens]
 const PAD_AXES := {
@@ -61,7 +68,7 @@ const PAD_AXES := {
 ## Ce que l'on montre à l'écran, par appareil : [clavier, manette].
 const LABELS := {
 	"interact": ["E", "X"], "cancel": ["Échap", "B"], "jump": ["Espace", "A"],
-	"torch": ["T", "Y"],
+	"torch": ["T", "Y"], "menu": ["Échap", "Start"],
 }
 
 const DEADZONE := 0.25
@@ -70,6 +77,13 @@ static var pad := false
 
 
 static func ensure() -> void:
+	# Les menus (le livre, ses pages) : A valide, B revient — Godot ne met pas A dans « ui_accept » par défaut.
+	for ui: String in UI_PAD:
+		var jb := InputEventJoypadButton.new()
+		jb.button_index = UI_PAD[ui]
+		jb.device = -1
+		if InputMap.has_action(ui) and not InputMap.action_has_event(ui, jb):
+			InputMap.action_add_event(ui, jb)
 	for action: String in KEYS:
 		if InputMap.has_action(action):
 			continue

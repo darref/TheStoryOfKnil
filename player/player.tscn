@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://player/player.gd" id="1"]
 [ext_resource type="Script" path="res://player/torche.gd" id="2"]
 [ext_resource type="PackedScene" path="res://assets/personnages/knil/knil.glb" id="3"]
+[ext_resource type="Script" path="res://world/contour/subtree_outline.gd" id="4"]
 
 [sub_resource type="CapsuleShape3D" id="body"]
 radius = 0.35
@@ -13,7 +14,12 @@ radius = 2.2
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1")
-anim_idle = "complain_01_001"
+anim_idle = "idle_001"
+anim_walk = "walk_001"
+anim_run = "run_001"
+anim_jump = "saut"
+anim_walk_ground_speed = 0.91
+anim_run_ground_speed = 3.09
 
 [node name="Shape" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
@@ -36,3 +42,7 @@ shadow_enabled = true
 omni_range = 9.0
 omni_attenuation = 1.4
 script = ExtResource("2")
+
+[node name="Contour" type="Node" parent="." node_paths=PackedStringArray("target_root")]
+script = ExtResource("4")
+target_root = NodePath("../Modele")
