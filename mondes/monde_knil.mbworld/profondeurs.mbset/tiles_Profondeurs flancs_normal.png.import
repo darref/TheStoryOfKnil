@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dgti4c1lvdplt"
-path.s3tc="res://.godot/imported/tiles_Profondeurs flancs_normal.png-5f020167e97f98e101a618dcd08f6688.s3tc.ctex"
+path.s3tc="res://.godot/imported/tiles_Profondeurs flancs_normal.png-41bd406a70fb1503e9c4f7e78fe0134a.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -15,7 +15,7 @@ generator_parameters={
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/profondeurs.mbset/tiles_Profondeurs flancs_normal.png"
-dest_files=["res://.godot/imported/tiles_Profondeurs flancs_normal.png-5f020167e97f98e101a618dcd08f6688.s3tc.ctex"]
+dest_files=["res://.godot/imported/tiles_Profondeurs flancs_normal.png-41bd406a70fb1503e9c4f7e78fe0134a.s3tc.ctex"]
 
 [params]
 

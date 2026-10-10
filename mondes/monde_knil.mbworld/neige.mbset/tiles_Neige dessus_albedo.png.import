@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bd6qbnoeqga50"
-path="res://.godot/imported/tiles_Neige dessus_albedo.png-415436e4ced5d39b557039b316d248a2.ctex"
+path="res://.godot/imported/tiles_Neige dessus_albedo.png-756b8f9905661918ac527fa7e5fc0fe0.ctex"
 metadata={
 "vram_texture": false
 }
@@ -14,7 +14,7 @@ generator_parameters={
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/neige.mbset/tiles_Neige dessus_albedo.png"
-dest_files=["res://.godot/imported/tiles_Neige dessus_albedo.png-415436e4ced5d39b557039b316d248a2.ctex"]
+dest_files=["res://.godot/imported/tiles_Neige dessus_albedo.png-756b8f9905661918ac527fa7e5fc0fe0.ctex"]
 
 [params]
 

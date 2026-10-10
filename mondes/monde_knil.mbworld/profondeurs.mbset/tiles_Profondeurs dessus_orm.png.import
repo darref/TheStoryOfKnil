@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cra5y3uxxw640"
-path.s3tc="res://.godot/imported/tiles_Profondeurs dessus_orm.png-a51f15325b79e2864f23760b24f9b05c.s3tc.ctex"
+path.s3tc="res://.godot/imported/tiles_Profondeurs dessus_orm.png-054fbe19cb33e346b7fae991dffe6ab4.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -15,7 +15,7 @@ generator_parameters={
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/profondeurs.mbset/tiles_Profondeurs dessus_orm.png"
-dest_files=["res://.godot/imported/tiles_Profondeurs dessus_orm.png-a51f15325b79e2864f23760b24f9b05c.s3tc.ctex"]
+dest_files=["res://.godot/imported/tiles_Profondeurs dessus_orm.png-054fbe19cb33e346b7fae991dffe6ab4.s3tc.ctex"]
 
 [params]
 

@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://x5n5ab4lfxwf"
-path="res://.godot/imported/lac_du_val.glb-0516fa901e80710869add1de3fe19943.scn"
+path="res://.godot/imported/lac_du_val.glb-07e2831fd7b43c16a16f435bfea9add2.scn"
 
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/water/lac_du_val.glb"
-dest_files=["res://.godot/imported/lac_du_val.glb-0516fa901e80710869add1de3fe19943.scn"]
+dest_files=["res://.godot/imported/lac_du_val.glb-07e2831fd7b43c16a16f435bfea9add2.scn"]
 
 [params]
 

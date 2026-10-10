@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dhxuuremdld8v"
-path="res://.godot/imported/tiles_SousBois flancs_orm.png-792e384b241ea61344e596d30f0e31f5.ctex"
+path="res://.godot/imported/tiles_SousBois flancs_orm.png-5d0afe3d67bf88c0b872f40f816cda42.ctex"
 metadata={
 "vram_texture": false
 }
@@ -14,7 +14,7 @@ generator_parameters={
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/sousbois.mbset/tiles_SousBois flancs_orm.png"
-dest_files=["res://.godot/imported/tiles_SousBois flancs_orm.png-792e384b241ea61344e596d30f0e31f5.ctex"]
+dest_files=["res://.godot/imported/tiles_SousBois flancs_orm.png-5d0afe3d67bf88c0b872f40f816cda42.ctex"]
 
 [params]
 

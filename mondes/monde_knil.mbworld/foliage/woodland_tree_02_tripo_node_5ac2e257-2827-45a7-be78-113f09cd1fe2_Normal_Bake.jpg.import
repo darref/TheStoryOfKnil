@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dqcq3e7hrnip"
-path="res://.godot/imported/woodland_tree_02_tripo_node_5ac2e257-2827-45a7-be78-113f09cd1fe2_Normal_Bake.jpg-fa878553762ee6144592fe9dc40cdd80.ctex"
+path="res://.godot/imported/woodland_tree_02_tripo_node_5ac2e257-2827-45a7-be78-113f09cd1fe2_Normal_Bake.jpg-5183274e45827e8d210ef00ad2edb7a3.ctex"
 metadata={
 "vram_texture": false
 }
@@ -14,7 +14,7 @@ generator_parameters={
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/foliage/woodland_tree_02_tripo_node_5ac2e257-2827-45a7-be78-113f09cd1fe2_Normal_Bake.jpg"
-dest_files=["res://.godot/imported/woodland_tree_02_tripo_node_5ac2e257-2827-45a7-be78-113f09cd1fe2_Normal_Bake.jpg-fa878553762ee6144592fe9dc40cdd80.ctex"]
+dest_files=["res://.godot/imported/woodland_tree_02_tripo_node_5ac2e257-2827-45a7-be78-113f09cd1fe2_Normal_Bake.jpg-5183274e45827e8d210ef00ad2edb7a3.ctex"]
 
 [params]
 

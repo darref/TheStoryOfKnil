@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://gqnjwagvx8w3"
-path="res://.godot/imported/plains_tree_02_tripo_node_bc64f14d-9321-4c6d-837b-f63c0ae9f468_BaseColor.jpg-f844584f70740fff98e4ee985ecda4a8.ctex"
+path="res://.godot/imported/plains_tree_02_tripo_node_bc64f14d-9321-4c6d-837b-f63c0ae9f468_BaseColor.jpg-b9a8692d1258a1884756c7945e5a6f09.ctex"
 metadata={
 "vram_texture": false
 }
@@ -14,7 +14,7 @@ generator_parameters={
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/foliage/plains_tree_02_tripo_node_bc64f14d-9321-4c6d-837b-f63c0ae9f468_BaseColor.jpg"
-dest_files=["res://.godot/imported/plains_tree_02_tripo_node_bc64f14d-9321-4c6d-837b-f63c0ae9f468_BaseColor.jpg-f844584f70740fff98e4ee985ecda4a8.ctex"]
+dest_files=["res://.godot/imported/plains_tree_02_tripo_node_bc64f14d-9321-4c6d-837b-f63c0ae9f468_BaseColor.jpg-b9a8692d1258a1884756c7945e5a6f09.ctex"]
 
 [params]
 

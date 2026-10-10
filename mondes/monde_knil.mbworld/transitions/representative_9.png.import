@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dtw2tg74c1scq"
-path="res://.godot/imported/representative_9.png-8c30ae0dbc6c4e49e71a0dce795c75b8.ctex"
+path="res://.godot/imported/representative_9.png-6212656917522dca251d9933574e1ef3.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/transitions/representative_9.png"
-dest_files=["res://.godot/imported/representative_9.png-8c30ae0dbc6c4e49e71a0dce795c75b8.ctex"]
+dest_files=["res://.godot/imported/representative_9.png-6212656917522dca251d9933574e1ef3.ctex"]
 
 [params]
 

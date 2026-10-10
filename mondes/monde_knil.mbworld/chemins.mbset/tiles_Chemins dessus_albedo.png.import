@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dnes6ut7o1yyu"
-path="res://.godot/imported/tiles_Chemins dessus_albedo.png-c8d9bd7a02e5ff4dbe569b0bb521a1d4.ctex"
+path="res://.godot/imported/tiles_Chemins dessus_albedo.png-59f62a636eeb1c157227f4ececa50238.ctex"
 metadata={
 "vram_texture": false
 }
@@ -14,7 +14,7 @@ generator_parameters={
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/chemins.mbset/tiles_Chemins dessus_albedo.png"
-dest_files=["res://.godot/imported/tiles_Chemins dessus_albedo.png-c8d9bd7a02e5ff4dbe569b0bb521a1d4.ctex"]
+dest_files=["res://.godot/imported/tiles_Chemins dessus_albedo.png-59f62a636eeb1c157227f4ececa50238.ctex"]
 
 [params]
 

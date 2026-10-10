@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b5bd81kcupfx6"
-path="res://.godot/imported/tiles_Marais flancs_normal.png-a712f6f14847ba09e8b0c47334f0c1ec.ctex"
+path="res://.godot/imported/tiles_Marais flancs_normal.png-6db794e3d4bc9e724779f62b9caf713f.ctex"
 metadata={
 "vram_texture": false
 }
@@ -14,7 +14,7 @@ generator_parameters={
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/marais.mbset/tiles_Marais flancs_normal.png"
-dest_files=["res://.godot/imported/tiles_Marais flancs_normal.png-a712f6f14847ba09e8b0c47334f0c1ec.ctex"]
+dest_files=["res://.godot/imported/tiles_Marais flancs_normal.png-6db794e3d4bc9e724779f62b9caf713f.ctex"]
 
 [params]
 

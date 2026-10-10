@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bn2bv02ar6fss"
-path.s3tc="res://.godot/imported/woodland_tree_06_tripo_node_aa0d803b-8aec-4725-b6b2-1c6e18921bed_BaseColor.jpg-fd1532d53559e4e361e17c938224c3d5.s3tc.ctex"
+path.s3tc="res://.godot/imported/woodland_tree_06_tripo_node_aa0d803b-8aec-4725-b6b2-1c6e18921bed_BaseColor.jpg-70e8c1fc6244d08784f9b319692c0bd8.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -15,7 +15,7 @@ generator_parameters={
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/foliage/woodland_tree_06_tripo_node_aa0d803b-8aec-4725-b6b2-1c6e18921bed_BaseColor.jpg"
-dest_files=["res://.godot/imported/woodland_tree_06_tripo_node_aa0d803b-8aec-4725-b6b2-1c6e18921bed_BaseColor.jpg-fd1532d53559e4e361e17c938224c3d5.s3tc.ctex"]
+dest_files=["res://.godot/imported/woodland_tree_06_tripo_node_aa0d803b-8aec-4725-b6b2-1c6e18921bed_BaseColor.jpg-70e8c1fc6244d08784f9b319692c0bd8.s3tc.ctex"]
 
 [params]
 

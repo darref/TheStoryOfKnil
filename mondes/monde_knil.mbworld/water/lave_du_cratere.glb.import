@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://b377wqhr7oca4"
-path="res://.godot/imported/lave_du_cratere.glb-6c6ccc7b05b403cc2690e300c142b1ae.scn"
+path="res://.godot/imported/lave_du_cratere.glb-be3aaa425b038064461720fd9811bf33.scn"
 
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/water/lave_du_cratere.glb"
-dest_files=["res://.godot/imported/lave_du_cratere.glb-6c6ccc7b05b403cc2690e300c142b1ae.scn"]
+dest_files=["res://.godot/imported/lave_du_cratere.glb-be3aaa425b038064461720fd9811bf33.scn"]
 
 [params]
 

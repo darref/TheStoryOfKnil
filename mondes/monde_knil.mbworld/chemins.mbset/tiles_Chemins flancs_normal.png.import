@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cr3faomdbajry"
-path="res://.godot/imported/tiles_Chemins flancs_normal.png-9fae2c045ff8957f6e2358fec65fafac.ctex"
+path="res://.godot/imported/tiles_Chemins flancs_normal.png-becba19a1ed8f4104259f781922d02a0.ctex"
 metadata={
 "vram_texture": false
 }
@@ -14,7 +14,7 @@ generator_parameters={
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/chemins.mbset/tiles_Chemins flancs_normal.png"
-dest_files=["res://.godot/imported/tiles_Chemins flancs_normal.png-9fae2c045ff8957f6e2358fec65fafac.ctex"]
+dest_files=["res://.godot/imported/tiles_Chemins flancs_normal.png-becba19a1ed8f4104259f781922d02a0.ctex"]
 
 [params]
 

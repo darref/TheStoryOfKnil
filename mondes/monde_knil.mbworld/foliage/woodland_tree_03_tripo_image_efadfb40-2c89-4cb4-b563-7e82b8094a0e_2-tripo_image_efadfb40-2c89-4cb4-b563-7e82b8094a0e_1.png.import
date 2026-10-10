@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://djj1kcn1g25ik"
-path.s3tc="res://.godot/imported/woodland_tree_03_tripo_image_efadfb40-2c89-4cb4-b563-7e82b8094a0e_2-tripo_image_efadfb40-2c89-4cb4-b563-7e82b8094a0e_1.png-5ab979e1d1814210afdc750e4cf7304b.s3tc.ctex"
+path.s3tc="res://.godot/imported/woodland_tree_03_tripo_image_efadfb40-2c89-4cb4-b563-7e82b8094a0e_2-tripo_image_efadfb40-2c89-4cb4-b563-7e82b8094a0e_1.png-2700e4cc4515c8429ba8ab1605d343d2.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -15,7 +15,7 @@ generator_parameters={
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/foliage/woodland_tree_03_tripo_image_efadfb40-2c89-4cb4-b563-7e82b8094a0e_2-tripo_image_efadfb40-2c89-4cb4-b563-7e82b8094a0e_1.png"
-dest_files=["res://.godot/imported/woodland_tree_03_tripo_image_efadfb40-2c89-4cb4-b563-7e82b8094a0e_2-tripo_image_efadfb40-2c89-4cb4-b563-7e82b8094a0e_1.png-5ab979e1d1814210afdc750e4cf7304b.s3tc.ctex"]
+dest_files=["res://.godot/imported/woodland_tree_03_tripo_image_efadfb40-2c89-4cb4-b563-7e82b8094a0e_2-tripo_image_efadfb40-2c89-4cb4-b563-7e82b8094a0e_1.png-2700e4cc4515c8429ba8ab1605d343d2.s3tc.ctex"]
 
 [params]
 

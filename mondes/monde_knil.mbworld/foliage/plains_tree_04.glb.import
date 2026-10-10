@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://djsg3myssgfok"
-path="res://.godot/imported/plains_tree_04.glb-d56904b94a9427eb107677ddacfedc4b.scn"
+path="res://.godot/imported/plains_tree_04.glb-81742650323e1612fca3edf6ce72f901.scn"
 
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/foliage/plains_tree_04.glb"
-dest_files=["res://.godot/imported/plains_tree_04.glb-d56904b94a9427eb107677ddacfedc4b.scn"]
+dest_files=["res://.godot/imported/plains_tree_04.glb-81742650323e1612fca3edf6ce72f901.scn"]
 
 [params]
 

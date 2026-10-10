@@ -8,7 +8,7 @@ set GODOT=C:\Users\jorda\Desktop\Godot_v4.7-stable_win64.exe\Godot_v4.7-stable_w
 set MONDE=res://mondes/monde_knil.mbworld/world.json
 set JOURNAL=D:\Knil\cuit\derniere_cuisson.txt
 cd /d D:\Knil
-if not exist "D:\Knil\mondes\monde_knil.mbworld\world.json" (
+if not exist "D:\TheStoryOfKnil\mondes\monde_knil.mbworld\world.json" (
 	echo.
 	echo   Pas d'export trouve : dans MB, World ^> "Export the world..." et choisis le dossier D:\Knil\mondes
 	echo.

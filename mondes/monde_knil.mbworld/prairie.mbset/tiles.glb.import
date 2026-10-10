@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://tegjhp4rqegc"
-path="res://.godot/imported/tiles.glb-ec68480175a3298ec61c258842d2542f.scn"
+path="res://.godot/imported/tiles.glb-ec111f4131c91c74e2db73b92f435012.scn"
 
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/prairie.mbset/tiles.glb"
-dest_files=["res://.godot/imported/tiles.glb-ec68480175a3298ec61c258842d2542f.scn"]
+dest_files=["res://.godot/imported/tiles.glb-ec111f4131c91c74e2db73b92f435012.scn"]
 
 [params]
 

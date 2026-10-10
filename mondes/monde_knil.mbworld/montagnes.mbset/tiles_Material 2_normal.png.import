@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cyhbixc5ulxpb"
-path="res://.godot/imported/tiles_Material 2_normal.png-276132a64459236fa54fb9d913474142.ctex"
+path="res://.godot/imported/tiles_Material 2_normal.png-5ebb0e35a9aac1fd12988e1f72a13ecf.ctex"
 metadata={
 "vram_texture": false
 }
@@ -14,7 +14,7 @@ generator_parameters={
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/montagnes.mbset/tiles_Material 2_normal.png"
-dest_files=["res://.godot/imported/tiles_Material 2_normal.png-276132a64459236fa54fb9d913474142.ctex"]
+dest_files=["res://.godot/imported/tiles_Material 2_normal.png-5ebb0e35a9aac1fd12988e1f72a13ecf.ctex"]
 
 [params]
 

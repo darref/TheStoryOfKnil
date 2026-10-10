@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://drjpmr1714hla"
-path="res://.godot/imported/etang_du_marais.glb-df54a9404b8f2894cc03023ad6569622.scn"
+path="res://.godot/imported/etang_du_marais.glb-78e7751ddbb03af2ffd7b4435e2c8cc9.scn"
 
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/water/etang_du_marais.glb"
-dest_files=["res://.godot/imported/etang_du_marais.glb-df54a9404b8f2894cc03023ad6569622.scn"]
+dest_files=["res://.godot/imported/etang_du_marais.glb-78e7751ddbb03af2ffd7b4435e2c8cc9.scn"]
 
 [params]
 

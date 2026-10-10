@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://djrqwmvwjap5j"
-path="res://.godot/imported/tiles_Paves flancs_normal.png-2818d4c470f7f76d03db66f3032ff4fb.ctex"
+path="res://.godot/imported/tiles_Paves flancs_normal.png-677b1a563465a14bfc972be4f6461dad.ctex"
 metadata={
 "vram_texture": false
 }
@@ -14,7 +14,7 @@ generator_parameters={
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/paves.mbset/tiles_Paves flancs_normal.png"
-dest_files=["res://.godot/imported/tiles_Paves flancs_normal.png-2818d4c470f7f76d03db66f3032ff4fb.ctex"]
+dest_files=["res://.godot/imported/tiles_Paves flancs_normal.png-677b1a563465a14bfc972be4f6461dad.ctex"]
 
 [params]
 

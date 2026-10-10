@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://dbwylk8c6ce48"
-path="res://.godot/imported/tiles.glb-f6f7743e63f3e096cfbc18bd87a7c4fd.scn"
+path="res://.godot/imported/tiles.glb-a03084b727d89f188da52355bede357f.scn"
 
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/volcan.mbset/tiles.glb"
-dest_files=["res://.godot/imported/tiles.glb-f6f7743e63f3e096cfbc18bd87a7c4fd.scn"]
+dest_files=["res://.godot/imported/tiles.glb-a03084b727d89f188da52355bede357f.scn"]
 
 [params]
 

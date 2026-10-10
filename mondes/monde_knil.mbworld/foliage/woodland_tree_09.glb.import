@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bgekbrtv1ntg8"
-path="res://.godot/imported/woodland_tree_09.glb-142f7172e28d741721d8eee0bcdc699e.scn"
+path="res://.godot/imported/woodland_tree_09.glb-57caf3ba749d1eaeb282abb237b01e37.scn"
 
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/foliage/woodland_tree_09.glb"
-dest_files=["res://.godot/imported/woodland_tree_09.glb-142f7172e28d741721d8eee0bcdc699e.scn"]
+dest_files=["res://.godot/imported/woodland_tree_09.glb-57caf3ba749d1eaeb282abb237b01e37.scn"]
 
 [params]
 

@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://st1hchb0rhy5"
-path="res://.godot/imported/tiles_Chemins dessus_normal.png-41057b5491d362181b01cda1f5e78c9a.ctex"
+path="res://.godot/imported/tiles_Chemins dessus_normal.png-984b83351cb2195f66322dfdd38db360.ctex"
 metadata={
 "vram_texture": false
 }
@@ -14,7 +14,7 @@ generator_parameters={
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/chemins.mbset/tiles_Chemins dessus_normal.png"
-dest_files=["res://.godot/imported/tiles_Chemins dessus_normal.png-41057b5491d362181b01cda1f5e78c9a.ctex"]
+dest_files=["res://.godot/imported/tiles_Chemins dessus_normal.png-984b83351cb2195f66322dfdd38db360.ctex"]
 
 [params]
 

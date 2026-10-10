@@ -2,19 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://vkaaowwpchdy"
-path="res://.godot/imported/tiles_SousBois dessus_albedo.png-dbd6096b74477d14101f4a7eb3926607.ctex"
+uid="uid://dsly4tjcy8joi"
+path="res://.godot/imported/tiles_SousBois dessus_albedo.png-1f0013ce8c4edab39a77f8bd95101ed6.ctex"
 metadata={
 "vram_texture": false
-}
-generator_parameters={
-"md5": "aca523a5a9575734c4a22d8bddfaedef"
 }
 
 [deps]
 
 source_file="res://mondes/monde_knil.mbworld/sousbois.mbset/tiles_SousBois dessus_albedo.png"
-dest_files=["res://.godot/imported/tiles_SousBois dessus_albedo.png-dbd6096b74477d14101f4a7eb3926607.ctex"]
+dest_files=["res://.godot/imported/tiles_SousBois dessus_albedo.png-1f0013ce8c4edab39a77f8bd95101ed6.ctex"]
 
 [params]
 
@@ -26,7 +23,7 @@ compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
