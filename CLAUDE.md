@@ -535,9 +535,9 @@ galerie → souterrain, troisième personne, torche allumée.
   `jump_001` (qui en fait cinq), 0,5 → 0,8 s, hanches tenues — la physique monte le corps, la pose du sommet tient
   jusqu'au sol. ⚠ Un nouvel export de Tripo : le recopier sous le MÊME nom (`knil.glb`), l'import refait tout.
   **LES PIEDS ET LE SOL** : la marche est animée à 0,91 m/s, la course à 3,09 m/s (mesuré, à l'échelle) ; la lecture
-  suit la vitesse réelle, bornée à ×2 (`anim_max_speed_scale`). ⚠ Avec `walk_speed` 3,5 et `run_speed` 7, la marche
-  GLISSE (il faudrait ×3,8) et la course un peu (×2,3) — à trancher : des vitesses plus lentes (~1,8 et ~6,2) ou le
-  glissement. Vu à l'image : attente, marche, course, saut (+1,44 m), retour à l'attente.
+  suit la vitesse réelle (`anim_max_speed_scale` = 4 dans `player.tscn`) : avec `walk_speed` 3,5 et `run_speed` 7,
+  la marche joue ×3,85 et la course ×2,27 — LES PIEDS NE GLISSENT PLUS (Jordan, 11 octobre 2026 : « scaler
+  l'anim ? »). La cadence : marche ~3,2 pas/s (l'anim d'origine, 0,84, est très lente), course ~3,5 pas/s. Vu à l'image : attente, marche, course, saut (+1,44 m), retour à l'attente.
   **LES PROMPTS POUR TRIPO** (text to motion), s'il en faut d'autres : en ANGLAIS, < 60 mots, « A person … », la
   mécanique du corps SEULE (ni « gros », ni « arrogant », ni décor) — l'attitude se traduit en gestes (« chest pushed
   out, arms held away from the body » : le ventre de Knil se fait traverser par des bras le long du corps) ; ni boucle
