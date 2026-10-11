@@ -20,6 +20,9 @@ extends Node3D
 ##   s'arrête, l'orientation gardée.
 ## - RENTRER TOUT DE SUITE, RESSORTIR EN DOUCEUR (`arm_return`) : rentrer en retard, c'est une image à travers la
 ##   paroi ; ressortir d'un coup, un saut de caméra à chaque pilier franchi.
+## LA BASCULE VERTICALE (comme dans Spirit3D) : dehors, si le décor coupe la vue OBLIQUE vers Knil (un rayon vers son
+## torse), la caméra passe DROIT AU-DESSUS de lui (même distance, le haut de l'écran gardé : les commandes ne tournent
+## pas) ; libre à nouveau, elle revient à l'oblique (`overhead`, `overhead_*`).
 ## LE TREMBLEMENT : le joueur avance aux pas de la PHYSIQUE (60 par seconde), la caméra à chaque IMAGE. Avec
 ## l'interpolation physique (project.godot, `physics/common/physics_interpolation`), la caméra suit la position
 ## INTERPOLÉE du joueur ; elle-même, posée dans `_process`, n'est pas interpolée.
@@ -51,6 +54,15 @@ enum Mode { TOPDOWN, THIRD_PERSON }
 @export var high_distance := 45.0
 @export var high_time := 1.2
 @export_group("")
+@export_group("Bascule verticale")
+## Le décor coupe la vue oblique vers Knil depuis ce temps : la caméra passe droit au-dessus de lui.
+@export var overhead_enter_delay := 0.08
+## La vue oblique est libre depuis ce temps : la caméra y revient.
+@export var overhead_exit_delay := 0.5
+## La durée du fondu entre l'oblique et la verticale.
+@export var overhead_time := 0.35
+## La hauteur du point de Knil que la vue doit voir (le torse, au-dessus des pieds).
+@export var overhead_los_height := 1.0
 @export_group("Bras-ressort")
 ## Le rayon de la sphère : plus que le demi plan proche, plus fin que la capsule du joueur (0,35).
 @export var arm_radius := 0.2
@@ -74,6 +86,10 @@ var _tp_yaw := 0.0
 var _focus := Vector3.ZERO
 var _said_radius := -1.0
 var _arm := -1.0  # la longueur du bras, < 0 : pas encore posé
+## Vrai : la vue de dessus est passée VERTICALE (le décor cachait Knil) ; `_overhead` en est le fondu (0 à 1).
+var overhead := false
+var _overhead := 0.0
+var _overhead_clock := 0.0
 
 @onready var camera: Camera3D = $Camera3D
 
@@ -147,6 +163,7 @@ func _process(delta: float) -> void:
 	if mode == Mode.THIRD_PERSON and not Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) and absf(turn) < 0.01 \
 			and target is CharacterBody3D and (target as CharacterBody3D).velocity.length() > 0.5:
 		_tp_yaw = lerp_angle(_tp_yaw, target.rotation.y, clampf(tp_follow * delta * 0.3, 0.0, 1.0))
+	_update_overhead(delta)
 	var a := _topdown_transform()
 	var b := _third_person_transform()
 	var t := smoothstep(0.0, 1.0, _blend)
@@ -206,10 +223,40 @@ func _say_view_radius() -> void:
 		EventBus.view_radius_changed.emit(r)
 
 
+## La vue de dessus : OBLIQUE, ou VERTICALE quand le décor cache Knil (`overhead`, fondu par `_overhead`).
 func _topdown_transform() -> Transform3D:
+	var oblique := _oblique_transform()
+	var k := smoothstep(0.0, 1.0, _overhead)
+	if k <= 0.0:
+		return oblique
+	var yaw := deg_to_rad(top_yaw_degrees)
+	var eye := _focus + Vector3.UP * oblique.origin.distance_to(_focus)
+	# Droit en bas, le haut de l'écran gardé dans le sens de l'oblique : les commandes ne tournent pas.
+	var vertical := Transform3D(Basis.looking_at(Vector3.DOWN, Vector3(-sin(yaw), 0, -cos(yaw))), eye)
+	return Transform3D(oblique.basis.slerp(vertical.basis, k).orthonormalized(), oblique.origin.lerp(vertical.origin, k))
+
+
+func _oblique_transform() -> Transform3D:
 	var yaw := deg_to_rad(top_yaw_degrees)
 	var eye := _focus + Vector3(sin(yaw) * top_distance * _zoom, top_height * _zoom, cos(yaw) * top_distance * _zoom)
 	return Transform3D(Basis.looking_at(_focus - eye, Vector3.UP), eye)
+
+
+## LA BASCULE VERTICALE : le décor coupe-t-il la vue OBLIQUE vers Knil ? On regarde toujours depuis l'oblique — en
+## vertical aussi : c'est elle qui dit quand revenir. Entrer vite, sortir après un délai (le long d'un mur, la vue ne
+## clignote pas).
+func _update_overhead(delta: float) -> void:
+	var blocked := false
+	var world := get_world_3d()
+	if world != null and mode == Mode.TOPDOWN:
+		var chest := _target_position() + Vector3.UP * overhead_los_height
+		var q := PhysicsRayQueryParameters3D.create(_oblique_transform().origin, chest, arm_mask)
+		blocked = not world.direct_space_state.intersect_ray(q).is_empty()
+	_overhead_clock = _overhead_clock + delta if blocked != overhead else 0.0
+	if _overhead_clock >= (overhead_enter_delay if blocked else overhead_exit_delay):
+		overhead = blocked
+		_overhead_clock = 0.0
+	_overhead = move_toward(_overhead, 1.0 if overhead else 0.0, delta / maxf(overhead_time, 0.01))
 
 
 func _high_transform() -> Transform3D:

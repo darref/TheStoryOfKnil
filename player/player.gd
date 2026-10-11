@@ -393,7 +393,10 @@ func _camera_relative(input: Vector2) -> Vector3:
 		return Vector3.ZERO
 	var cam := get_viewport().get_camera_3d()
 	var b := cam.global_basis if cam else Basis.IDENTITY
-	var forward := Vector3(-b.z.x, 0, -b.z.z).normalized()
+	var forward := Vector3(-b.z.x, 0, -b.z.z)
+	if forward.length_squared() < 0.01:
+		forward = Vector3(b.y.x, 0, b.y.z)  # la caméra regarde droit en bas (vue verticale) : « avant », c'est le haut de l'écran
+	forward = forward.normalized()
 	var right := Vector3(b.x.x, 0, b.x.z).normalized()
 	return (right * input.x - forward * input.y).limit_length(1.0)
 

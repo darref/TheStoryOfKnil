@@ -38,7 +38,12 @@ d'actions, « Mépriser », le sommeil obligatoire toutes les 72 h). Tout cela e
   `PHYSICS_INTERPOLATION_MODE_OFF`. Un nœud 3D neuf déplacé dans `_process` : pareil, sinon il saccade. Un saut de
   position (téléport) : `reset_physics_interpolation()`. Et LE BRAS-RESSORT DU PLAY TEST DE MB (`app/vue.gd`,
   `_suivre`), dans TOUTES les vues : une SPHÈRE (0,2) lancée de la tête vers l'œil, rentre sans délai, ressort en
-  douceur. ⚠ Le « FilDeSecours » (une boîte invisible de 400 m à y = −5,5) est RETIRÉ de `main.tscn` : il coupait
+  douceur. **LA BASCULE VERTICALE** (comme Spirit3D, refaite ici) : dehors, si le décor coupe la vue OBLIQUE vers
+  le torse de Knil, la caméra passe DROIT AU-DESSUS de lui (même distance, haut de l'écran gardé : les commandes ne
+  tournent pas — `Player._camera_relative` prend le haut de l'écran quand la caméra regarde droit en bas) ; la vue
+  testée est toujours l'oblique, même en vertical ; entrer après 0,08 s, revenir après 0,5 s libre, fondu 0,35 s
+  (`overhead_*`). ÉPROUVÉ : `sonde_camera` (8 ; mutation : bascule coupée → 4 rouges). Vu sur la carte (49,5 ; −49,5).
+  ⚠ Le « FilDeSecours » (une boîte invisible de 400 m à y = −5,5) est RETIRÉ de `main.tscn` : il coupait
   tout ce qui est peint plus bas ; la chute est rattrapée par `Player.fall_limit`.
 - **LA VUE** (gardée) : de dessus dehors ; troisième personne dans un intérieur (bâtiment, grotte, galerie) ; la
   bascule est AUTOMATIQUE (`Interior` → `CameraRig`).
@@ -502,6 +507,7 @@ GODOT=/c/Users/jorda/Desktop/Godot_v4.7-stable_win64.exe/Godot_v4.7-stable_win64
 "$GODOT" --path D:/TheStoryOfKnil --windowed res://tests/capture_zoom.tscn       # molette, Ctrl + molette, ce qui se charge
 "$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_manette.tscn     # la manette (faux événements) : 17 vérifications
 "$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_triche_limites.tscn   # la triche et les limites : 11 vérifications
+"$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_camera.tscn    # la bascule verticale, le bras-ressort : 8
 "$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_combat.tscn    # le genou, le pied, la boule, les coups reçus : 34
 "$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_livre.tscn       # le livre (menu) : pause, sélection, pages, manette : 29
 "$GODOT" --path D:/TheStoryOfKnil --windowed res://tests/sonde_contour.tscn   # le contour noir : 15 (headless aussi ; avec fenêtre, des captures)
