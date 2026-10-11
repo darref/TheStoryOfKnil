@@ -63,4 +63,4 @@ TIME is global (one clock for every material). PHASE of a tile = hash of its ORI
     + phase))), multiplying the emission.
   The UVs of a tile turn with it: a v scroll stays vertical on every copy, a u scroll follows each copy's turn.
 
-Open format — free plugins for Godot, Unity and Unreal read it. Made with MarchingBlocks 0.9.0 (Knil : fabriquer_val.gd).
+Open format — free plugins for Godot, Unity and Unreal read it. Made with MarchingBlocks 0.9.0.

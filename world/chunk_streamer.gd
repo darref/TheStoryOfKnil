@@ -173,6 +173,7 @@ func loaded_count(track := "sol") -> int:
 	if not _tracks.has(track):
 		return 0
 	return _tracks[track].values().filter(func(c: Dictionary) -> bool: return c["state"] == "on").size()
+	
 
 
 func state_of(key: Vector2i, track := "sol") -> String:

@@ -9,6 +9,16 @@ extends EditorScenePostImport
 ## - LE SAUT (`saut`) : `jump_001` est une suite de cinq petits bonds ; on en garde UN, de l'impulsion au sommet
 ##   (`JUMP_FROM` → `JUMP_TO`), les hanches tenues à leur hauteur de repos — c'est la physique qui monte le corps.
 ##   Non bouclé : la pose du sommet tient jusqu'au sol.
+## - LES ANIMATIONS DE MIXAMO (`MIXAMO`) : Knil passé dans Mixamo garde le MÊME squelette (65 os `mixamorig_*`,
+##   mêmes repos) — l'animation se recopie telle quelle, chemins des pistes remis sur le squelette du .glb. On en garde
+##   un morceau, ACCÉLÉRÉ pour tenir dans le geste du jeu, hanches à l'aplomb (c'est `player.gd` qui fait l'élan).
+##   « genou » : `Illegal Knee` (2,25 s : garde, le genou droit monte de 0,38 à 0,75 s, redescend à 1,27 s, puis la
+##   garde tient) → 0,30–1,35 s joué ×2,1 = 0,5 s ; le genou est haut de 0,14 à 0,29 s, le sommet à 0,21 s — dans la
+##   frappe de `player.gd` (0,12 à 0,26 s).
+##   « pied » : `Kicking` (2,2 s : le pied droit monte de 0,45 à 0,95 s, ~0,95 m de haut et 1 m devant à l'échelle,
+##   revient au sol vers 1,5 s) → 0,40–1,55 s joué ×1,6 = 0,72 s ; le pied est haut de 0,22 à 0,41 s, le sommet à
+##   0,34 s — la frappe du pied dans `player.gd`. ⚠ Un .fbx changé ne réimporte pas `knil.glb` : le réimporter (clic droit →
+##   Réimporter dans l'éditeur, ou effacer `.godot/imported/knil.glb-*.scn` puis `--import` ; effacer le .md5 ne suffit pas).
 
 const HIPS := "mixamorig_Hips"
 const LOOPS := ["idle_001", "walk_001", "run_001", "swagger_001"]
@@ -16,6 +26,11 @@ const JUMP_SOURCE := "jump_001"
 const JUMP_NAME := "saut"
 const JUMP_FROM := 0.5
 const JUMP_TO := 0.8
+## Le nom dans le jeu → [le .fbx de Mixamo, début, fin (s), accélération].
+const MIXAMO := {
+	"genou": ["res://assets/personnages/knil/animations/illegal_knee.fbx", 0.30, 1.35, 2.1],
+	"pied": ["res://assets/personnages/knil/animations/kicking.fbx", 0.40, 1.55, 1.6],
+}
 const FPS := 30.0
 const SEAM := 0.15
 
@@ -39,7 +54,32 @@ func _post_import(scene: Node) -> Object:
 		var jump := _slice(library.get_animation(JUMP_SOURCE), JUMP_FROM, JUMP_TO)
 		_in_place(jump, rest, true)
 		library.add_animation(JUMP_NAME, jump)
+	var skeleton_path := str(player.get_node(player.root_node).get_path_to(skeleton))
+	for name in MIXAMO:
+		var m: Array = MIXAMO[name]
+		var source := _mixamo_animation(m[0])
+		if source == null:
+			push_warning("knil_animations : %s introuvable — « %s » manque (réimporter knil.glb)" % [m[0], name])
+			continue
+		var a := _slice(source, m[1], m[2], m[3])
+		for i in a.get_track_count():
+			a.track_set_path(i, NodePath(skeleton_path + ":" + str(a.track_get_path(i)).get_slice(":", 1)))
+		_in_place(a, rest, false)
+		library.add_animation(name, a)
 	return scene
+
+
+## La première animation d'un .fbx de Mixamo (« mixamo_com »).
+func _mixamo_animation(path: String) -> Animation:
+	if not ResourceLoader.exists(path):
+		return null
+	var scene := (load(path) as PackedScene).instantiate()
+	var player := scene.find_child("AnimationPlayer", true, false) as AnimationPlayer
+	var a: Animation = null
+	if player and not player.get_animation_list().is_empty():
+		a = player.get_animation(player.get_animation_list()[0])
+	scene.free()
+	return a
 
 
 func _hips_track(a: Animation) -> int:
@@ -102,25 +142,26 @@ func _pose_distance(a: Animation, t0: float, t1: float) -> float:
 	return d
 
 
-## Un morceau [from, to] d'une animation, rééchantillonné à `FPS`, ramené à commencer en 0.
-func _slice(source: Animation, from: float, to: float) -> Animation:
+## Un morceau [from, to] d'une animation, rééchantillonné à `FPS`, ramené à commencer en 0, joué `speed` fois plus vite.
+func _slice(source: Animation, from: float, to: float, speed := 1.0) -> Animation:
 	var a := Animation.new()
-	a.length = to - from
+	a.length = (to - from) / speed
 	for i in source.get_track_count():
 		var type := source.track_get_type(i)
 		if type not in [Animation.TYPE_POSITION_3D, Animation.TYPE_ROTATION_3D, Animation.TYPE_SCALE_3D]:
 			continue
 		var j := a.add_track(type)
 		a.track_set_path(j, source.track_get_path(i))
-		var t := from
-		while t <= to + 1e-4:
-			var at := minf(t, to)
+		var t := 0.0
+		while t <= a.length + 1e-4:
+			var kt := minf(t, a.length)
+			var at := from + kt * speed
 			match type:
 				Animation.TYPE_POSITION_3D:
-					a.position_track_insert_key(j, at - from, source.position_track_interpolate(i, at))
+					a.position_track_insert_key(j, kt, source.position_track_interpolate(i, at))
 				Animation.TYPE_ROTATION_3D:
-					a.rotation_track_insert_key(j, at - from, source.rotation_track_interpolate(i, at))
+					a.rotation_track_insert_key(j, kt, source.rotation_track_interpolate(i, at))
 				Animation.TYPE_SCALE_3D:
-					a.scale_track_insert_key(j, at - from, source.scale_track_interpolate(i, at))
+					a.scale_track_insert_key(j, kt, source.scale_track_interpolate(i, at))
 			t += 1.0 / FPS
 	return a

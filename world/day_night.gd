@@ -31,6 +31,10 @@ func _ready() -> void:
 		moon.name = "Lune"
 		moon.shadow_enabled = true  # sans ombre, elle éclairait l'intérieur de l'auberge à travers le toit (vu)
 		add_child(moon)
+	# Tournés à chaque image (`_process`) : l'interpolation physique n'a rien à y lisser.
+	for light: Node3D in [sun, moon]:
+		if light:
+			light.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF
 
 
 func _process(delta: float) -> void:

@@ -15,3 +15,9 @@ export_credentials.cfg
 .mono/
 mono_crash.*.json
 ~*.dll
+
+# Windows dépose ces fichiers dans les dossiers.
+desktop.ini
+# L'ancien Val (déjà dans l'historique git) et un export vide de MB : gardés sur le disque, pas dans git.
+/Knil_MB_project/archives/
+/Knil_MB_project/monde_knil.mbworld/

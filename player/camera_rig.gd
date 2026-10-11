@@ -12,6 +12,17 @@ extends Node3D
 ## À LA MANETTE : le stick droit ↑ ↓ zoome (`pad_zoom_speed`), ← → tourne la troisième personne (`pad_turn_speed`) ;
 ## Back bascule la vue haute.
 ## Ce que la caméra voit au sol est dit par `EventBus.view_radius_changed` : le ChunkStreamer charge assez loin pour lui.
+##
+## LE BRAS-RESSORT — repris du Play test de MarchingBlocks (`app/vue.gd`, `_suivre`), dans TOUTES les vues : la caméra
+## ne passe jamais à travers le décor.
+## - UNE SPHÈRE, PAS UN RAYON (`arm_radius`) : le plan proche a une largeur ; un rayon le laissait traverser la paroi.
+##   Elle part de la TÊTE du joueur (dans sa capsule, donc jamais dans la roche) vers l'œil ; l'œil se pose où elle
+##   s'arrête, l'orientation gardée.
+## - RENTRER TOUT DE SUITE, RESSORTIR EN DOUCEUR (`arm_return`) : rentrer en retard, c'est une image à travers la
+##   paroi ; ressortir d'un coup, un saut de caméra à chaque pilier franchi.
+## LE TREMBLEMENT : le joueur avance aux pas de la PHYSIQUE (60 par seconde), la caméra à chaque IMAGE. Avec
+## l'interpolation physique (project.godot, `physics/common/physics_interpolation`), la caméra suit la position
+## INTERPOLÉE du joueur ; elle-même, posée dans `_process`, n'est pas interpolée.
 
 enum Mode { TOPDOWN, THIRD_PERSON }
 
@@ -40,6 +51,16 @@ enum Mode { TOPDOWN, THIRD_PERSON }
 @export var high_distance := 45.0
 @export var high_time := 1.2
 @export_group("")
+@export_group("Bras-ressort")
+## Le rayon de la sphère : plus que le demi plan proche, plus fin que la capsule du joueur (0,35).
+@export var arm_radius := 0.2
+## La hauteur d'où part le bras (la tête, au-dessus des pieds).
+@export var arm_head := 1.4
+## La vitesse à laquelle le bras ressort (par seconde) ; il rentre, lui, sans délai.
+@export var arm_return := 6.0
+## Ce que la caméra évite : le monde (couche 1) — pas les troncs (couche 5), qu'elle traverse.
+@export_flags_3d_physics var arm_mask := 1
+@export_group("")
 @export var blend_time := 0.8
 @export var follow_speed := 8.0
 
@@ -52,17 +73,26 @@ var _high := 0.0   # 0 à hauteur du joueur, 1 vue haute
 var _tp_yaw := 0.0
 var _focus := Vector3.ZERO
 var _said_radius := -1.0
+var _arm := -1.0  # la longueur du bras, < 0 : pas encore posé
 
 @onready var camera: Camera3D = $Camera3D
 
 
 func _ready() -> void:
 	top_level = true
+	physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF  # posée à chaque image, elle n'a rien à lisser
 	EventBus.interior_entered.connect(func(_id: String, _t: String) -> void: _update_mode())
 	EventBus.interior_exited.connect(func(_id: String) -> void: _update_mode())
 	if target:
-		_focus = target.global_position
+		_focus = _target_position()
 		_tp_yaw = target.rotation.y
+
+
+## Où est le joueur À CETTE IMAGE : sa position interpolée entre deux pas de physique (sinon, il avance par à-coups).
+func _target_position() -> Vector3:
+	if target.is_physics_interpolated_and_enabled():
+		return target.get_global_transform_interpolated().origin
+	return target.global_position
 
 
 func _update_mode() -> void:
@@ -113,7 +143,7 @@ func _process(delta: float) -> void:
 	if mode == Mode.THIRD_PERSON and absf(turn) > 0.0:
 		_tp_yaw -= turn * pad_turn_speed * TAU * delta
 	_zoom = lerpf(_zoom, zoom, clampf(zoom_speed * delta, 0.0, 1.0))
-	_focus = _focus.lerp(target.global_position, clampf(follow_speed * delta, 0.0, 1.0))
+	_focus = _focus.lerp(_target_position(), clampf(follow_speed * delta, 0.0, 1.0))
 	if mode == Mode.THIRD_PERSON and not Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) and absf(turn) < 0.01 \
 			and target is CharacterBody3D and (target as CharacterBody3D).velocity.length() > 0.5:
 		_tp_yaw = lerp_angle(_tp_yaw, target.rotation.y, clampf(tp_follow * delta * 0.3, 0.0, 1.0))
@@ -125,8 +155,39 @@ func _process(delta: float) -> void:
 	if h > 0.0:
 		var c := _high_transform()
 		base = Transform3D(base.basis.slerp(c.basis, h).orthonormalized(), base.origin.lerp(c.origin, h))
-	global_transform = base
+	global_transform = _spring_arm(base, delta)
 	_say_view_radius()
+
+
+## LE BRAS-RESSORT (voir en tête) : l'œil ramené sur la ligne tête → œil, là où la sphère du bras bute.
+func _spring_arm(t: Transform3D, delta: float) -> Transform3D:
+	var head := _target_position() + Vector3.UP * arm_head
+	var offset := t.origin - head
+	var full := offset.length()
+	if full < 0.001:
+		return t
+	var free := full * _free_part(head, offset)
+	if _arm < 0.0 or free < _arm:
+		_arm = free  # rentrer : sans délai
+	else:
+		_arm = minf(free, lerpf(_arm, free, clampf(arm_return * delta, 0.0, 1.0)))  # ressortir : en douceur
+	return Transform3D(t.basis, head + offset / full * _arm)
+
+
+## La part libre (0..1) du déplacement de la sphère du bras, de `from` de `motion`, contre le décor.
+func _free_part(from: Vector3, motion: Vector3) -> float:
+	var world := get_world_3d()
+	if world == null:
+		return 1.0
+	var q := PhysicsShapeQueryParameters3D.new()
+	var sphere := SphereShape3D.new()
+	sphere.radius = arm_radius
+	q.shape = sphere
+	q.transform = Transform3D(Basis(), from)
+	q.motion = motion
+	q.collision_mask = arm_mask
+	var r := world.direct_space_state.cast_motion(q)
+	return 1.0 if r.is_empty() else r[0]
 
 
 ## Le rayon du sol que la caméra voit autour du joueur (à peu près : sa distance au point visé, l'ouverture, le format).
@@ -162,10 +223,5 @@ func _third_person_transform() -> Transform3D:
 	var pivot := _focus + Vector3.UP * tp_look_height
 	var back := Vector3(-sin(_tp_yaw), 0, -cos(_tp_yaw))
 	var eye := _focus + Vector3.UP * (tp_look_height + (tp_height - tp_look_height) * z) + back * tp_distance * z
-	# Le mur entre le joueur et la caméra : la caméra s'avance jusqu'à lui.
-	var space := get_world_3d().direct_space_state
-	var q := PhysicsRayQueryParameters3D.create(pivot, eye, 1)
-	var hit := space.intersect_ray(q)
-	if not hit.is_empty():
-		eye = hit["position"] + (pivot - eye).normalized() * 0.2
+	# Le mur entre le joueur et la caméra : c'est le bras-ressort qui s'en charge (`_spring_arm`), dans toutes les vues.
 	return Transform3D(Basis.looking_at(pivot - eye, Vector3.UP), eye)

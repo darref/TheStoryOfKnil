@@ -2,7 +2,7 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dqcq3e7hrnip"
+uid="uid://c74tkcmtmubai"
 path.s3tc="res://.godot/imported/woodland_tree_02_tripo_node_5ac2e257-2827-45a7-be78-113f09cd1fe2_Normal_Bake.jpg-5183274e45827e8d210ef00ad2edb7a3.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
@@ -29,8 +29,8 @@ compress/normal_map=1
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
-roughness/mode=0
-roughness/src_normal=""
+roughness/mode=1
+roughness/src_normal="res://mondes/monde_knil.mbworld/monde_knil.mbworld/foliage/woodland_tree_02_tripo_node_5ac2e257-2827-45a7-be78-113f09cd1fe2_Normal_Bake.jpg"
 process/channel_remap/red=0
 process/channel_remap/green=1
 process/channel_remap/blue=2

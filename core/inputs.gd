@@ -7,11 +7,12 @@ extends RefCounted
 ##   se déplacer      W A S D, flèches          stick gauche
 ##   courir           Maj                       clic du stick gauche, RB
 ##   sauter           Espace                    A
-##   parler / partir  E                         X
-##   coup de genou    F, clic gauche            RT (gâchette droite)
+##   parler / partir  E                         X (près de quelqu'un : X parle, sinon il frappe du genou)
+##   coup de genou    F, clic gauche            X
+##   coup de pied     G                         Y
 ##   en boule         R (tenu)                  LT (gâchette gauche, tenue)
 ##   fermer           Échap                     B
-##   torche           T                         Y
+##   torche           T                         croix ↑
 ##   la vue           clic droit + souris       stick droit ← → (troisième personne)
 ##   zoom             molette                   stick droit ↑ ↓
 ##   vue haute        Ctrl + molette            Back
@@ -28,6 +29,7 @@ const KEYS := {
 	"jump": [KEY_SPACE],
 	"interact": [KEY_E],
 	"attack": [KEY_F],
+	"kick": [KEY_G],
 	"guard": [KEY_R],
 	"torch": [KEY_T],
 	"cancel": [KEY_ESCAPE],
@@ -48,9 +50,12 @@ const MOUSE_BUTTONS := {
 const PAD_BUTTONS := {
 	"run": [JOY_BUTTON_LEFT_STICK, JOY_BUTTON_RIGHT_SHOULDER],
 	"jump": [JOY_BUTTON_A],
+	# X : parler ET le genou — `Player` donne la parole d'abord quand quelqu'un est à portée.
 	"interact": [JOY_BUTTON_X],
+	"attack": [JOY_BUTTON_X],
+	"kick": [JOY_BUTTON_Y],
 	"cancel": [JOY_BUTTON_B],
-	"torch": [JOY_BUTTON_Y],
+	"torch": [JOY_BUTTON_DPAD_UP],
 	"high_view": [JOY_BUTTON_BACK],
 	"menu": [JOY_BUTTON_START],
 	"cheat_fly": [JOY_BUTTON_LEFT_SHOULDER],
@@ -70,7 +75,6 @@ const PAD_AXES := {
 	"camera_right": [JOY_AXIS_RIGHT_X, 1.0],
 	"zoom_in": [JOY_AXIS_RIGHT_Y, -1.0],
 	"zoom_out": [JOY_AXIS_RIGHT_Y, 1.0],
-	"attack": [JOY_AXIS_TRIGGER_RIGHT, 1.0],
 	# LT : en boule à pied, descendre en vol (triche) — jamais les deux à la fois.
 	"guard": [JOY_AXIS_TRIGGER_LEFT, 1.0],
 	"fly_down": [JOY_AXIS_TRIGGER_LEFT, 1.0],
@@ -79,8 +83,8 @@ const PAD_AXES := {
 ## Ce que l'on montre à l'écran, par appareil : [clavier, manette].
 const LABELS := {
 	"interact": ["E", "X"], "cancel": ["Échap", "B"], "jump": ["Espace", "A"],
-	"torch": ["T", "Y"], "menu": ["Échap", "Start"],
-	"attack": ["F", "RT"], "guard": ["R", "LT"],
+	"torch": ["T", "croix ↑"], "menu": ["Échap", "Start"],
+	"attack": ["F", "X"], "kick": ["G", "Y"], "guard": ["R", "LT"],
 }
 
 const DEADZONE := 0.25

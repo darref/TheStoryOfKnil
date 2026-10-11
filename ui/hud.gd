@@ -1,6 +1,6 @@
 extends CanvasLayer
 ## L'INTERFACE — provisoire dans sa forme, définitive dans ses branchements : elle n'écoute que l'EventBus et
-## ne lit que le GameState. En haut : les cœurs, l'argent, l'heure, le lieu. Au centre : à qui l'on peut parler.
+## ne lit que le GameState. En haut : les cœurs, l'argent, l'heure, le lieu ; à droite, le COMPTEUR d'images/s. Au centre : à qui l'on peut parler.
 ## En bas : la boîte de dialogue.
 
 const Inputs := preload("res://core/inputs.gd")
@@ -18,6 +18,9 @@ var _speaker: Label
 var _line: Label
 var _focus: Node = null
 var _cheat: Label
+var _fps: Label
+var _worst_ms := 0.0  # la pire image de la dernière demi-seconde
+var _fps_left := 0.0
 
 
 func _ready() -> void:
@@ -32,6 +35,12 @@ func _ready() -> void:
 	_place = _label(top)
 	_cheat = _label(top)
 	_cheat.add_theme_color_override("font_color", Color(1.0, 0.55, 0.3))
+
+	# Le compteur : images/s (moyenne de Godot sur une seconde) et la pire image récente — un à-coup s'y voit.
+	_fps = _label(self)
+	_fps.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	_fps.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_place_rect(_fps, Rect2(-236, 12, 220, 24))
 
 	_prompt = _label(self)
 	_prompt.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
@@ -72,6 +81,13 @@ func _process(delta: float) -> void:
 	_cheat.text = Triche.etat()
 	_place.text = str(GameState.get_value("place.region_type", "")) + \
 		(" · " + str(GameState.get_value("place.interior_type", "")) if GameState.get_value("place.interior", false) else "")
+	_worst_ms = maxf(_worst_ms, delta * 1000.0)
+	_fps_left -= delta
+	if _fps_left <= 0.0:
+		_fps.text = "%d img/s · pire %.0f ms" % [Engine.get_frames_per_second(), _worst_ms]
+		_fps.add_theme_color_override("font_color", Color(0.6, 1.0, 0.6) if _worst_ms <= 33.4 else Color(1.0, 0.6, 0.4))
+		_worst_ms = 0.0
+		_fps_left = 0.5
 	if _toast_left > 0.0:
 		_toast_left -= delta
 		_toast.modulate.a = clampf(_toast_left, 0.0, 1.0)

@@ -1,0 +1,13 @@
+{
+	"actif": 0,
+	"calques": [
+		{
+			"fichier": "layer_0.png",
+			"nom": "Base",
+			"opacite": 1.0,
+			"visible": true
+		}
+	],
+	"md5": "9169d64c83b63c388216066a98659da6",
+	"version": 2
+}

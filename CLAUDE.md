@@ -32,6 +32,14 @@ d'actions, « Mépriser », le sommeil obligatoire toutes les 72 h). Tout cela e
   « Quadriforce » : quatre CARRÉS — pas en 2 × 2 avec quatre couleurs, c'est le logo de Windows). Avant la sortie
   commerciale : chercher « Knil » dans les bases de marques (INPI, EUIPO, USPTO) et voir un avocat en propriété
   intellectuelle.
+- **LA CAMÉRA NE TREMBLE PLUS, NE TRAVERSE PLUS (11 octobre 2026)** : l'INTERPOLATION PHYSIQUE est activée
+  (`physics/common/physics_interpolation`) — Knil avance aux pas de la physique (60/s), la caméra suit sa position
+  INTERPOLÉE (`CameraRig._target_position`) ; ce qui bouge dans `_process` (la caméra, le soleil, la lune) a
+  `PHYSICS_INTERPOLATION_MODE_OFF`. Un nœud 3D neuf déplacé dans `_process` : pareil, sinon il saccade. Un saut de
+  position (téléport) : `reset_physics_interpolation()`. Et LE BRAS-RESSORT DU PLAY TEST DE MB (`app/vue.gd`,
+  `_suivre`), dans TOUTES les vues : une SPHÈRE (0,2) lancée de la tête vers l'œil, rentre sans délai, ressort en
+  douceur. ⚠ Le « FilDeSecours » (une boîte invisible de 400 m à y = −5,5) est RETIRÉ de `main.tscn` : il coupait
+  tout ce qui est peint plus bas ; la chute est rattrapée par `Player.fall_limit`.
 - **LA VUE** (gardée) : de dessus dehors ; troisième personne dans un intérieur (bâtiment, grotte, galerie) ; la
   bascule est AUTOMATIQUE (`Interior` → `CameraRig`).
 - **LA RÈGLE D'ARCHITECTURE** (gardée) : **le backend ne connaît pas la présentation.** Il émet sur l'`EventBus` ;
@@ -240,6 +248,15 @@ monde@300`, `--sans-feuillage`, `--octant=n`, `--sans-physique`, `--chronos` ; r
      cuisson (~8 min), la sonde de collision ; il dit « C'EST PRÊT » ou ce qui ne va pas (`cuit/derniere_cuisson.txt`) ;
   4. lancer le jeu. Oublié l'étape 3 ? Le jeu le DIT (`ChunkStreamer._warn_if_stale` : l'export plus récent que la
      cuisson → un message à l'écran et un avertissement).
+  ⚠ **L'EXPORT SE FAIT DANS `mondes`, PAS DANS `mondes/monde_knil.mbworld`** (vu le 11 octobre 2026) : MB rangeait le
+  nouveau monde DANS l'ancien dossier, et `recuire.bat` recuisait l'ANCIEN sans rien dire. Il le refuse désormais.
+  La sonde de collision de `recuire.bat` prend ses points dans le monde cuit (`--points=auto`) : elle vaut pour toute carte.
+- **LE MONDE PEINT À LA MAIN — EN PLACE (11 octobre 2026)** : 354 × 465 m (x −153 à 201, z −278 à 187), quatre
+  couches peintes (Prairie, Pavés, SousBois, Marais), une eau de marais ; cuit en 1 min 42 : 515 morceaux, 307 000
+  tuiles, 280 Mo, collision fidèle (0 écart). Les LIMITES suivent sa boîte (`monde_knil.limites.json`). Le Val v2 de
+  `fabriquer_val.gd` est rangé dans `Knil_MB_project/archives/val_v2_fabrique.mbworld` (hors git, hors projet Godot).
+  ⚠ `main.tscn` est encore celui du Val : les RÉGIONS (La Sablière, Désert, Volcan, Montagnes… hors de la carte),
+  le bourg, l'auberge et les PNJ sont à replacer sur la nouvelle carte.
   ⚠ `fabriquer_val.gd` refait TOUT le projet : il refuse d'écraser un `monde_knil.mbproj` existant (`--ecraser`).
   ⚠ Les LIMITES du monde (±385 m) sont dans `mondes/monde_knil.limites.json`, hors du dossier que MB réécrit : un
   cadre repeint ailleurs → les y changer. ⚠ Les RÉGIONS, PNJ, lits, l'auberge sont posés dans `scenes/main.tscn` : une
@@ -368,7 +385,7 @@ world/       les nœuds posés dans le monde
                       `_outline_skip` : un nœud et son sous-arbre exclus. Le monde et les bâtiments : jamais.
 player/      player.gd/.tscn (CharacterBody3D : Knil), camera_rig.gd (les deux vues et leur fondu), torche.gd (la
              torche : allumée d'elle-même hors du plein jour et dans un intérieur, T la force)
-ui/          hud.gd (provisoire) : cœurs, argent, heure, lieu ; la boîte de dialogue
+ui/          hud.gd (provisoire) : cœurs, argent, heure, lieu, le COMPTEUR (img/s et pire image, à droite) ; la boîte de dialogue
   livre/              LE LIVRE, le menu copié de Spirit3D (§4) : book.gd, cell.gd, la cellule de base, les flèches,
                       la touche de coin ; cells/ : game_cell (le jeu), page_cell et ses pages (commandes, options,
                       sauvegardes, quitter)
@@ -386,29 +403,41 @@ tests/       les épreuves (§5)
 dialogue, Knil ne bouge pas et ne saute pas.
 
 **LE COMBAT — PRÉPARÉ (Jordan, 11 octobre 2026 : « prépare les attaques de Knil, coup de genou, et se mettre en boule
-avec le bouclier sur la tête, même s'il manque les anims »)** — dans `player.gd` (`Action` : NONE, KNEE, GUARD) :
+avec le bouclier sur la tête, même s'il manque les anims »)** — dans `player.gd` (`Action` : NONE, KNEE, GUARD, KICK) :
 - **LE COUP DE GENOU** (`attack`) : armée 0,12 s (Knil s'élance à 3 m/s, ne se dirige plus), frappe 0,14 s — chaque
   Frappable dans une boule de 0,55 m, 0,75 m devant lui, UNE fois par coup : 2 demi-cœurs, poussé à 6 m/s —,
   rétablissement 0,28 s ; un appui pendant le rétablissement ENCHAÎNE. Pas en dialogue, pas en vol de triche.
+  ⚠ À LA MANETTE, X EST AUSSI « PARLER » (Jordan, 11 octobre 2026 : « X genou Y kick ») : quelqu'un à portée, X
+  parle et ne frappe pas ; seul, X frappe. F et le clic gauche ne font jamais parler.
+- **LE COUP DE PIED** (`kick` : G, Y — demandé le 11 octobre 2026) : le même déroulé que le genou, plus lent, plus
+  loin, plus fort (`kick_*`) — armée 0,22 s (élan 1,5 m/s), frappe 0,19 s dans une boule de 0,55 m à 1,1 m devant,
+  0,8 m du sol : 3 demi-cœurs, poussé à 9 m/s —, rétablissement 0,31 s. Animé : « Kicking » de Mixamo → « pied »
+  (0,40–1,55 s joué ×1,6 = 0,72 s, le pied au sommet à 0,34 s, à hauteur de ventre). Vu à l'image.
 - **EN BOULE** (`guard`, tenu) : recroquevillé, le bouclier sur la tête ; il ne marche, ne saute, ne frappe plus.
   Après 0,15 s (`guard_enter_time`), tout coup est PARÉ, de tous les côtés (en boule, pas de face) : poussé à 30 %.
 - **KNIL FRAPPÉ** : `Player.take_hit(demi-cœurs, poussée)` — paré en boule, sinon `player.health` baisse et il est
   invulnérable 0,6 s. ⚠ À zéro, rien encore : LA MORT est à faire ; et rien ne frappe Knil (pas d'ennemi).
 - L'EventBus : `player_attacked`, `player_hit`, `player_guard_changed`, `player_damaged`.
-- **LES ANIMATIONS MANQUENT** : `anim_knee` (« genou »), `anim_guard` (« boule ») — un AnimationTree reçoit
-  `parameters/conditions/knee` et `guarding`. Sans elles, une DOUBLURE : le modèle s'écrase en boule, se cabre au
-  genou. Venue l'animation (même nom dans le .glb, ou `anim_knee` réglé dans `player.tscn`), la doublure s'efface.
+- **LE GENOU EST ANIMÉ (11 octobre 2026)** : « Illegal Knee » de MIXAMO (`assets/personnages/knil/animations/
+  illegal_knee.fbx`), Knil lui-même passé dans Mixamo — MÊME squelette que le .glb de Tripo (65 os, mêmes repos) :
+  pas de reciblage. L'import de `knil.glb` (`MIXAMO` dans `tools/import/knil_animations.gd`) en fait « genou » :
+  0,30–1,35 s joué ×2,1 = 0,5 s, le sommet du genou à 0,21 s (dans la frappe, 0,12–0,26), hanches à l'aplomb. Vu à
+  l'image : le genou droit part devant, sous le ventre. Une autre animation de Mixamo : le .fbx dans `animations/`,
+  une ligne dans `MIXAMO`, puis RÉIMPORTER `knil.glb` (effacer `.godot/imported/knil.glb-*.scn`, `--import` — un .fbx
+  changé ne le fait pas, effacer le .md5 non plus). Les .fbx ne partent pas dans l'export (filtre).
+- **LA BOULE N'EST PAS ANIMÉE** : `anim_guard` (« boule ») manque — la DOUBLURE (le modèle s'écrase) tient lieu.
+  Un AnimationTree recevrait `parameters/conditions/knee`, `kick` et `guarding`.
 - Le BOUCLIER n'est pas un objet du GameState : Knil l'a toujours. À trancher (le trouver dans un donjon ?).
-- ÉPROUVÉ : `sonde_combat` (26, sans le monde cuit). Mutations rouges : un coup qui touche à chaque image ; la boule
+- ÉPROUVÉ : `sonde_combat` (34, sans le monde cuit ; « genou » et « pied » se jouent, sans doublure ; le pied touche, pousse plus fort, pas à 3 m). Mutations rouges : un coup qui touche à chaque image ; la boule
   qui pare dès l'appui.
 
 ## 4. Commandes de jeu (provisoires)
 
-À LA MANETTE (Xbox) : stick gauche se déplacer · clic du stick ou RB courir · A sauter · X parler · B fermer ·
-Y torche · stick droit ← → tourner la troisième personne, ↑ ↓ zoomer · Back vue haute · Start le livre. Les textes à l'écran suivent
+À LA MANETTE (Xbox) : stick gauche se déplacer · clic du stick ou RB courir · A sauter · X parler (près de
+quelqu'un) ou coup de genou · Y coup de pied · B fermer · croix ↑ torche · stick droit ← → tourner la troisième personne, ↑ ↓ zoomer · Back vue haute · Start le livre. Les textes à l'écran suivent
 le dernier appareil touché (`core/inputs.gd`, la table des deux). ÉPROUVÉ par de faux événements (`sonde_manette`,
-13) — PAS ENCORE TENU EN MAIN avec une vraie manette.
-COMBAT : F / clic gauche / RT le coup de genou · R / LT (tenus) en boule sous le bouclier (LT descend aussi en vol de
+17) — PAS ENCORE TENU EN MAIN avec une vraie manette.
+COMBAT : F / clic gauche / X le coup de genou · G / Y le coup de pied · R / LT (tenus) en boule sous le bouclier (LT descend aussi en vol de
 triche — jamais les deux à la fois).
 AU CLAVIER : W A S D (Z Q S D en AZERTY) se déplacer · Maj courir · Espace sauter (1,4 m) · E parler · T torche
 (automatique → allumée → éteinte) · molette : zoom · Ctrl + molette : vue haute / retour · Échap fermer ·
@@ -471,9 +500,9 @@ GODOT=/c/Users/jorda/Desktop/Godot_v4.7-stable_win64.exe/Godot_v4.7-stable_win64
 "$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_collision.tscn -- --monde=…  # collision cuite = rendu ?
 "$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_galerie.tscn -- --monde=… [--escalier=x,z]  # la galerie se parcourt ?
 "$GODOT" --path D:/TheStoryOfKnil --windowed res://tests/capture_zoom.tscn       # molette, Ctrl + molette, ce qui se charge
-"$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_manette.tscn     # la manette (faux événements) : 13 vérifications
+"$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_manette.tscn     # la manette (faux événements) : 17 vérifications
 "$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_triche_limites.tscn   # la triche et les limites : 11 vérifications
-"$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_combat.tscn    # le genou, la boule, les coups reçus : 26
+"$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_combat.tscn    # le genou, le pied, la boule, les coups reçus : 34
 "$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_livre.tscn       # le livre (menu) : pause, sélection, pages, manette : 29
 "$GODOT" --path D:/TheStoryOfKnil --windowed res://tests/sonde_contour.tscn   # le contour noir : 15 (headless aussi ; avec fenêtre, des captures)
 "$GODOT" --path D:/TheStoryOfKnil --windowed res://tests/capture_reference.tscn -- --monde=… --lieu=x,y,z  # le GREFFON, pour comparer

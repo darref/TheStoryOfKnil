@@ -1,6 +1,7 @@
 extends Node
 ## LA MANETTE — headless : la scène principale menée par de faux événements de manette (ceux qu'une vraie enverrait) :
-## le stick gauche déplace, A saute, X fait parler (et on ne bouge pas pendant le dialogue), B ferme, le stick droit
+## le stick gauche déplace, A saute, X fait parler (et on ne bouge pas pendant le dialogue) — seul, X frappe du
+## genou, Y du pied —, B ferme, le stick droit
 ## zoome, Back bascule la vue haute ; et les textes à l'écran passent à la manette.
 ##   Godot --headless --path D:/TheStoryOfKnil res://tests/sonde_manette.tscn
 ## Sort avec 0 si tout est vert.
@@ -49,6 +50,7 @@ func _ready() -> void:
 	_button(JOY_BUTTON_X)
 	await _frames(5)
 	check(player.focus != null and player.focus.is_talking(), "X fait parler")
+	check(player.action == Player.Action.NONE, "X près d'elle parle, sans coup de genou")
 	check(hud._box.visible and str(hud._line.text) != "", "la boîte de dialogue montre la réplique")
 	var x0 := player.global_position.x
 	_axis(JOY_AXIS_LEFT_X, 1.0)
@@ -58,6 +60,18 @@ func _ready() -> void:
 	_button(JOY_BUTTON_B)
 	await _frames(5)
 	check(not player.focus.is_talking() and not hud._box.visible, "B ferme le dialogue")
+	# Loin de tout le monde : X, le genou ; Y, le coup de pied.
+	player.teleport(main.get_node("Bourg/Marchande").global_position + Vector3(-8.0, 0.3, 0))  # loin du Mendiant et du Puits
+	await _frames(30)
+	check(player.focus == null, "plus personne à portée")
+	_button(JOY_BUTTON_X)
+	await _frames(2)
+	check(player.action == Player.Action.KNEE, "X, seul : le coup de genou")
+	await _frames(60)
+	_button(JOY_BUTTON_Y)
+	await _frames(2)
+	check(player.action == Player.Action.KICK, "Y : le coup de pied")
+	await _frames(60)
 	# Le stick droit : le zoom ; Back : la vue haute.
 	var z := rig.zoom
 	_axis(JOY_AXIS_RIGHT_Y, 1.0)

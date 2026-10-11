@@ -2,11 +2,14 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dsly4tjcy8joi"
+uid="uid://7rprfl4elnwb"
 path.s3tc="res://.godot/imported/tiles_SousBois dessus_albedo.png-1f0013ce8c4edab39a77f8bd95101ed6.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
+}
+generator_parameters={
+"md5": "aca523a5a9575734c4a22d8bddfaedef"
 }
 
 [deps]

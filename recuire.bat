@@ -15,6 +15,17 @@ if not exist "D:\TheStoryOfKnil\mondes\monde_knil.mbworld\world.json" (
 	pause
 	exit /b 1
 )
+rem L'export range DANS le dossier du monde (on a choisi mondes\monde_knil.mbworld au lieu de mondes) : on recuirait
+rem l'ANCIEN monde sans le voir (vu le 11 octobre 2026).
+if exist "D:\TheStoryOfKnil\mondes\monde_knil.mbworld\monde_knil.mbworld\world.json" (
+	echo.
+	echo   L'export de MB est DANS l'ancien : mondes\monde_knil.mbworld\monde_knil.mbworld
+	echo   Dans MB, World ^> "Export the world..." : choisis le dossier D:\TheStoryOfKnil\mondes ^(pas monde_knil.mbworld^).
+	echo   Ou remplace mondes\monde_knil.mbworld par le dossier qui est dedans, puis relance.
+	echo.
+	pause
+	exit /b 1
+)
 if not exist "D:\TheStoryOfKnil\cuit" mkdir "D:\TheStoryOfKnil\cuit"
 echo.
 echo   1/3  Import de l'export de MB...
@@ -30,7 +41,7 @@ if errorlevel 1 (
 	exit /b 1
 )
 echo   3/3  Verification de la collision...
-"%GODOT%" --headless --path D:\TheStoryOfKnil res://tests/sonde_collision.tscn -- --monde=res://cuit/monde_knil "--points=0.5,0.5;64.5,40.5;-150,-20;150,140;-210,230;258,-235;0,-300" >> "%JOURNAL%" 2>&1
+"%GODOT%" --headless --path D:\TheStoryOfKnil res://tests/sonde_collision.tscn -- --monde=res://cuit/monde_knil --points=auto >> "%JOURNAL%" 2>&1
 if errorlevel 1 (
 	echo.
 	echo   ATTENTION : la collision cuite s'ecarte du rendu par endroits — detail dans %JOURNAL%

@@ -4,7 +4,8 @@ extends Node
 ## (couche 16) — depuis le ciel, et depuis le niveau des galeries. Un écart de plus de `TOL` est un trou (ou un
 ## mur) que le joueur sentirait et ne verrait pas.
 ##   Godot --headless --path D:/TheStoryOfKnil res://tests/sonde_collision.tscn -- --monde=res://cuit/monde_knil
-##         [--points=x,z;x,z…] [--pas=1.3] [--galerie=-3.6]
+##         [--points=x,z;x,z… | --points=auto] [--pas=1.3] [--galerie=-3.6]
+## `auto` : sept morceaux qui ont une collision, pris à intervalles réguliers dans monde.json — vaut pour toute carte.
 ## Sort avec 0 si aucun écart.
 
 const TOL := 0.15
@@ -26,9 +27,14 @@ func _ready() -> void:
 			"galerie": gallery_y = float(kv[1])
 			"points":
 				points = []
+				if kv[1] == "auto":
+					points = ["auto"]
+					continue
 				for t in kv[1].split(";"):
 					var c := t.split(",")
 					points.append(Vector2(float(c[0]), float(c[1])))
+	if points == ["auto"]:
+		points = _auto_points(dir, 7)
 	var target := Node3D.new()
 	add_child(target)
 	var s := ChunkStreamer.new()
@@ -97,3 +103,19 @@ func _ready() -> void:
 	_fails = total
 	print("COLLISION : %d écarts" % total)
 	get_tree().quit(1 if total > 0 else 0)
+
+
+## `n` points au centre de morceaux qui ont une collision, pris à intervalles réguliers dans la liste de monde.json
+## (décalés d'un rien : jamais une coordonnée entière).
+static func _auto_points(dir: String, n: int) -> Array:
+	var manifest: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(dir.path_join("monde.json")))
+	var ck := float(manifest["chunk"])
+	var keys: Array = []
+	for c: Dictionary in manifest["chunks"]:
+		if c["files"].has("collision"):
+			keys.append(c["key"])
+	var points: Array = []
+	for i in mini(n, keys.size()):
+		var k: Array = keys[int((i + 0.5) * keys.size() / mini(n, keys.size()))]
+		points.append(Vector2((float(k[0]) + 0.5) * ck + 0.03, (float(k[1]) + 0.5) * ck + 0.03))
+	return points

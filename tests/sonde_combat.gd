@@ -3,7 +3,7 @@ extends Node
 ## (F, clic gauche, RT) touche la cible UNE fois, la pousse, fait avancer Knil d'un pas ; un appui pendant le
 ## rétablissement enchaîne ; trop loin, rien. En boule (R, LT tenus) : Knil ne bouge ni ne saute ni ne frappe, le
 ## bouclier pare (la vie ne baisse pas) — mais pas avant d'être en boule ; sans boule, le coup coûte, puis Knil est
-## invulnérable un moment. Sans les animations : la doublure (le modèle s'écrase, se cabre) puis revient au repos.
+## invulnérable un moment. L'animation du genou se joue ; sans animation : la doublure (le modèle s'écrase, se cabre) puis revient au repos.
 ##   Godot --headless --path D:/TheStoryOfKnil res://tests/sonde_combat.tscn
 ## Sort avec 0 si tout est vert.
 
@@ -59,17 +59,24 @@ func _ready() -> void:
 	var z0 := player.global_position.z
 	await _tap("attack")
 	check(player.action == Player.Action.KNEE, "F : le coup de genou commence")
+	var anim: AnimationPlayer = player._anim_player
+	var has_knee := anim != null and anim.has_animation(player.anim_knee)
 	var leaned := false
+	var played := false
 	for i in 20:
 		await get_tree().physics_frame
 		leaned = leaned or model.rotation.x < -0.1
+		played = played or (anim != null and anim.current_animation == player.anim_knee)
 	check(_struck.size() == 1, "le genou touche la cible une fois (%d)" % _struck.size())
 	if _struck.size() > 0:
 		check(_struck[0][0] == player.knee_damage, "les dégâts : %d demi-cœurs" % _struck[0][0])
 		check(_struck[0][1].z > 3.0, "la cible est poussée devant (%.1f m/s)" % _struck[0][1].z)
 		check(_struck[0][2] == player, "la source du coup : Knil")
 	check(player.global_position.z - z0 > 0.15, "Knil s'élance d'un pas (%.2f m)" % (player.global_position.z - z0))
-	check(leaned, "sans animation, la doublure : il se cabre")
+	if has_knee:  # l'animation venue (`genou`, de Mixamo), la doublure s'efface
+		check(played and not leaned, "l'animation « %s » se joue, sans doublure" % player.anim_knee)
+	else:
+		check(leaned, "sans animation, la doublure : il se cabre")
 	check(events.has("attaque genou") and events.has("touché genou"), "l'EventBus dit le coup et la touche")
 	# l'enchaînement : un appui pendant le rétablissement relance un coup
 	await _frames(4)
@@ -85,6 +92,30 @@ func _ready() -> void:
 	await _tap("attack")
 	await _frames(40)
 	check(_struck.size() == 2, "cible à 3 m : le genou ne la touche pas")
+	target.position.z = player.global_position.z + 1.0
+
+	# --- Le coup de pied ------------------------------------------------------------------------------------
+	await _frames(2)
+	await _tap("kick")
+	check(player.action == Player.Action.KICK, "G : le coup de pied commence")
+	var kicked := false
+	for i in 30:
+		await get_tree().physics_frame
+		kicked = kicked or (anim != null and anim.current_animation == player.anim_kick)
+	check(_struck.size() == 3, "le pied touche la cible une fois (%d)" % _struck.size())
+	if _struck.size() > 2:
+		check(_struck[2][0] == player.kick_damage, "les dégâts du pied : %d demi-cœurs" % _struck[2][0])
+		check(_struck[2][1].z > player.knee_knockback, "le pied pousse plus fort que le genou (%.1f m/s)" % _struck[2][1].z)
+	check(events.has("attaque pied") and events.has("touché pied"), "l'EventBus dit le coup de pied")
+	if anim != null and anim.has_animation(player.anim_kick):
+		check(kicked, "l'animation « %s » se joue" % player.anim_kick)
+	await _frames(30)
+	check(player.action == Player.Action.NONE, "le coup de pied fini, Knil est libre")
+	target.position.z = player.global_position.z + 3.0
+	await _frames(2)
+	await _tap("kick")
+	await _frames(50)
+	check(_struck.size() == 3, "cible à 3 m : le pied ne la touche pas")
 	target.position.z = player.global_position.z + 1.0
 
 	# --- En boule -----------------------------------------------------------------------------------------

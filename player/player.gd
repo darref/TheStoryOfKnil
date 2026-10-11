@@ -16,15 +16,18 @@ extends CharacterBody3D
 ## « idle » / « walk » / « run » / « jump » s'il les a — cherché aussi DANS le modèle (`Modele`, le .glb importé),
 ## et ces noms se changent (`anim_idle`…) : un export de Mixamo ou de Tripo a les siens.
 ##
-## LE COMBAT — deux gestes de bourrin :
-## - LE COUP DE GENOU (`attack` : F, clic gauche, RT) : une ARMÉE (`knee_windup`), Knil s'élance d'un pas
+## LE COMBAT — trois gestes de bourrin :
+## - LE COUP DE GENOU (`attack` : F, clic gauche, X) : une ARMÉE (`knee_windup`), Knil s'élance d'un pas
 ##   (`knee_lunge`), le genou FRAPPE (`knee_active`) — chaque Frappable dans la zone devant lui, une fois par coup —,
 ##   puis il se RÉTABLIT (`knee_recovery`). Il ne se dirige pas pendant le coup ; un appui fait pendant le
-##   rétablissement est retenu (on enchaîne les coups).
+##   rétablissement est retenu (on enchaîne les coups). À la manette, X sert aussi à PARLER : quelqu'un à portée,
+##   X parle et ne frappe pas.
+## - LE COUP DE PIED (`kick` : G, Y) : le même déroulé (`kick_*`), plus lent, plus loin, plus fort — le pied monte
+##   à hauteur de ventre, à un mètre devant.
 ## - EN BOULE (`guard` tenu : R, LT) : Knil se recroqueville, le bouclier sur la tête. Il ne bouge plus, ne saute
 ##   plus, ne frappe plus ; après `guard_enter_time`, tout coup reçu (`take_hit`) est PARÉ — de n'importe quel côté :
 ##   en boule, il n'a pas de face. Il est seulement poussé (`guard_pushback`).
-## SANS ANIMATION (`anim_knee`, `anim_guard` absentes du modèle), une DOUBLURE : le modèle s'écrase en boule, se
+## SANS ANIMATION (`anim_knee`, `anim_kick`, `anim_guard` absentes du modèle), une DOUBLURE : le modèle s'écrase en boule, se
 ## penche au coup de genou — la mécanique se joue et se voit dès maintenant ; l'animation, venue, la remplace.
 
 @export var walk_speed := 3.5
@@ -52,6 +55,16 @@ extends CharacterBody3D
 @export var knee_height := 0.6
 ## La poussée donnée à ce qui est frappé (m/s).
 @export var knee_knockback := 6.0
+## LE COUP DE PIED, réglé comme le genou (Mixamo « Kicking », 0,72 s : le pied haut de 0,22 à 0,41 s).
+@export var kick_damage := 3
+@export var kick_windup := 0.22
+@export var kick_active := 0.19
+@export var kick_recovery := 0.31
+@export var kick_lunge := 1.5
+@export var kick_reach := 1.1
+@export var kick_radius := 0.55
+@export var kick_height := 0.8
+@export var kick_knockback := 9.0
 ## Le temps de se mettre en boule : frappé avant, le coup passe.
 @export var guard_enter_time := 0.15
 ## La part de la poussée gardée quand le bouclier pare (0 : il ne bouge pas, 1 : comme sans bouclier).
@@ -64,6 +77,7 @@ extends CharacterBody3D
 @export var anim_run := "run"
 @export var anim_jump := "jump"
 @export var anim_knee := "genou"
+@export var anim_kick := "pied"
 @export var anim_guard := "boule"
 ## La vitesse au sol de la marche et de la course TELLES QU'ANIMÉES (m/s, à l'échelle du modèle) : la lecture
 ## s'accélère ou ralentit pour que les pieds suivent le sol, jusqu'à `anim_max_speed_scale` (au-delà, ils glissent).
@@ -76,7 +90,7 @@ const Triche := preload("res://core/triche.gd")
 ## Ce que le joueur heurte : le monde (couche 1) et les troncs des arbres (couche 5, valeur 16).
 const WORLD_MASK := 1 | 16
 
-enum Action { NONE, KNEE, GUARD }
+enum Action { NONE, KNEE, GUARD, KICK }
 
 @onready var _sense: Area3D = $Sense
 @onready var _anim_tree: AnimationTree = get_node_or_null("AnimationTree")
@@ -94,9 +108,11 @@ var world_bounds := Rect2()
 ## Le geste en cours, et depuis quand.
 var action := Action.NONE
 var _action_time := 0.0
-var _attack_wanted := false
-var _knee_hits: Array[Node] = []
+## Le coup voulu (KNEE, KICK), retenu pendant le rétablissement du précédent ; NONE : aucun.
+var _strike_wanted := Action.NONE
+var _strike_hits: Array[Node] = []
 var _knee_zone: Area3D
+var _kick_zone: Area3D
 var _hurt_time := 99.0
 ## La doublure (sans animation) : la pose du modèle au repos, et la part de la pose de combat (0 à 1).
 var _model: Node3D
@@ -113,7 +129,8 @@ func _ready() -> void:
 	_sense.collision_layer = 0
 	_sense.collision_mask = 4
 	EventBus.game_loaded.connect(_on_loaded)
-	_knee_zone = _make_knee_zone()
+	_knee_zone = _make_zone("Genou", knee_reach, knee_radius, knee_height)
+	_kick_zone = _make_zone("Pied", kick_reach, kick_radius, kick_height)
 	_model = get_node_or_null("Modele") as Node3D
 	if _model:
 		_model_scale = _model.scale
@@ -134,9 +151,10 @@ func _physics_process(delta: float) -> void:
 	_update_action(delta, talking)
 	if action != Action.NONE:
 		dir = Vector3.ZERO  # en plein geste, Knil ne se dirige pas
-		target = _forward() * knee_lunge if action == Action.KNEE and _action_time < knee_windup + knee_active \
-			else Vector3.ZERO
-	var grip := 1.0 if is_on_floor() or action == Action.KNEE else air_control
+		var timing := _strike_timing()
+		target = _forward() * (kick_lunge if action == Action.KICK else knee_lunge) \
+			if _is_strike() and _action_time < timing.x + timing.y else Vector3.ZERO
+	var grip := 1.0 if is_on_floor() or _is_strike() else air_control
 	velocity.x = move_toward(velocity.x, target.x, acceleration * grip * delta)
 	velocity.z = move_toward(velocity.z, target.z, acceleration * grip * delta)
 	if is_on_floor():
@@ -167,38 +185,42 @@ func _physics_process(delta: float) -> void:
 	_pose_stand_in(delta)
 
 
-## LE COMBAT — le geste en cours avance ; un nouveau commence (le genou, ou la boule tant que la touche est tenue).
+## LE COMBAT — le geste en cours avance ; un nouveau commence (un coup, ou la boule tant que la touche est tenue).
 func _update_action(delta: float, talking: bool) -> void:
 	if talking:
 		_end_action()
-		_attack_wanted = false
+		_strike_wanted = Action.NONE
 		return
-	if Input.is_action_just_pressed("attack"):
-		_attack_wanted = true
+	# X (manette) est aussi « parler » : quelqu'un à portée, la parole l'emporte (`_unhandled_input`).
+	var speaking := focus != null and Input.is_action_just_pressed("interact")
+	if Input.is_action_just_pressed("kick"):
+		_strike_wanted = Action.KICK
+	elif Input.is_action_just_pressed("attack") and not speaking:
+		_strike_wanted = Action.KNEE
 	var guard_held := Input.is_action_pressed("guard")
 	_action_time += delta
-	match action:
-		Action.KNEE:
-			var t := _action_time - knee_windup
-			if t >= 0.0 and t < knee_active:
-				_knee_strike()
-			if _action_time >= knee_windup + knee_active + knee_recovery:
-				_end_action()
-			elif _action_time < knee_windup + knee_active:
-				_attack_wanted = false  # retenu seulement pendant le rétablissement
-		Action.GUARD:
-			if not guard_held:
-				_end_action()
-			_attack_wanted = false  # en boule, on ne frappe pas
+	if _is_strike():
+		var timing := _strike_timing()
+		var t := _action_time - timing.x
+		if t >= 0.0 and t < timing.y:
+			_strike()
+		if _action_time >= timing.x + timing.y + timing.z:
+			_end_action()
+		elif _action_time < timing.x + timing.y:
+			_strike_wanted = Action.NONE  # retenu seulement pendant le rétablissement
+	elif action == Action.GUARD:
+		if not guard_held:
+			_end_action()
+		_strike_wanted = Action.NONE  # en boule, on ne frappe pas
 	if action == Action.NONE:
 		if guard_held:
 			_start(Action.GUARD)
 			EventBus.player_guard_changed.emit(true)
-		elif _attack_wanted:
-			_attack_wanted = false
-			_start(Action.KNEE)
-			_knee_hits.clear()
-			EventBus.player_attacked.emit("genou")
+		elif _strike_wanted != Action.NONE:
+			_start(_strike_wanted)
+			_strike_wanted = Action.NONE
+			_strike_hits.clear()
+			EventBus.player_attacked.emit(_strike_kind())
 
 
 func _start(a: Action) -> void:
@@ -217,30 +239,49 @@ func _end_action() -> void:
 	_action_time = 0.0
 
 
-## Le genou frappe tout Frappable dans sa zone, une fois par coup.
-func _knee_strike() -> void:
-	for a in _knee_zone.get_overlapping_areas():
+func _is_strike() -> bool:
+	return action == Action.KNEE or action == Action.KICK
+
+
+## Le déroulé du coup en cours : (armée, frappe, rétablissement), en secondes.
+func _strike_timing() -> Vector3:
+	if action == Action.KICK:
+		return Vector3(kick_windup, kick_active, kick_recovery)
+	return Vector3(knee_windup, knee_active, knee_recovery)
+
+
+## Le nom du coup en cours, pour l'EventBus : « genou », « pied ».
+func _strike_kind() -> String:
+	return "pied" if action == Action.KICK else "genou"
+
+
+## Le coup en cours frappe tout Frappable dans sa zone, une fois par coup.
+func _strike() -> void:
+	var kick := action == Action.KICK
+	var zone := _kick_zone if kick else _knee_zone
+	var knockback := kick_knockback if kick else knee_knockback
+	for a in zone.get_overlapping_areas():
 		var f := a as Frappable
-		if f == null or _knee_hits.has(f):
+		if f == null or _strike_hits.has(f):
 			continue
-		_knee_hits.append(f)
+		_strike_hits.append(f)
 		var push := (f.global_position - global_position) * Vector3(1, 0, 1)
-		push = (push.normalized() if push.length_squared() > 0.0001 else _forward()) * knee_knockback
-		f.take_hit(knee_damage, push + Vector3.UP * knee_knockback * 0.3, self)
-		EventBus.player_hit.emit(f, "genou")
+		push = (push.normalized() if push.length_squared() > 0.0001 else _forward()) * knockback
+		f.take_hit(kick_damage if kick else knee_damage, push + Vector3.UP * knockback * 0.3, self)
+		EventBus.player_hit.emit(f, _strike_kind())
 
 
-func _make_knee_zone() -> Area3D:
+func _make_zone(zone_name: String, reach: float, radius: float, height: float) -> Area3D:
 	var zone := Area3D.new()
-	zone.name = "Genou"
+	zone.name = zone_name
 	zone.collision_layer = 0
 	zone.collision_mask = Frappable.LAYER
 	zone.monitorable = false
 	var shape := CollisionShape3D.new()
 	var sphere := SphereShape3D.new()
-	sphere.radius = knee_radius
+	sphere.radius = radius
 	shape.shape = sphere
-	shape.position = Vector3(0, knee_height, knee_reach)  # le modèle regarde vers +Z, le sens d'avance
+	shape.position = Vector3(0, height, reach)  # le modèle regarde vers +Z, le sens d'avance
 	zone.add_child(shape)
 	add_child(zone)
 	return zone
@@ -283,9 +324,11 @@ func _pose_stand_in(delta: float) -> void:
 	var want := 0.0
 	if action == Action.GUARD and not _has_anim(anim_guard):
 		want = 1.0
-	elif action == Action.KNEE and not _has_anim(anim_knee):
-		want = 1.0 if _action_time < knee_windup + knee_active else 0.0
-	var span := guard_enter_time if _stand_in_kind == Action.GUARD else knee_windup
+	elif _is_strike() and not _has_anim(anim_kick if action == Action.KICK else anim_knee):
+		var timing := _strike_timing()
+		want = 1.0 if _action_time < timing.x + timing.y else 0.0
+	var span := guard_enter_time if _stand_in_kind == Action.GUARD else \
+		(kick_windup if _stand_in_kind == Action.KICK else knee_windup)
 	_stand_in = move_toward(_stand_in, want, delta / maxf(span, 0.01))
 	var k := _stand_in
 	if _stand_in_kind == Action.GUARD:
@@ -388,6 +431,7 @@ func _animate(speed_ratio: float, airborne := false) -> void:
 		_anim_tree.set("parameters/move/blend_position", speed_ratio)
 		_anim_tree.set("parameters/conditions/airborne", airborne)
 		_anim_tree.set("parameters/conditions/knee", action == Action.KNEE)
+		_anim_tree.set("parameters/conditions/kick", action == Action.KICK)
 		_anim_tree.set("parameters/conditions/guarding", action == Action.GUARD)
 		return
 	if _anim_player == null:
@@ -396,6 +440,8 @@ func _animate(speed_ratio: float, airborne := false) -> void:
 		(anim_run if speed_ratio > 0.6 else (anim_walk if speed_ratio > 0.05 else anim_idle))
 	if action == Action.KNEE and _anim_player.has_animation(anim_knee):
 		want = anim_knee
+	elif action == Action.KICK and _anim_player.has_animation(anim_kick):
+		want = anim_kick
 	elif action == Action.GUARD and _anim_player.has_animation(anim_guard):
 		want = anim_guard
 	elif action != Action.NONE:
