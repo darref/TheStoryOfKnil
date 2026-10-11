@@ -8,6 +8,8 @@ extends RefCounted
 ##   courir           Maj                       clic du stick gauche, RB
 ##   sauter           Espace                    A
 ##   parler / partir  E                         X
+##   coup de genou    F, clic gauche            RT (gâchette droite)
+##   en boule         R (tenu)                  LT (gâchette gauche, tenue)
 ##   fermer           Échap                     B
 ##   torche           T                         Y
 ##   la vue           clic droit + souris       stick droit ← → (troisième personne)
@@ -25,6 +27,8 @@ const KEYS := {
 	"run": [KEY_SHIFT],
 	"jump": [KEY_SPACE],
 	"interact": [KEY_E],
+	"attack": [KEY_F],
+	"guard": [KEY_R],
 	"torch": [KEY_T],
 	"cancel": [KEY_ESCAPE],
 	"quicksave": [KEY_F5],
@@ -35,6 +39,10 @@ const KEYS := {
 	"camera_left": [], "camera_right": [], "zoom_in": [], "zoom_out": [],
 	# La triche (core/triche.gd) : sans effet quand elle est éteinte.
 	"cheat_fly": [KEY_F1], "cheat_ghost": [KEY_F2], "cheat_speed": [KEY_F3], "cheat_time": [KEY_F4], "fly_down": [KEY_C],
+}
+
+const MOUSE_BUTTONS := {
+	"attack": [MOUSE_BUTTON_LEFT],
 }
 
 const PAD_BUTTONS := {
@@ -62,6 +70,9 @@ const PAD_AXES := {
 	"camera_right": [JOY_AXIS_RIGHT_X, 1.0],
 	"zoom_in": [JOY_AXIS_RIGHT_Y, -1.0],
 	"zoom_out": [JOY_AXIS_RIGHT_Y, 1.0],
+	"attack": [JOY_AXIS_TRIGGER_RIGHT, 1.0],
+	# LT : en boule à pied, descendre en vol (triche) — jamais les deux à la fois.
+	"guard": [JOY_AXIS_TRIGGER_LEFT, 1.0],
 	"fly_down": [JOY_AXIS_TRIGGER_LEFT, 1.0],
 }
 
@@ -69,6 +80,7 @@ const PAD_AXES := {
 const LABELS := {
 	"interact": ["E", "X"], "cancel": ["Échap", "B"], "jump": ["Espace", "A"],
 	"torch": ["T", "Y"], "menu": ["Échap", "Start"],
+	"attack": ["F", "RT"], "guard": ["R", "LT"],
 }
 
 const DEADZONE := 0.25
@@ -92,6 +104,10 @@ static func ensure() -> void:
 			var ev := InputEventKey.new()
 			ev.physical_keycode = k
 			InputMap.action_add_event(action, ev)
+		for m: MouseButton in MOUSE_BUTTONS.get(action, []):
+			var mb := InputEventMouseButton.new()
+			mb.button_index = m
+			InputMap.action_add_event(action, mb)
 		for b: JoyButton in PAD_BUTTONS.get(action, []):
 			var jb := InputEventJoypadButton.new()
 			jb.button_index = b

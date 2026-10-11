@@ -352,6 +352,8 @@ world/       les nœuds posés dans le monde
   interior.gd         Interior (Area3D) : maison, auberge… — passe la caméra en 3e personne ; « souterrain » :
                       l'intérieur AUTOMATIQUE des galeries (`set_underground`, dit par le ChunkStreamer)
   interactable.gd     Interactable (Area3D) : ce à quoi on parle — ses répliques (`lines`), une par appui
+  frappable.gd        Frappable (Area3D, couche 6) : ce que les coups de Knil touchent — il DIT le coup (`struck`),
+                      son porteur en fait ce qu'il veut (perdre de la vie, reculer, se briser)
   chunk_streamer.gd   ChunkStreamer : les morceaux cuits chargés autour du joueur (le visible, puis la collision)
   feuillage_morceau.gd  les plants d'un morceau, faits MultiMesh au chargement
   souterrain_morceau.gd  le sous-sol d'un morceau (l'air enfoui) : le joueur est-il sous terre ?
@@ -376,11 +378,29 @@ scenes/      livre.tscn — LA SCÈNE PRINCIPALE : le livre, le monde (main.tscn
 tests/       les épreuves (§5)
 ```
 
-**Couches physiques** : 1 le monde (tuiles, bâtiments) · 2 le joueur · 4 les interactables · 5 (valeur 16) les troncs.
+**Couches physiques** : 1 le monde (tuiles, bâtiments) · 2 le joueur · 4 les interactables · 5 (valeur 16) les troncs ·
+6 (valeur 32) les Frappables.
 
 **LE DIALOGUE** : `E` / `X` près d'un Interactable → `interact()` montre la réplique suivante
 (`EventBus.dialogue_shown`) ; après la dernière, ou `Échap` / `B`, la boîte se ferme (`dialogue_closed`). Pendant un
 dialogue, Knil ne bouge pas et ne saute pas.
+
+**LE COMBAT — PRÉPARÉ (Jordan, 11 octobre 2026 : « prépare les attaques de Knil, coup de genou, et se mettre en boule
+avec le bouclier sur la tête, même s'il manque les anims »)** — dans `player.gd` (`Action` : NONE, KNEE, GUARD) :
+- **LE COUP DE GENOU** (`attack`) : armée 0,12 s (Knil s'élance à 3 m/s, ne se dirige plus), frappe 0,14 s — chaque
+  Frappable dans une boule de 0,55 m, 0,75 m devant lui, UNE fois par coup : 2 demi-cœurs, poussé à 6 m/s —,
+  rétablissement 0,28 s ; un appui pendant le rétablissement ENCHAÎNE. Pas en dialogue, pas en vol de triche.
+- **EN BOULE** (`guard`, tenu) : recroquevillé, le bouclier sur la tête ; il ne marche, ne saute, ne frappe plus.
+  Après 0,15 s (`guard_enter_time`), tout coup est PARÉ, de tous les côtés (en boule, pas de face) : poussé à 30 %.
+- **KNIL FRAPPÉ** : `Player.take_hit(demi-cœurs, poussée)` — paré en boule, sinon `player.health` baisse et il est
+  invulnérable 0,6 s. ⚠ À zéro, rien encore : LA MORT est à faire ; et rien ne frappe Knil (pas d'ennemi).
+- L'EventBus : `player_attacked`, `player_hit`, `player_guard_changed`, `player_damaged`.
+- **LES ANIMATIONS MANQUENT** : `anim_knee` (« genou »), `anim_guard` (« boule ») — un AnimationTree reçoit
+  `parameters/conditions/knee` et `guarding`. Sans elles, une DOUBLURE : le modèle s'écrase en boule, se cabre au
+  genou. Venue l'animation (même nom dans le .glb, ou `anim_knee` réglé dans `player.tscn`), la doublure s'efface.
+- Le BOUCLIER n'est pas un objet du GameState : Knil l'a toujours. À trancher (le trouver dans un donjon ?).
+- ÉPROUVÉ : `sonde_combat` (26, sans le monde cuit). Mutations rouges : un coup qui touche à chaque image ; la boule
+  qui pare dès l'appui.
 
 ## 4. Commandes de jeu (provisoires)
 
@@ -388,6 +408,8 @@ dialogue, Knil ne bouge pas et ne saute pas.
 Y torche · stick droit ← → tourner la troisième personne, ↑ ↓ zoomer · Back vue haute · Start le livre. Les textes à l'écran suivent
 le dernier appareil touché (`core/inputs.gd`, la table des deux). ÉPROUVÉ par de faux événements (`sonde_manette`,
 13) — PAS ENCORE TENU EN MAIN avec une vraie manette.
+COMBAT : F / clic gauche / RT le coup de genou · R / LT (tenus) en boule sous le bouclier (LT descend aussi en vol de
+triche — jamais les deux à la fois).
 AU CLAVIER : W A S D (Z Q S D en AZERTY) se déplacer · Maj courir · Espace sauter (1,4 m) · E parler · T torche
 (automatique → allumée → éteinte) · molette : zoom · Ctrl + molette : vue haute / retour · Échap fermer ·
 F5 / F9 sauvegarde rapide · clic droit + souris : tourner la vue en troisième personne · Échap (hors dialogue) le livre.
@@ -451,6 +473,7 @@ GODOT=/c/Users/jorda/Desktop/Godot_v4.7-stable_win64.exe/Godot_v4.7-stable_win64
 "$GODOT" --path D:/TheStoryOfKnil --windowed res://tests/capture_zoom.tscn       # molette, Ctrl + molette, ce qui se charge
 "$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_manette.tscn     # la manette (faux événements) : 13 vérifications
 "$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_triche_limites.tscn   # la triche et les limites : 11 vérifications
+"$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_combat.tscn    # le genou, la boule, les coups reçus : 26
 "$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_livre.tscn       # le livre (menu) : pause, sélection, pages, manette : 29
 "$GODOT" --path D:/TheStoryOfKnil --windowed res://tests/sonde_contour.tscn   # le contour noir : 15 (headless aussi ; avec fenêtre, des captures)
 "$GODOT" --path D:/TheStoryOfKnil --windowed res://tests/capture_reference.tscn -- --monde=… --lieu=x,y,z  # le GREFFON, pour comparer
@@ -546,5 +569,5 @@ galerie → souterrain, troisième personne, torche allumée.
   le GameState, comme le reste.
 - La collision en formes CONCAVES par tuile est la plus fidèle et la plus chère ; à mesurer sur le vrai monde.
 
-- **TOUT LE GAMEPLAY DE KNIL EST À FAIRE** : combat (coups, recul, ennemis), cœurs et dégâts, objets et inventaire,
+- **TOUT LE GAMEPLAY DE KNIL EST À FAIRE** : combat (les ENNEMIS, la mort — le genou et la boule sont prêts, §3), objets et inventaire,
   coffres, donjons et clés, boutiques. Le GameState a déjà `player.health` (demi-cœurs), `max_health`, `money`, `items`.

@@ -23,6 +23,15 @@ signal focus_changed(target: Node)
 signal dialogue_shown(speaker: String, text: String)
 signal dialogue_closed()
 
+# --- Combat ----------------------------------------------------------------------------------------------
+## Knil commence un coup (`kind` : « genou ») ; il touche `target` (un Frappable).
+signal player_attacked(kind: String)
+signal player_hit(target: Node, kind: String)
+## Knil se met en boule sous son bouclier (vrai), ou en sort (faux).
+signal player_guard_changed(guarding: bool)
+## Knil est frappé : `amount` demi-cœurs perdus (0 si `blocked` : le bouclier a tout pris).
+signal player_damaged(amount: int, blocked: bool)
+
 # --- Temps -------------------------------------------------------------------------------------------------
 signal hour_changed(day: int, hour: int)
 signal day_changed(day: int)
