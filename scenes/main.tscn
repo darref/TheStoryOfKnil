@@ -1,5 +1,7 @@
-[gd_scene format=4 uid="uid://db2fi0lvdma3f"]
+[gd_scene format=3 uid="uid://db2fi0lvdma3f"]
 
+[ext_resource type="PackedScene" path="res://ennemis/dealer.tscn" id="10_choun"]
+[ext_resource type="Script" uid="uid://t63qvdcd2rnq" path="res://world/apercu_monde.gd" id="apercu"]
 [ext_resource type="Script" uid="uid://jqm6v5x2rufw" path="res://player/camera_rig.gd" id="camrig"]
 [ext_resource type="Script" uid="uid://cj4nysgw030mm" path="res://world/day_night.gd" id="daynight"]
 [ext_resource type="Script" uid="uid://drodr3trnc0us" path="res://ui/hud.gd" id="hud"]
@@ -7,7 +9,7 @@
 [ext_resource type="PackedScene" path="res://player/player.tscn" id="player"]
 [ext_resource type="PackedScene" path="res://world/prefabs/pnj.tscn" id="pnj"]
 [ext_resource type="Script" uid="uid://q31y6scjq11v" path="res://world/region.gd" id="region"]
-[ext_resource type="Script" path="res://world/chunk_streamer.gd" id="streamer"]
+[ext_resource type="Script" uid="uid://dfiauclendg14" path="res://world/chunk_streamer.gd" id="streamer"]
 
 [sub_resource type="Environment" id="env"]
 background_mode = 1
@@ -16,9 +18,6 @@ ambient_light_source = 2
 ambient_light_color = Color(0.55, 0.7, 0.95, 1)
 ambient_light_energy = 0.35
 tonemap_mode = 2
-
-[sub_resource type="StandardMaterial3D" id="murs"]
-albedo_color = Color(0.75, 0.68, 0.55, 1)
 
 [sub_resource type="BoxShape3D" id="r_Capitale"]
 size = Vector3(70, 40, 70)
@@ -53,6 +52,9 @@ size = Vector3(170, 160, 170)
 [sub_resource type="BoxShape3D" id="r_LacDuVal"]
 size = Vector3(56, 40, 56)
 
+[sub_resource type="StandardMaterial3D" id="murs"]
+albedo_color = Color(0.75, 0.68, 0.55, 1)
+
 [sub_resource type="BoxShape3D" id="salle"]
 size = Vector3(7.4, 3.6, 7.4)
 
@@ -70,110 +72,115 @@ script = ExtResource("daynight")
 sun = NodePath("../Sun")
 environment = NodePath("../Environment")
 
-[node name="Monde" type="Node3D" parent="." node_paths=PackedStringArray("target")]
+[node name="Monde" type="Node3D" parent="." unique_id=1113345885 node_paths=PackedStringArray("target")]
 script = ExtResource("streamer")
 baked_dir = "res://cuit/monde_knil"
 target = NodePath("../Player")
 
+[node name="ApercuMonde" type="Node3D" parent="Monde" unique_id=1566703207]
+script = ExtResource("apercu")
+metadata/_edit_lock_ = true
+
+[node name="Ennemis" type="Node3D" parent="." unique_id=487147114]
+
 [node name="Regions" type="Node3D" parent="." unique_id=1526089926]
 
-[node name="Capitale" type="Area3D" parent="Regions"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+[node name="Capitale" type="Area3D" parent="Regions" unique_id=361171441]
 script = ExtResource("region")
 region_id = "capitale"
 region_type = "capitale"
 
-[node name="Shape" type="CollisionShape3D" parent="Regions/Capitale"]
+[node name="Shape" type="CollisionShape3D" parent="Regions/Capitale" unique_id=709127524]
 shape = SubResource("r_Capitale")
 
-[node name="BoisJoli" type="Area3D" parent="Regions"]
+[node name="BoisJoli" type="Area3D" parent="Regions" unique_id=936225088]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -230, 0, -30)
 script = ExtResource("region")
 region_id = "bois_joli"
 region_type = "village"
 
-[node name="Shape" type="CollisionShape3D" parent="Regions/BoisJoli"]
+[node name="Shape" type="CollisionShape3D" parent="Regions/BoisJoli" unique_id=1160873646]
 shape = SubResource("r_BoisJoli")
 
-[node name="LaSabliere" type="Area3D" parent="Regions"]
+[node name="LaSabliere" type="Area3D" parent="Regions" unique_id=647893505]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 190, 0, 160)
 script = ExtResource("region")
 region_id = "la_sabliere"
 region_type = "village"
 
-[node name="Shape" type="CollisionShape3D" parent="Regions/LaSabliere"]
+[node name="Shape" type="CollisionShape3D" parent="Regions/LaSabliere" unique_id=1863452558]
 shape = SubResource("r_LaSabliere")
 
-[node name="LesJoncs" type="Area3D" parent="Regions"]
+[node name="LesJoncs" type="Area3D" parent="Regions" unique_id=1986564942]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -130, 0, 190)
 script = ExtResource("region")
 region_id = "les_joncs"
 region_type = "village"
 
-[node name="Shape" type="CollisionShape3D" parent="Regions/LesJoncs"]
+[node name="Shape" type="CollisionShape3D" parent="Regions/LesJoncs" unique_id=314014202]
 shape = SubResource("r_LesJoncs")
 
-[node name="PiedMont" type="Area3D" parent="Regions"]
+[node name="PiedMont" type="Area3D" parent="Regions" unique_id=161749656]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, -200)
 script = ExtResource("region")
 region_id = "pied_mont"
 region_type = "village"
 
-[node name="Shape" type="CollisionShape3D" parent="Regions/PiedMont"]
+[node name="Shape" type="CollisionShape3D" parent="Regions/PiedMont" unique_id=1194852539]
 shape = SubResource("r_PiedMont")
 
-[node name="ForetOuest" type="Area3D" parent="Regions"]
+[node name="ForetOuest" type="Area3D" parent="Regions" unique_id=373148715]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -266, 0, 0)
 script = ExtResource("region")
 region_id = "foret_de_l_ouest"
 region_type = "foret"
 
-[node name="Shape" type="CollisionShape3D" parent="Regions/ForetOuest"]
+[node name="Shape" type="CollisionShape3D" parent="Regions/ForetOuest" unique_id=2072090590]
 shape = SubResource("r_ForetOuest")
 
-[node name="Marais" type="Area3D" parent="Regions"]
+[node name="Marais" type="Area3D" parent="Regions" unique_id=1417504707]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -210, 0, 230)
 script = ExtResource("region")
 region_id = "marais_du_sud"
 region_type = "marais"
 
-[node name="Shape" type="CollisionShape3D" parent="Regions/Marais"]
+[node name="Shape" type="CollisionShape3D" parent="Regions/Marais" unique_id=407498115]
 shape = SubResource("r_Marais")
 
-[node name="Desert" type="Area3D" parent="Regions"]
+[node name="Desert" type="Area3D" parent="Regions" unique_id=1326381963]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 261, 0, 216)
 script = ExtResource("region")
 region_id = "desert_du_sud_est"
 region_type = "desert"
 
-[node name="Shape" type="CollisionShape3D" parent="Regions/Desert"]
+[node name="Shape" type="CollisionShape3D" parent="Regions/Desert" unique_id=959194624]
 shape = SubResource("r_Desert")
 
-[node name="Montagnes" type="Area3D" parent="Regions"]
+[node name="Montagnes" type="Area3D" parent="Regions" unique_id=1621722002]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -325)
 script = ExtResource("region")
 region_id = "montagnes_du_nord"
 region_type = "montagne"
 
-[node name="Shape" type="CollisionShape3D" parent="Regions/Montagnes"]
+[node name="Shape" type="CollisionShape3D" parent="Regions/Montagnes" unique_id=1319737725]
 shape = SubResource("r_Montagnes")
 
-[node name="Volcan" type="Area3D" parent="Regions"]
+[node name="Volcan" type="Area3D" parent="Regions" unique_id=1832231017]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 260, 0, -230)
 script = ExtResource("region")
 region_id = "volcan_du_nord_est"
 region_type = "montagne"
 
-[node name="Shape" type="CollisionShape3D" parent="Regions/Volcan"]
+[node name="Shape" type="CollisionShape3D" parent="Regions/Volcan" unique_id=1972003949]
 shape = SubResource("r_Volcan")
 
-[node name="LacDuVal" type="Area3D" parent="Regions"]
+[node name="LacDuVal" type="Area3D" parent="Regions" unique_id=298641008]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 60, 0, 140)
 script = ExtResource("region")
 region_id = "lac_du_val"
 region_type = "lac"
 
-[node name="Shape" type="CollisionShape3D" parent="Regions/LacDuVal"]
+[node name="Shape" type="CollisionShape3D" parent="Regions/LacDuVal" unique_id=1051772693]
 shape = SubResource("r_LacDuVal")
 
 [node name="Auberge" type="Node3D" parent="." unique_id=1227503352]
@@ -211,7 +218,6 @@ shape = SubResource("salle")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.2, 2)
 entity_id = "aubergiste_bourg"
 display_name = "L'aubergiste"
-lines = PackedStringArray("Encore toi ? La dernière fois, tu as bu le tonneau et mangé le chat.")
 
 [node name="Bourg" type="Node3D" parent="." unique_id=20216741]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
@@ -220,19 +226,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, -4)
 entity_id = "marchande_bourg"
 display_name = "La marchande"
-lines = PackedStringArray("Tu touches, tu paies. Tu casses, tu paies. Tu respires... bon, ça va.")
 
 [node name="Mendiant" parent="Bourg" unique_id=1579297860 instance=ExtResource("pnj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -6)
 entity_id = "mendiant_bourg"
 display_name = "Le mendiant"
-lines = PackedStringArray("Une pièce, mon bon seigneur ? ... Non, pas un coup de pied, une PIÈCE.")
 
 [node name="Puits" parent="Bourg" unique_id=1045599293 instance=ExtResource("pnj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 entity_id = "puits_bourg"
 display_name = "Le puits"
-lines = PackedStringArray("Un puits. Quelqu'un a gravé « KNIL PU » sur la margelle.")
 kind = "lieu"
 
 [node name="Player" parent="." unique_id=583380518 instance=ExtResource("player")]
@@ -248,3 +251,36 @@ fov = 55.0
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1672253199]
 script = ExtResource("hud")
+
+[node name="Dealer" parent="." unique_id=811458774 instance=ExtResource("10_choun")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.843382, 0.75, -12.307026)
+
+[node name="Dealer2" parent="." unique_id=1333343335 instance=ExtResource("10_choun")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.59388, 0.7499981, -12.237164)
+
+[node name="Dealer3" parent="." unique_id=1973913804 instance=ExtResource("10_choun")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.152071, 0.75, 25.680223)
+
+[node name="Dealer4" parent="." unique_id=1058289237 instance=ExtResource("10_choun")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.74786, 0.7464382, 2.3428197)
+
+[node name="Dealer5" parent="." unique_id=1571918855 instance=ExtResource("10_choun")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -34.433342, 0.7500076, 1.648489)
+
+[node name="Dealer6" parent="." unique_id=972479375 instance=ExtResource("10_choun")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.4526, 0.75006485, 23.391924)
+
+[node name="Dealer7" parent="." unique_id=1583527626 instance=ExtResource("10_choun")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54.86225, 0.7499981, -11.347115)
+
+[node name="Dealer8" parent="." unique_id=1165078950 instance=ExtResource("10_choun")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.191427, 0.75, 39.19214)
+
+[node name="Dealer9" parent="." unique_id=2109314014 instance=ExtResource("10_choun")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80.624985, 0.74683166, 84.80365)
+
+[node name="Dealer10" parent="." unique_id=1259287941 instance=ExtResource("10_choun")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75.99313, 0.78466755, 85.5394)
+
+[node name="Dealer11" parent="." unique_id=705582977 instance=ExtResource("10_choun")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 85.51436, 0.825949, 84.35958)

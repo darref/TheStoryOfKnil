@@ -154,6 +154,9 @@ func _process(delta: float) -> void:
 	_build_shapes()
 	last_costs["shapes"] = (Time.get_ticks_usec() - t0) / 1000.0
 	t0 = Time.get_ticks_usec()
+	_attach_staged()
+	last_costs["staged"] = (Time.get_ticks_usec() - t0) / 1000.0
+	t0 = Time.get_ticks_usec()
 	_detect_underground(p, delta)
 	last_costs["under"] = (Time.get_ticks_usec() - t0) / 1000.0
 
@@ -291,7 +294,7 @@ func _poll() -> void:
 						continue
 					c["state"] = "instancing"
 					c["built"] = null
-					c["task"] = WorkerThreadPool.add_task(func() -> void: c["built"] = packed.instantiate(),
+					c["task"] = WorkerThreadPool.add_task(func() -> void: c["built"] = _instantiate_off_thread(packed),
 						false, "morceau %s %s" % [track, key])
 				elif status == ResourceLoader.THREAD_LOAD_FAILED or status == ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
 					c["state"] = "off"
@@ -307,7 +310,7 @@ func _poll() -> void:
 					var formes := n.get_node_or_null("Formes") if n != null else null
 					if formes != null:
 						formes.budgeted = true  # bâtie à petites doses (`_build_shapes`)
-					_enter(track, key, n)
+					_enter(track, key, n, true)
 					_queue.remove_at(i)
 					spawned += 1
 					continue
@@ -354,12 +357,50 @@ func _build_shapes() -> void:
 				return
 
 
-func _enter(track: String, key: Vector2i, n: Node) -> void:
+## Ce que fait le FIL DE TRAVAIL d'un morceau : l'instancier, et préparer hors de l'arbre ce qui s'y prépare (le
+## feuillage : ses MultiMesh).
+static func _instantiate_off_thread(packed: PackedScene) -> Node:
+	var n := packed.instantiate()
+	var fol := n.get_node_or_null("Feuillage") if n != null else null
+	if fol != null and fol.has_method("prepare"):
+		fol.prepare()
+	return n
+
+
+## L'ENTRÉE ÉTALÉE (`staged`, les morceaux venus du fond) : un maillage qui entre dans la scène coûte sur le fil
+## principal (mesuré : 1 à 15 ms la surface, autant le souterrain). La racine entre seule — la collision, le sous-sol
+## sont là tout de suite —, puis UN enfant visible par image (`_attach_staged`). Un saut (`load_around_now`), d'un coup.
+const STAGED_PARTS := ["Surface", "Couvert", "Souterrain", "Eau", "Feuillage"]
+var _staged: Array = []  # [[piste, clé, enfant, son morceau], …] dans l'ordre d'arrivée
+
+
+func _attach_staged() -> void:
+	while not _staged.is_empty():
+		var s: Array = _staged.pop_front()
+		var c: Dictionary = _tracks[s[0]][s[1]]
+		var part: Node = s[2]
+		if c["state"] != "on" or c["node"] != s[3]:
+			part.free()  # le morceau est reparti (ou revenu, neuf) avant d'être complet
+			continue
+		(c["node"] as Node).add_child(part)
+		if part.name == "Souterrain":
+			_apply_underground_to(c["node"])
+		return  # un par image
+
+
+func _enter(track: String, key: Vector2i, n: Node, staged := false) -> void:
 	var c: Dictionary = _tracks[track][key]
 	if c["state"] == "on" or n == null:
 		if n:
 			n.queue_free()
 		return
+	if staged:
+		for part_name: String in STAGED_PARTS:
+			var part := n.get_node_or_null(part_name)
+			if part != null:
+				n.remove_child(part)
+				part.owner = null  # rattaché plus tard : sans cela, Godot avertit d'un propriétaire « incohérent »
+				_staged.append([track, key, part, n])
 	var te := Time.get_ticks_usec()
 	add_child(n)
 	if not last_costs.is_empty():

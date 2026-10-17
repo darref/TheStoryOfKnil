@@ -165,7 +165,7 @@ monde@300`, `--sans-feuillage`, `--octant=n`, `--sans-physique`, `--chronos` ; r
   ⚠ **L'APPLI INSTALLÉE NE LE SAVAIT PAS** (« plante encore malgré réinstallation ») : l'installeur `build/` datait du
   8 octobre. Rebâtie le 9 au soir par `DEV_TOOLS/exporter_marchingblocks.sh` depuis un arbre git À PART
   (`D:/MarchingBlocks_wt_resolve` : HEAD + ces seuls correctifs, fins de ligne LF, projet importé — un autre travail en
-  cours dans `D:/MarchingBlocks` cassait la fumée), 28 suites vertes, sortie `D:/MarchingBlocks_build_resolve/` ; l'exe
+  cours dans `D:/MarchingBlocks` cassait la fumée), 28 suites vertes, sortie `D:/SpannerGames/ATELIER/MarchingBlocks/builds/build_resolve/` ; l'exe
   et sa DLL copiés dans `%LOCALAPPDATA%/Programs/MarchingBlocks` (l'ancien gardé à côté, `ancienne_version_8_octobre/`).
   Vu à l'image : le Val s'ouvre (5,6 Go). ⚠ Réinstaller depuis `D:/MarchingBlocks/build/installeur` remettrait l'ancien.
   ⚠ La FUMÉE de MB réécrit `reglages.cfg` de l'appli (où vit la CLÉ DE LICENCE) : tuée en route, elle l'a perdue — remise
@@ -216,6 +216,22 @@ monde@300`, `--sans-feuillage`, `--octant=n`, `--sans-physique`, `--chronos` ; r
   587 contacts diagonaux comblés, 3 eaux (lac 806 cases, étang 380, lave 1 024), 3 383 arbres ; `.mbproj` 22 Mo,
   `.mbworld` 284 Mo. Cuisson : 8 min 25, 1,55 Go au plus, **1,7 Go** cuits, 1,71 M tuiles, 2 500 morceaux. Collision
   fidèle (0 écart sur 9 morceaux, 900 rayons), scène, saut, galerie, triche et limites : verts.
+- **L'ENTRÉE DES MORCEAUX, SORTIE DU FIL PRINCIPAL (11 octobre 2026, Jordan : « ça lag à chaque chargement quand on
+  court »)** : la lecture et l'instanciation étaient déjà en fond ; restait l'ENTRÉE dans la scène, mesurée (`banc_course`,
+  le vrai jeu, Knil qui court) à 22–30 ms par morceau de sol, dont le FEUILLAGE (ses MultiMesh, 30 à 48 ms). Remède : le
+  feuillage est bâti dans le FIL DE TRAVAIL juste après l'instanciation (`FeuillageMorceau.prepare`), et l'entrée est
+  ÉTALÉE (`ChunkStreamer.STAGED_PARTS`) : la racine (et la collision) d'abord, puis UN enfant visible par image ; un
+  saut (`load_around_now`), d'un coup. Entrées mesurées ensuite : 0,0–0,1 ms. ⚠ L'accrochage d'un enfant mesurait
+  encore 12–15 ms EN JEU, mais 0,14 ms SEUL : la machine était chargée (MB ouvert sur la carte, un jeu lancé depuis
+  l'éditeur resté ouvert) — à remesurer MB FERMÉ.
+  ⚠ **MB OUVERT SUR LA CARTE PARTAGE LA CARTE GRAPHIQUE** : mesuré, le jeu plein écran tombait à 25–49 img/s (même à
+  l'arrêt, rien en chargement) alors qu'il tient ~250 img/s seul. Le « 20 img/s dans l'éditeur » de Jordan : sans doute
+  ça. Fermer MB (ou le réduire) pour juger le jeu.
+- **LES CHUTES À TRAVERS LE SOL — CHERCHÉES (11 octobre 2026)** : `sonde_chute` fait courir Knil dans 8 directions à ×3
+  et ×8 (jusqu'à 56 m/s) : AUCUNE chute due à la collision (chargée à temps, coutures soudées). La seule chute est un
+  TROU PEINT : deux passages sous les murs (x 2..6 et x 31..35, z −25..−15) creusés jusqu'en bas — plus aucune case de
+  sol à y = 0, la plus basse à y = 5. À reboucher dans MB (une case de sol au fond du passage). Fusionner toute la
+  collision en une forme (3,3 M triangles) n'y changerait rien et empêcherait de la charger par morceaux : non.
 - **LES À-COUPS DE LA TRAVERSÉE APRÈS LES ARBRES — RÉGLÉS (9 octobre 2026)** : 7 à 13 images > 33 ms → **0** (deux
   traversées aller-retour, pire image 28 ms, ~200 img/s). Trouvé par `banc_marche --detail` (il dit la piste, la clé
   et ce qui se lisait en même temps) : l'ENTRÉE des morceaux de COLLISION, 26 à 45 ms. ⚠ **UNE FORME CONCAVE CRÉÉE
@@ -388,6 +404,7 @@ world/       les nœuds posés dans le monde
                       (`player.tscn`, `Contour` → `Modele`) et de lui-même par CHAQUE `Interactable` — un objet
                       d'intérêt neuf : en faire un Interactable, ou lui poser un `SubtreeOutline`. Méta
                       `_outline_skip` : un nœud et son sous-arbre exclus. Le monde et les bâtiments : jamais.
+ennemis/     ennemi.gd (Ennemi : voit, court, frappe, chancelle, meurt — §3, LE PREMIER ENNEMI), dealer.tscn
 player/      player.gd/.tscn (CharacterBody3D : Knil), camera_rig.gd (les deux vues et leur fondu), torche.gd (la
              torche : allumée d'elle-même hors du plein jour et dans un intérieur, T la force)
 ui/          hud.gd (provisoire) : cœurs, argent, heure, lieu, le COMPTEUR (img/s et pire image, à droite) ; la boîte de dialogue
@@ -401,7 +418,7 @@ tests/       les épreuves (§5)
 ```
 
 **Couches physiques** : 1 le monde (tuiles, bâtiments) · 2 le joueur · 4 les interactables · 5 (valeur 16) les troncs ·
-6 (valeur 32) les Frappables.
+6 (valeur 32) les Frappables · 7 (valeur 64) les ennemis (Knil les heurte : `Player.WORLD_MASK`).
 
 **LE DIALOGUE** : `E` / `X` près d'un Interactable → `interact()` montre la réplique suivante
 (`EventBus.dialogue_shown`) ; après la dernière, ou `Échap` / `B`, la boîte se ferme (`dialogue_closed`). Pendant un
@@ -421,7 +438,7 @@ avec le bouclier sur la tête, même s'il manque les anims »)** — dans `playe
 - **EN BOULE** (`guard`, tenu) : recroquevillé, le bouclier sur la tête ; il ne marche, ne saute, ne frappe plus.
   Après 0,15 s (`guard_enter_time`), tout coup est PARÉ, de tous les côtés (en boule, pas de face) : poussé à 30 %.
 - **KNIL FRAPPÉ** : `Player.take_hit(demi-cœurs, poussée)` — paré en boule, sinon `player.health` baisse et il est
-  invulnérable 0,6 s. ⚠ À zéro, rien encore : LA MORT est à faire ; et rien ne frappe Knil (pas d'ennemi).
+  invulnérable 0,6 s. ⚠ À zéro, rien encore : LA MORT est à faire (les ennemis cessent seulement de frapper).
 - L'EventBus : `player_attacked`, `player_hit`, `player_guard_changed`, `player_damaged`.
 - **LE GENOU EST ANIMÉ (11 octobre 2026)** : « Illegal Knee » de MIXAMO (`assets/personnages/knil/animations/
   illegal_knee.fbx`), Knil lui-même passé dans Mixamo — MÊME squelette que le .glb de Tripo (65 os, mêmes repos) :
@@ -433,6 +450,38 @@ avec le bouclier sur la tête, même s'il manque les anims »)** — dans `playe
 - **LA BOULE N'EST PAS ANIMÉE** : `anim_guard` (« boule ») manque — la DOUBLURE (le modèle s'écrase) tient lieu.
   Un AnimationTree recevrait `parameters/conditions/knee`, `kick` et `guarding`.
 - Le BOUCLIER n'est pas un objet du GameState : Knil l'a toujours. À trancher (le trouver dans un donjon ?).
+- **LE PREMIER ENNEMI : LE DEALER (Jordan, 12 octobre 2026 : « fais ce mob qui s'approche et attaque ensuite, je les
+  placerai moi-même dans la map »)** — `ennemis/dealer.tscn`, à poser où l'on veut (dans `main.tscn` ou ailleurs) : il
+  garde l'endroit où il est posé (`home`). `ennemis/ennemi.gd` (`Ennemi`, générique — un autre mob : une autre scène,
+  le même script, ses réglages) : en garde chez lui ; VOIT Knil à 9 m (un rayon contre le décor : pas à travers un mur) ;
+  COURT vers lui (4,5 m/s : Knil à la course le sème) ; à 1,3 m il FRAPPE — armée 0,36 s (il se tourne vers Knil),
+  frappe 0,16 s (Knil devant lui, à 1,6 m, cône de 60° : 2 demi-cœurs, poussé à 7 m/s ; la BOULE pare), rétablissement
+  0,4 s, souffle 0,6 s ; semé (16 m, ou caché 3 s) il RENTRE en marchant. Frappé : il perd de la vie (6 demi-cœurs :
+  trois genoux, deux pieds), recule, CHANCELLE 0,45 s — son armée est COUPÉE ; il ne lâche plus Knil. Mort : il tombe,
+  ne heurte plus rien, s'enfonce et disparaît (4 s). Rien n'est sauvé : la partie relue, il est de retour.
+  **POUR LES POSER : L'APERÇU DU MONDE DANS L'ÉDITEUR** (`world/apercu_monde.gd`, le nœud `Monde/ApercuMonde` de
+  `main.tscn`, @tool) : dans l'éditeur seulement, TOUS les morceaux cuits (1 030 avec la collision, ~30 s, en fond),
+  le feuillage et la COLLISION — glisser `dealer.tscn` dans la vue le pose sur le sol, Page Down le colle au sol.
+  Rien n'est enregistré (enfants internes sans propriétaire) ; en jeu il s'efface ; verrouillé. Recuit : rouvrir la
+  scène. Vérifié dans un éditeur (copie du projet) : la carte vue, 257 rayons sur 391 touchent le sol (le reste : hors
+  carte). Le nœud `Ennemis` de `main.tscn` est là pour les ranger. Les épreuves qui chargent `main.tscn` y retirent
+  les ennemis (ils frapperaient Knil au milieu d'une autre épreuve).
+  LE MONDE PAR MORCEAUX : à plus de 45 m de Knil il DORT (et, semé hors de chez lui, y est ramené d'un coup, vie
+  refaite) ; sans collision chargée sous lui, il ne tombe pas. Une marche d'une case : il la saute. Pas de navigation :
+  il va droit sur Knil (un mur entre eux, il le perd de vue et rentre).
+  L'EventBus : `enemy_alerted`, `enemy_attacked`, `enemy_damaged`, `enemy_died`.
+  **LE MODÈLE** : `assets/personnages/dealer/dealer.fbx` (Tripo, sweat à capuche, ~19 600 triangles, échelle 1,8 →
+  ~1,77 m), MÊME SQUELETTE MIXAMO que Knil mais PAS LES MÊMES REPOS (jusqu'à 118° d'écart, du roulis). ⚠ Son FBX ne
+  porte qu'UNE animation (le nom en annonce cinq — run, front_kick_02, walk, hit_to_head, hit_to_stomach — mais il
+  n'y a qu'une pile de 2,33 s : une GARDE de boxe sur place → « garde »). Les autres sont CELLES DE KNIL, RECALÉES
+  (`tools/import/recaler_animations.gd`, le mouvement vu dans le monde recopié os par os ; la commande est en tête du
+  script) dans `dealer_animations.res` : course ← run_001, marche ← walk_001, coup ← pied, genou ← genou, touche ←
+  hit_to_side_001, mort ← defeat_03_001. Vu à l'image : toutes justes. ⚠ Les animations de Knil changées : relancer
+  l'outil. Ses propres animations venues (un export Tripo par animation) : les mettre dans `--propres`.
+- ÉPROUVÉ : `sonde_ennemi` (25 : caché par un mur il ne voit pas ; il voit, court, s'arrête à portée, frappe — Knil
+  6 → 4 ; la boule pare ; un genou dans son armée la coupe ; il meurt, disparaît ; semé il rentre ; endormi loin ;
+  ne tombe pas sans collision ; mutation : la vue à travers les murs → 2 rouges). Vu à l'image dans le monde : il court
+  vers Knil et lui met le pied.
 - ÉPROUVÉ : `sonde_combat` (34, sans le monde cuit ; « genou » et « pied » se jouent, sans doublure ; le pied touche, pousse plus fort, pas à 3 m). Mutations rouges : un coup qui touche à chaque image ; la boule
   qui pare dès l'appui.
 
@@ -507,8 +556,11 @@ GODOT=/c/Users/jorda/Desktop/Godot_v4.7-stable_win64.exe/Godot_v4.7-stable_win64
 "$GODOT" --path D:/TheStoryOfKnil --windowed res://tests/capture_zoom.tscn       # molette, Ctrl + molette, ce qui se charge
 "$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_manette.tscn     # la manette (faux événements) : 17 vérifications
 "$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_triche_limites.tscn   # la triche et les limites : 11 vérifications
+"$GODOT" --path D:/TheStoryOfKnil res://tests/banc_course.tscn [-- --gel --arret --dir=0,1]   # le VRAI jeu, Knil court : les images lentes détaillées
+"$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_chute.tscn [-- --vitesse=8]   # Knil traverse-t-il le sol ?
 "$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_camera.tscn    # la bascule verticale, le bras-ressort : 8
 "$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_combat.tscn    # le genou, le pied, la boule, les coups reçus : 34
+"$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_ennemi.tscn    # le dealer : voir, courir, frapper, chanceler, mourir, rentrer : 25
 "$GODOT" --headless --path D:/TheStoryOfKnil res://tests/sonde_livre.tscn       # le livre (menu) : pause, sélection, pages, manette : 29
 "$GODOT" --path D:/TheStoryOfKnil --windowed res://tests/sonde_contour.tscn   # le contour noir : 15 (headless aussi ; avec fenêtre, des captures)
 "$GODOT" --path D:/TheStoryOfKnil --windowed res://tests/capture_reference.tscn -- --monde=… --lieu=x,y,z  # le GREFFON, pour comparer
@@ -604,5 +656,6 @@ galerie → souterrain, troisième personne, torche allumée.
   le GameState, comme le reste.
 - La collision en formes CONCAVES par tuile est la plus fidèle et la plus chère ; à mesurer sur le vrai monde.
 
-- **TOUT LE GAMEPLAY DE KNIL EST À FAIRE** : combat (les ENNEMIS, la mort — le genou et la boule sont prêts, §3), objets et inventaire,
+- **TOUT LE GAMEPLAY DE KNIL EST À FAIRE** : combat (d'autres ENNEMIS, LA MORT de Knil — le genou, le pied, la boule et le
+  dealer sont prêts, §3 ; les ennemis tués ne restent pas morts : à décider), objets et inventaire,
   coffres, donjons et clés, boutiques. Le GameState a déjà `player.health` (demi-cœurs), `max_health`, `money`, `items`.

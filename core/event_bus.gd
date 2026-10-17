@@ -31,6 +31,12 @@ signal player_hit(target: Node, kind: String)
 signal player_guard_changed(guarding: bool)
 ## Knil est frappé : `amount` demi-cœurs perdus (0 si `blocked` : le bouclier a tout pris).
 signal player_damaged(amount: int, blocked: bool)
+## Un ennemi (`ennemis/ennemi.gd`) voit Knil et le prend en chasse ; il commence un coup ; il est frappé
+## (`amount` demi-cœurs) ; il meurt.
+signal enemy_alerted(enemy: Node)
+signal enemy_attacked(enemy: Node)
+signal enemy_damaged(enemy: Node, amount: int)
+signal enemy_died(enemy: Node)
 
 # --- Temps -------------------------------------------------------------------------------------------------
 signal hour_changed(day: int, hour: int)

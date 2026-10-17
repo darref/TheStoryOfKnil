@@ -9,9 +9,21 @@ extends Node3D
 @export var view_distance := 80.0
 
 
+var _prepared := false
+
+
 func _ready() -> void:
 	# La vue s'éloigne (zoom, vue haute) : les plants se voient d'aussi loin que la caméra.
 	EventBus.view_radius_changed.connect(_on_view_radius)
+	prepare()
+
+
+## Bâtit les MultiMesh. HORS DE L'ARBRE, donc dans le FIL DE TRAVAIL du ChunkStreamer (juste après l'instanciation) :
+## mesuré, 30 à 48 ms par morceau sur le fil principal quand c'était fait au `_ready`. Une seule fois.
+func prepare() -> void:
+	if _prepared:
+		return
+	_prepared = true
 	for p: Dictionary in parts:
 		var mm := MultiMesh.new()
 		mm.transform_format = MultiMesh.TRANSFORM_3D

@@ -1,0 +1,37 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ennemis/ennemi.gd" id="1"]
+[ext_resource type="PackedScene" path="res://assets/personnages/dealer/dealer.fbx" id="2"]
+[ext_resource type="AnimationLibrary" path="res://assets/personnages/dealer/dealer_animations.res" id="3"]
+[ext_resource type="Script" path="res://world/frappable.gd" id="4"]
+[ext_resource type="Script" path="res://world/contour/subtree_outline.gd" id="5"]
+
+[sub_resource type="CapsuleShape3D" id="body"]
+radius = 0.35
+height = 1.8
+
+[sub_resource type="CapsuleShape3D" id="cible"]
+radius = 0.45
+height = 1.8
+
+[node name="Dealer" type="CharacterBody3D"]
+script = ExtResource("1")
+animations = ExtResource("3")
+
+[node name="Shape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("body")
+
+[node name="Modele" parent="." instance=ExtResource("2")]
+transform = Transform3D(1.8, 0, 0, 0, 1.8, 0, 0, 0, 1.8, 0, 0, 0)
+
+[node name="Frappable" type="Area3D" parent="."]
+script = ExtResource("4")
+
+[node name="Shape" type="CollisionShape3D" parent="Frappable"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("cible")
+
+[node name="Contour" type="Node" parent="." node_paths=PackedStringArray("target_root")]
+script = ExtResource("5")
+target_root = NodePath("../Modele")

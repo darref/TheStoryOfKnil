@@ -19,6 +19,8 @@ func check(ok: bool, what: String) -> void:
 
 func _ready() -> void:
 	var main: Node = load("res://scenes/main.tscn").instantiate()
+	for e in main.find_children("*", "Ennemi", true, false):  # les ennemis posés sur la carte : pas ici
+		e.free()
 	add_child(main)
 	var player: Player = main.get_node("Player")
 	var monde: ChunkStreamer = main.get_node("Monde")

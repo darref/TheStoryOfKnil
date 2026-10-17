@@ -87,8 +87,9 @@ extends CharacterBody3D
 @export_group("")
 
 const Triche := preload("res://core/triche.gd")
-## Ce que le joueur heurte : le monde (couche 1) et les troncs des arbres (couche 5, valeur 16).
-const WORLD_MASK := 1 | 16
+## Ce que le joueur heurte : le monde (couche 1), les troncs des arbres (couche 5, valeur 16) et les ennemis
+## (couche 7, valeur 64 : `Ennemi.LAYER`).
+const WORLD_MASK := 1 | 16 | 64
 
 enum Action { NONE, KNEE, GUARD, KICK }
 
