@@ -22,10 +22,32 @@ extends RefCounted
 const Water := preload("res://addons/marchingblocks_paint/mb_water.gd")
 
 ## A still sheet is at its top row + SURFACE; a river band at its cell + RIVER; a sheet reaches OVERLAP under the
-## full cell next to it (the thinned rock hides the edge).
+## full cell next to it (the rock hides the edge). SURFACE and RIVER are those of an INSET floor (0.25, the default).
 const SURFACE := 0.7
-const RIVER := -0.15
+const RIVER := 0.05
 const OVERLAP := 0.45
+## THE FLOOR r (world.json `water_floor`): where the ground of the tiles is drawn — the top of a full cell y - 1 is seen
+## at y - r, the bottom of a full cell y + 1 at y + 1 + r (0.25 inset, 0 centred, -0.25 outset). Every height follows:
+## a sheet at L + 1 - |r| - THIN (`surface`), a band at y + ABOVE_FLOOR - r (`river`), a waterfall leaves the cliff's
+## plane moved by 0.25 - r (`advance`). At r = 0.25 they are SURFACE and RIVER.
+const FLOOR_DEFAULT := 0.25
+const THIN := 0.05
+## A river band has a THICKNESS: 0.3 above the drawn ground (0.1 before 13 October 2026 — a sheet of paper), and its
+## depth in COLOR.a is that thickness (in cells / 8).
+const ABOVE_FLOOR := 0.3
+const BAND_DEPTH := ABOVE_FLOOR / 8.0
+
+
+static func surface(r: float) -> float:
+	return 1.0 - absf(r) - THIN
+
+
+static func river(r: float) -> float:
+	return ABOVE_FLOOR - r
+
+
+static func advance(r: float) -> float:
+	return FLOOR_DEFAULT - r
 ## THE WATERFALL: a curved sheet leaving the lip flat, out by SHEET * sqrt(drop / ARC), then flaring FLARE per cell
 ## of drop (at most FLARE_MAX). A free end (no waterfall next to it on its plane) is rounded (ROUNDING) and goes
 ## INTO_ROCK behind the cliff's plane; it reaches OVERHANG past its cell there.
@@ -57,8 +79,9 @@ const UP := Vector3i(0, 1, 0)
 
 
 ## THE MESH of one water layer: an ArrayMesh of one surface, or null when there is nothing to draw.
-static func mesh(bodies: Array, cells: Dictionary, box: Variant = null, memory: Variant = null) -> ArrayMesh:
-	return to_mesh(arrays(bodies, cells, box, memory))
+static func mesh(bodies: Array, cells: Dictionary, box: Variant = null, memory: Variant = null,
+		floor_ := FLOOR_DEFAULT) -> ArrayMesh:
+	return to_mesh(arrays(bodies, cells, box, memory, floor_))
 
 
 ## The ArrayMesh of computed arrays, or null when they are empty.
@@ -83,7 +106,9 @@ static func to_mesh(a: Dictionary) -> ArrayMesh:
 ## `memory`: a Dictionary kept by the caller from one call to the next (or null) — the sheets of a body that is the
 ## SAME object as last time (`Water.world` reuses a body whose footprint did not change) are reused, and so are the
 ## waterfalls whose fields did not change and the springs: the same output, a fraction of the cost.
-static func arrays(bodies: Array, cells: Dictionary, box: Variant = null, memory: Variant = null) -> Dictionary:
+## `floor_`: the floor r (see FLOOR_DEFAULT).
+static func arrays(bodies: Array, cells: Dictionary, box: Variant = null, memory: Variant = null,
+		floor_ := FLOOR_DEFAULT) -> Dictionary:
 	var a := _arrays()
 	var b: Dictionary = box if box != null else Water.box(cells)
 	var flats: Array = []
@@ -91,16 +116,28 @@ static func arrays(bodies: Array, cells: Dictionary, box: Variant = null, memory
 	var springs: Array = []
 	# The STILL waters (sea, lakes, the lakes of the rivers): a waterfall falling into one lays its foam on ITS sheet.
 	var still: Array = []
+	# ALL THE WATER of the layer: a band is not closed by a flank on the side of another water (`_band`).
+	var waters := {}
 	for r in bodies:
 		if r == null or r["error"] != "":
 			continue
 		if r["kind"] == "sea" or r["kind"] == "lake":
 			still.append(r["water"])
+			waters.merge(r["water"])
 		elif r["kind"] == "river":
 			for lake in r["lakes"]:
 				still.append(lake["cells"])
+				waters.merge(lake["cells"])
+			for e: Dictionary in r["course"]:
+				waters[e["cell"]] = true
 	seen["still"] = still
+	seen["floor"] = floor_
 	var keep: Dictionary = memory if memory != null else {}
+	# Everything the memory keeps depends on the floor (the heights): another floor, a fresh memory.
+	if memory != null and float(keep.get("floor", FLOOR_DEFAULT)) != floor_:
+		keep.clear()
+	if memory != null:
+		keep["floor"] = floor_
 	var used := {}
 	for j in bodies.size():
 		var r: Variant = bodies[j]
@@ -109,12 +146,12 @@ static func arrays(bodies: Array, cells: Dictionary, box: Variant = null, memory
 		if keep.has(j) and is_same(keep[j][0], r):
 			flats.append_array(keep[j][1])
 		else:
-			var sheets := _sheets_of_body(r, cells, b)
+			var sheets := _sheets_of_body(r, cells, b, floor_)
 			keep[j] = [r, sheets]
 			flats.append_array(sheets)
 		used[j] = true
 		if r["kind"] == "river":
-			_river(a, r["course"], cells, flats, seen, springs)
+			_river(a, r["course"], cells, flats, seen, springs, waters)
 	for j in keep.keys():
 		if j is int and not used.has(j):
 			keep.erase(j)
@@ -130,7 +167,7 @@ static func arrays(bodies: Array, cells: Dictionary, box: Variant = null, memory
 	for c: Vector3i in springs:
 		var gs: Variant = springs_before.get(c)
 		if gs == null:
-			gs = (_spring(c) as Array).map(_compiled_grid)
+			gs = (_spring(c, floor_) as Array).map(_compiled_grid)
 		springs_now[c] = gs
 		foam.append_array(gs)
 	if memory != null:
@@ -142,21 +179,22 @@ static func arrays(bodies: Array, cells: Dictionary, box: Variant = null, memory
 
 
 ## The sheet rectangles of a body: the sea (and its horizon), a lake, the lakes of a river.
-static func _sheets_of_body(r: Dictionary, cells: Dictionary, b: Dictionary) -> Array:
+static func _sheets_of_body(r: Dictionary, cells: Dictionary, b: Dictionary, floor_ := FLOOR_DEFAULT) -> Array:
 	var flats: Array = []
+	var top := surface(floor_)
 	match r["kind"]:
 		"sea":
 			var level: int = r["level"]
 			var h := NAN
 			if not b.is_empty() and level > (b["hi"] as Vector3i).y:
-				h = level + SURFACE   # the world is drowned: the sheet is at the level, not at the box's top row
-			flats.append_array(sheet_rectangles(r["water"], cells, level, h))
-			flats.append_array(_horizon(b, float(level) + SURFACE))
+				h = level + top   # the world is drowned: the sheet is at the level, not at the box's top row
+			flats.append_array(sheet_rectangles(r["water"], cells, level, h, floor_))
+			flats.append_array(_horizon(b, float(level) + top))
 		"lake":
-			flats.append_array(sheet_rectangles(r["water"], cells, r["level"]))
+			flats.append_array(sheet_rectangles(r["water"], cells, r["level"], NAN, floor_))
 		"river":
 			for lake in r["lakes"]:
-				flats.append_array(sheet_rectangles(lake["cells"], cells, lake["level"]))
+				flats.append_array(sheet_rectangles(lake["cells"], cells, lake["level"], NAN, floor_))
 	return flats
 
 
@@ -284,6 +322,49 @@ static func _flat(a: Dictionary, x0: float, x1: float, z0: float, z1: float, h: 
 		[Vector2(x0, z0), Vector2(x1, z0), Vector2(x1, z1), Vector2(x0, z1)])
 
 
+## THE BAND of a river on cell `c` (a rectangle for `_lay_flats`) and its FLANKS, laid in `a` at once. A river has a
+## THICKNESS: each side, by its neighbour n on the same row — FULL: the band reaches OVERLAP under the rock; WATER (of
+## this layer) resting on matter: nothing; water over the VOID (a waterfall's lip): the band reaches where the sheet
+## starts (`advance`); DRY with ground under it: the band stops at its cell's edge and goes down in a flank below the
+## floor; DRY over the void (a ledge): the band stops THIN outside the rock (r inside the cell) and goes down there.
+## Bounds are multiples of 0.05 (`_lay_flats` compares in twentieths).
+static func _band(a: Dictionary, c: Vector3i, cells: Dictionary, waters: Dictionary, floor_: float,
+		color: Color) -> Dictionary:
+	var h: float = c.y + river(floor_)
+	var low: float = c.y - floor_ - THIN
+	var edges := {}
+	var flanks: Array = []
+	for d: Vector3i in [Vector3i(-1, 0, 0), Vector3i(1, 0, 0), Vector3i(0, 0, -1), Vector3i(0, 0, 1)]:
+		var n := c + d
+		var e := 0.0
+		if cells.has(n):
+			e = OVERLAP
+		elif waters.has(n):
+			e = 0.0 if cells.has(n + DOWN) else advance(floor_)
+		else:
+			e = 0.0 if cells.has(n + DOWN) else THIN - floor_
+			flanks.append(d)
+		edges[d] = e
+	var r := {"x0": c.x - edges[Vector3i(-1, 0, 0)], "x1": c.x + 1 + edges[Vector3i(1, 0, 0)],
+		"z0": c.z - edges[Vector3i(0, 0, -1)], "z1": c.z + 1 + edges[Vector3i(0, 0, 1)], "h": h, "color": color}
+	for d: Vector3i in flanks:
+		var p0: Vector3
+		var p1: Vector3
+		if d.x != 0:
+			var x: float = r["x0"] if d.x < 0 else r["x1"]
+			p0 = Vector3(x, 0, r["z0"])
+			p1 = Vector3(x, 0, r["z1"])
+		else:
+			var z: float = r["z0"] if d.z < 0 else r["z1"]
+			p0 = Vector3(r["x0"], 0, z)
+			p1 = Vector3(r["x1"], 0, z)
+		var u0: float = p0.z if d.x != 0 else p0.x
+		var u1: float = p1.z if d.x != 0 else p1.x
+		_quad(a, [Vector3(p0.x, h, p0.z), Vector3(p1.x, h, p1.z), Vector3(p1.x, low, p1.z), Vector3(p0.x, low, p0.z)],
+			Vector3(d), color, [Vector2(u0, h), Vector2(u1, h), Vector2(u1, low), Vector2(u0, low)])
+	return r
+
+
 ## The cell `c` at height `h`, reaching OVERLAP under each full neighbour of its row: a rectangle for `_lay_flats`.
 static func _cell_flat(c: Vector3i, h: float, cells: Dictionary, color: Color) -> Dictionary:
 	var xm := OVERLAP if cells.has(c + Vector3i(-1, 0, 0)) else 0.0
@@ -309,7 +390,9 @@ static func drawn_surface(water: Dictionary, cells: Dictionary, level: int) -> A
 ##   2. two strips of NEIGHBOURING rows in z, of the same extent in x (overlaps included), of the same colour, with
 ##      no overlap on their shared side, merge.
 ## Each merge only joins two rectangles sharing a WHOLE side. Fixed order (y, z, x): no hash table decides anything.
-static func sheet_rectangles(water: Dictionary, cells: Dictionary, level: int, h_forced := NAN) -> Array:
+static func sheet_rectangles(water: Dictionary, cells: Dictionary, level: int, h_forced := NAN,
+		floor_ := FLOOR_DEFAULT) -> Array:
+	var top := surface(floor_)
 	var depths := {}
 	for c: Vector3i in drawn_surface(water, cells, level):
 		depths[c] = Water.depth(water, cells, c)
@@ -349,7 +432,7 @@ static func sheet_rectangles(water: Dictionary, cells: Dictionary, level: int, h
 			r["z1"] = s["z"] + 1 + s["zp"]
 		else:
 			r = {"x0": x0, "x1": x1, "z0": s["z"] - s["zm"], "z1": s["z"] + 1 + s["zp"],
-				"h": h_forced if not is_nan(h_forced) else s["y"] + SURFACE, "color": s["color"]}
+				"h": h_forced if not is_nan(h_forced) else s["y"] + top, "color": s["color"]}
 			rects.append(r)
 		if s["zp"] == 0.0:
 			open[[s["y"], s["z"] + 1, x0, x1, s["color"]]] = r
@@ -406,8 +489,9 @@ static func _horizontal(d: Vector3i) -> bool:
 ## and a waterfall per run of "fall" entries. The bands go to `flats`, the waterfalls to `seen` (laid afterwards by
 ## `_lay_waterfalls`, all rivers together); the spring, if any, to `springs`.
 static func _river(a: Dictionary, course: Array, cells: Dictionary, flats: Array, seen: Dictionary,
-		springs: Array = []) -> void:
+		springs: Array = [], waters: Dictionary = {}) -> void:
 	var n := course.size()
+	var floor_: float = seen.get("floor", FLOOR_DEFAULT)
 	# THE SPRING: the first cell of a river that flows on matter. A river leaving an overflowing lake has none.
 	if n > 0 and course[0]["kind"] == "flow" and cells.has((course[0]["cell"] as Vector3i) + DOWN) \
 			and not springs.has(course[0]["cell"]):
@@ -419,7 +503,7 @@ static func _river(a: Dictionary, course: Array, cells: Dictionary, flats: Array
 			continue
 		var d := flow_of(course, i)
 		seen[c] = true
-		flats.append(_cell_flat(c, c.y + RIVER, cells, _color(Vector2(d.x, d.z), FLOWING, 0.05)))
+		flats.append(_band(a, c, cells, waters, floor_, _color(Vector2(d.x, d.z), FLOWING, BAND_DEPTH)))
 	var i := 0
 	while i < n:
 		var e: Dictionary = course[i]
@@ -461,16 +545,17 @@ static func flow_of(course: Array, i: int) -> Vector3i:
 ## `ground`: the height of the water it falls into — the band of `bottom` if it rests on matter, else the sheet below
 ## (bottom.y - 0.3 = the row below + SURFACE); the foot of the sheet is 0.15 lower, under the water.
 static func _waterfall(lip: Vector3i, bottom: Vector3i, d: Vector3i, cells: Dictionary, seen: Dictionary) -> void:
-	var top := lip.y + RIVER
-	var foot := bottom.y - 0.3
-	var ground := bottom.y + RIVER if cells.has(bottom + DOWN) else foot
+	var floor_: float = seen.get("floor", FLOOR_DEFAULT)
+	var top := lip.y + river(floor_)
+	var foot := bottom.y - 1 + surface(floor_)
+	var ground := bottom.y + river(floor_) if cells.has(bottom + DOWN) else foot
 	# FALLING INTO A HOLLOW IT FILLS: the foam is on the sheet of the still water that drowns `bottom`, not at its floor.
 	for water: Dictionary in seen.get("still", []):
 		if water.has(bottom):
 			var h := bottom
 			while water.has(h + UP):
 				h += UP
-			ground = h.y + SURFACE
+			ground = h.y + surface(floor_)
 			foot = minf(foot, ground - 0.15)
 			break
 	# The plane: x = const (axis 0) or z = const (axis 2); `along` the cell along the plane.
@@ -486,6 +571,8 @@ static func _waterfall(lip: Vector3i, bottom: Vector3i, d: Vector3i, cells: Dict
 	else:
 		var edge: int = lip.x if axis == 0 else lip.z
 		plane = float(edge) if sense > 0 else float(edge + 1)
+		# The cliff is at plane - r (the floor): the waterfall keeps the place it has in front of inset rock.
+		plane += advance(floor_) * sense
 	var key := "%d|%d|%d" % [axis, roundi(plane * 20.0), along]
 	var l: Dictionary = seen.get(key, {})
 	if l.is_empty():
@@ -565,7 +652,7 @@ static func _sign(l: Dictionary) -> int:
 static func _lay_waterfalls(a: Dictionary, seen: Dictionary, foam: Array, flats: Array = [],
 		before: Dictionary = {}, after: Variant = null) -> void:
 	for key in seen:
-		if not key is String or key == "still":
+		if not key is String or key == "still" or key == "floor":
 			continue
 		var l: Dictionary = seen[key]
 		var u_cell: int = l["along"]
@@ -689,8 +776,8 @@ static func _crown(feet: Array, dirs: Array, us: Array, flow: Vector2, ground: f
 
 ## THE SPRING of a river, on the band of cell `c`: the water WELLS UP — a disc of foam, domed in the middle, that
 ## spreads and fades, and a small veil of spray. Kind "foam"; UV (angle × 0.6, height - 1.5 radius).
-static func _spring(c: Vector3i) -> Array:
-	var centre := Vector3(c.x + 0.5, c.y + RIVER, c.z + 0.5)
+static func _spring(c: Vector3i, floor_ := FLOOR_DEFAULT) -> Array:
+	var centre := Vector3(c.x + 0.5, c.y + river(floor_), c.z + 0.5)
 	var turns := 16
 	var disc := {"p": [], "n": [], "c": [], "uv": []}
 	var radii := [0.0, 0.2, 0.42, SPRING]

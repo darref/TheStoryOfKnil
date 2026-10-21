@@ -130,9 +130,9 @@ uniform ivec3 origine;
 uniform ivec3 taille;
 uniform sampler2D table : filter_nearest, repeat_disable;
 uniform sampler2DArray representants : source_color, filter_linear_mipmap, repeat_enable;
-uniform vec4 rep_couleur[15];
-uniform float rep_echelle[15];
-uniform float rep_rugosite[15];
+// Les réglages des représentants (21 octobre 2026, au lieu de trois tableaux de 15) : (k, 0) la couleur de la couche k,
+// (k, 1) x l'échelle, y la rugosité — une texture, comme dans Unity et Unreal, dimensionnée sur le nombre de couches.
+uniform sampler2D rep_params : filter_nearest, repeat_disable;
 uniform bool montrer_choix = false;
 
 varying vec3 p_monde;
@@ -140,10 +140,16 @@ varying vec3 n_monde;
 varying flat vec3 centre;
 
 void vertex() {
-	VERTEX += NORMAL * 0.002;
 	p_monde = ((mb_world_to_format * MODEL_MATRIX) * vec4(VERTEX, 1.0)).xyz;
 	n_monde = normalize(((mb_world_to_format * MODEL_MATRIX) * vec4(NORMAL, 0.0)).xyz);
 	centre = (mb_world_to_format * MODEL_MATRIX)[3].xyz;
+	vec4 vue = MODELVIEW_MATRIX * vec4(VERTEX, 1.0);
+	if (PROJECTION_MATRIX[3][3] == 0.0) {
+		vue.xyz *= 1.0 - 2e-4;
+	} else {
+		vue.z += 0.002;
+	}
+	POSITION = PROJECTION_MATRIX * vue;
 }
 
 float hache(vec3 p) {
@@ -163,11 +169,11 @@ float bruit3(vec3 x) {
 vec4 aspect(int k, vec3 p, vec3 n) {
 	vec3 w = pow(abs(n), vec3(4.0));
 	w /= (w.x + w.y + w.z);
-	float e = max(rep_echelle[k], 0.01);
+	float e = max(texelFetch(rep_params, ivec2(k, 1), 0).x, 0.01);
 	vec4 c = texture(representants, vec3(p.zy / e, float(k))) * w.x
 		+ texture(representants, vec3(p.xz / e, float(k))) * w.y
 		+ texture(representants, vec3(p.xy / e, float(k))) * w.z;
-	return c * rep_couleur[k];
+	return c * texelFetch(rep_params, ivec2(k, 0), 0);
 }
 
 float visible(vec4 p1, vec4 p2, float s_c, float h, float n) {
@@ -180,8 +186,8 @@ int rang_en(ivec3 c, int canal) {
 	if (t.x < 0 || t.y < 0 || t.z < 0 || t.x >= taille.x || t.y >= taille.y || t.z >= taille.z) {
 		return -1;
 	}
-	int v = int(round(texelFetch(cases, t, 0).r * 255.0));
-	return (canal == 0 ? (v & 15) : (v >> 4)) - 1;
+	vec4 v = texelFetch(cases, t, 0);
+	return int(round((canal == 0 ? v.r : v.g) * 255.0)) - 1;
 }
 
 void fragment() {
@@ -226,7 +232,9 @@ void fragment() {
 			}
 		}
 	}
-	if (autre < 0) {
+	// ⚠ LA TABLE A LE NOMBRE RÉEL DE COUCHES (2·N × N) : un rang hors d'elle ne se fond pas (un texelFetch hors de la
+	// texture n'est pas défini).
+	if (autre < 0 || max(proprio, autre) >= textureSize(table, 0).y) {
 		discard;
 	}
 	vec4 ao1 = texelFetch(table, ivec2(2 * proprio, autre), 0);
@@ -262,7 +270,7 @@ void fragment() {
 		couleur = mix(couleur, vec3(1.0, 0.85, 0.2), 0.35);
 	}
 	ALBEDO = couleur;
-	ROUGHNESS = rep_rugosite[autre];
+	ROUGHNESS = texelFetch(rep_params, ivec2(autre, 1), 0).y;
 	ALPHA = a;
 }
 """

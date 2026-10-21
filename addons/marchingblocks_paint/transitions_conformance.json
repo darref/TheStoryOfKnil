@@ -933,6 +933,121 @@
       "name": "blend: a tie between two other layers: the first corner wins"
     },
     {
+      "expected": {
+        "alpha": 0.0835186993634259,
+        "other": 21,
+        "owner": 16,
+        "s": 0.375,
+        "vote": 0.40625
+      },
+      "input": {
+        "choices": [
+          21,
+          -1,
+          21,
+          -1,
+          -1,
+          21,
+          -1,
+          -1
+        ],
+        "f": [
+          0.375,
+          0.5,
+          0.5
+        ],
+        "h": {
+          "16": 0.3,
+          "21": 0.8
+        },
+        "n": 0.5,
+        "ranks": [
+          16,
+          21,
+          16,
+          21,
+          16,
+          21,
+          16,
+          21
+        ],
+        "table": {
+          "16|21": {
+            "fills_hollows": 0.5,
+            "grain": 1.5,
+            "irregularity": 0.35,
+            "reach": 0.2,
+            "softness": 0.3
+          },
+          "21|16": {
+            "fills_hollows": 0.5,
+            "grain": 1.5,
+            "irregularity": 0.35,
+            "reach": -0.1,
+            "softness": 0.6
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: ranks beyond the 15th blend (16 and 21, the brush chose 21)"
+    },
+    {
+      "expected": {
+        "alpha": 0.311940990464293,
+        "other": 254,
+        "owner": 253,
+        "s": 0.448275862068966,
+        "vote": 0.0
+      },
+      "input": {
+        "choices": [
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1,
+          -1
+        ],
+        "f": [
+          0.5,
+          0.25,
+          0.75
+        ],
+        "h": {},
+        "n": 0.25,
+        "ranks": [
+          253,
+          254,
+          254,
+          253,
+          253,
+          254,
+          -1,
+          253
+        ],
+        "table": {
+          "253|254": {
+            "fills_hollows": 0.5,
+            "grain": 1.5,
+            "irregularity": 0.35,
+            "reach": 0.1,
+            "softness": 0.5
+          },
+          "254|253": {
+            "fills_hollows": 0.5,
+            "grain": 1.5,
+            "irregularity": 0.35,
+            "reach": -0.1,
+            "softness": 0.4
+          }
+        }
+      },
+      "kind": "blend",
+      "name": "blend: the highest ranks (253 and 254)"
+    },
+    {
       "expected": {},
       "input": {
         "choices": [
@@ -6267,10 +6382,38 @@
           "irregularity": 0.35,
           "reach": 0.2,
           "softness": 0.6
+        },
+        "15|2": {
+          "fills_hollows": 0.5,
+          "grain": 1.5,
+          "irregularity": 0.35,
+          "reach": 0.2,
+          "softness": 0.45
+        },
+        "16|21": {
+          "fills_hollows": 0.5,
+          "grain": 1.5,
+          "irregularity": 0.35,
+          "reach": 0.1,
+          "softness": 0.3
+        },
+        "21|16": {
+          "fills_hollows": 0.5,
+          "grain": 1.5,
+          "irregularity": 0.35,
+          "reach": -0.2,
+          "softness": 0.7
+        },
+        "2|15": {
+          "fills_hollows": 0.5,
+          "grain": 1.5,
+          "irregularity": 0.35,
+          "reach": 0.2,
+          "softness": 0.45
         }
       },
       "input": {
-        "layers": 17,
+        "layers": 22,
         "pairs": [
           {
             "a": 2,
@@ -6309,36 +6452,142 @@
               "reach": 0.2,
               "softness": 0.6
             }
+          },
+          {
+            "a": 16,
+            "a_covers_b": {
+              "fills_hollows": 0.5,
+              "grain": 1.5,
+              "irregularity": 0.35,
+              "reach": 0.1,
+              "softness": 0.3
+            },
+            "active": true,
+            "b": 21,
+            "b_covers_a": {
+              "fills_hollows": 0.5,
+              "grain": 1.5,
+              "irregularity": 0.35,
+              "reach": -0.2,
+              "softness": 0.7
+            }
           }
         ]
       },
       "kind": "table",
-      "name": "table: a layer beyond the 15th blends nothing"
+      "name": "table: layers beyond the 15th blend (22 layers, Satyron's palette)"
     },
     {
       "expected": {
-        "bytes": [
+        "200|254": {
+          "fills_hollows": 0.5,
+          "grain": 1.5,
+          "irregularity": 0.35,
+          "reach": 0.2,
+          "softness": 0.4
+        },
+        "254|200": {
+          "fills_hollows": 0.5,
+          "grain": 1.5,
+          "irregularity": 0.35,
+          "reach": 0.2,
+          "softness": 0.9
+        }
+      },
+      "input": {
+        "layers": 257,
+        "pairs": [
+          {
+            "a": 2,
+            "a_covers_b": {
+              "fills_hollows": 0.5,
+              "grain": 1.5,
+              "irregularity": 0.35,
+              "reach": 0.2,
+              "softness": 0.45
+            },
+            "active": true,
+            "b": 255,
+            "b_covers_a": {
+              "fills_hollows": 0.5,
+              "grain": 1.5,
+              "irregularity": 0.35,
+              "reach": 0.2,
+              "softness": 0.45
+            }
+          },
+          {
+            "a": 200,
+            "a_covers_b": {
+              "fills_hollows": 0.5,
+              "grain": 1.5,
+              "irregularity": 0.35,
+              "reach": 0.2,
+              "softness": 0.4
+            },
+            "active": true,
+            "b": 254,
+            "b_covers_a": {
+              "fills_hollows": 0.5,
+              "grain": 1.5,
+              "irregularity": 0.35,
+              "reach": 0.2,
+              "softness": 0.9
+            }
+          }
+        ]
+      },
+      "kind": "table",
+      "name": "table: a layer beyond the 255th blends nothing"
+    },
+    {
+      "expected": {
+        "origin": [-9, -7, -6],
+        "size": [18, 16, 18],
+        "texels": [
+          [
+            11,
+            6,
+            6,
+            16,
+            201
+          ],
           [
             9,
             7,
             6,
-            33
+            1,
+            2
           ],
           [
             10,
             7,
             6,
-            18
+            2,
+            1
+          ],
+          [
+            9,
+            8,
+            6,
+            22,
+            0
+          ],
+          [
+            10,
+            8,
+            6,
+            255,
+            0
           ],
           [
             6,
             9,
             11,
-            15
+            15,
+            17
           ]
-        ],
-        "origin": [-9, -7, -6],
-        "size": [18, 16, 18]
+        ]
       },
       "input": {
         "cells": [
@@ -6365,6 +6614,24 @@
             -1,
             0,
             15
+          ],
+          [
+            0,
+            1,
+            0,
+            21
+          ],
+          [
+            1,
+            1,
+            0,
+            254
+          ],
+          [
+            -1,
+            0,
+            0,
+            255
           ]
         ],
         "choices": [
@@ -6391,11 +6658,23 @@
             2,
             5,
             16
+          ],
+          [
+            2,
+            -1,
+            0,
+            200
+          ],
+          [
+            0,
+            1,
+            0,
+            255
           ]
         ]
       },
       "kind": "cell_texture",
-      "name": "cell_texture: ranks, a layer beyond the 15th, a choice outside the box, a choice beyond the 15th"
+      "name": "cell_texture: ranks and choices beyond the 15th, a choice outside the box, a layer and a choice beyond the 255th"
     },
     {
       "expected": {
@@ -8094,7 +8373,7 @@
   ],
   "format": "marchingblocks-transitions-conformance",
   "limits": {
-    "layers_max": 15,
+    "layers_max": 255,
     "margin": 6
   },
   "rules_text": [
@@ -8115,7 +8394,7 @@
     "                    p.xy/scale. A layer's representative is what is laid over the OTHER layer's surface.",
     "  choices           a flat array x y z L per vertex (FORMAT space): at that vertex, layer L covers. The same vertex",
     "                    never twice. A choice of a layer that is not in the blending pair counts as no choice.",
-    "  Only layers 0 to 14 blend (a pair with a larger index blends nothing). Hidden layers place no cell.",
+    "  Only layers 0 to 254 blend (a pair with a larger index blends nothing). Hidden layers place no cell.",
     "  Refuse the whole file, and say why, if any of these does not hold.",
     "THE BLEND at a point p of the surface of the tile of vertex v (that tile covers [v + 1/2, v + 3/2]; take v from the",
     "  TILE, never from p: on a joint, p belongs to two tiles):",
@@ -8138,10 +8417,12 @@
     "h {rank: luminance of its representative at p, 0.5 when absent}, n; expected {} (nothing drawn) or {owner,",
     "other, s, vote, alpha}. settings: read one direction's settings. table: from world.json pairs to the active",
     "directions. cell_texture: the RECOMMENDED packing (what the app's shader reads; an engine may store the same",
-    "facts otherwise): one byte per cell over the box of the cells grown by 6, low nibble rank + 1 (0 empty or",
-    "rank >= 15), high nibble chosen rank + 1 at that vertex (0 none); a choice outside the box is dropped; only",
-    "non-zero bytes are listed, at texel (x, y, z) = cell - origin. read: world.json in, the normalized transitions",
-    "out, or {\"error\": true} (the reason is free)."
+    "facts otherwise): TWO bytes per cell (an RG8 texture) over the box of the cells grown by 6, R = rank + 1",
+    "(0 empty or rank >= 255), G = chosen rank + 1 at that vertex (0 none, or rank >= 255); a choice outside the box",
+    "is dropped; only texels with a non-zero byte are listed, as [x, y, z, R, G] at texel (x, y, z) = cell - origin",
+    "(byte 2 i is R, 2 i + 1 is G, i = (z size.y + y) size.x + x). The table and the representatives are sized on",
+    "the world's number of layers (at most 255), not on a constant. read: world.json in, the normalized",
+    "transitions out, or {\"error\": true} (the reason is free)."
   ],
   "settings": {
     "bounds": {

@@ -89,6 +89,37 @@ static func animate(library: MeshLibrary, glb: String) -> int:
 	return animated.size()
 
 
+## THE REPEAT of a box-projected surface, in cells (the tool's "cells per repeat"), read back from its UVs: on each
+## triangle the UV is the position on the face's two other axes divided by the repeat. The median over the triangles
+## (a few unwrapped or degenerate faces do not move it). 0.0 when the surface has no usable UV (not box-projected).
+static func repeat_of(mesh: Mesh, surface: int) -> float:
+	var a := mesh.surface_get_arrays(surface)
+	var pos: PackedVector3Array = a[Mesh.ARRAY_VERTEX]
+	var uv = a[Mesh.ARRAY_TEX_UV]
+	if uv == null or (uv as PackedVector2Array).size() != pos.size():
+		return 0.0
+	var ind = a[Mesh.ARRAY_INDEX]
+	var idx: PackedInt32Array = ind if ind != null else PackedInt32Array(range(pos.size()))
+	var ratios: Array = []
+	for t in range(0, mini(idx.size(), 3 * 400), 3):
+		var p0 := pos[idx[t]]
+		var p1 := pos[idx[t + 1]]
+		var p2 := pos[idx[t + 2]]
+		var n := (p1 - p0).cross(p2 - p0)
+		if n.length() < 1e-8:
+			continue
+		var ax := n.abs().max_axis_index()
+		var e := p1 - p0
+		var d2 := Vector2(e[(ax + 1) % 3], e[(ax + 2) % 3]).length()
+		var du: float = ((uv as PackedVector2Array)[idx[t + 1]] - (uv as PackedVector2Array)[idx[t]]).length()
+		if d2 > 1e-5 and du > 1e-6:
+			ratios.append(d2 / du)
+	if ratios.is_empty():
+		return 0.0
+	ratios.sort()
+	return float(ratios[ratios.size() / 2])
+
+
 ## Every mesh of the library becomes the library's OWN copy, its materials too (one copy per material, shared by
 ## its surfaces as before): a material changed for one layer — its place in the world, the transitions pass laid over
 ## it — must not change another layer, or another world, that loaded the same file. Returns {original: copy}.
@@ -136,12 +167,28 @@ static func _meshes_of(glb: String) -> Dictionary:
 	return out
 
 
+## The tile mesh rebuilt from the ImporterMesh arrays, surface by surface, materials included.
+## NOT ImporterMesh.get_mesh(): measured in the app (1 October 2026), its conversion bends normals by up to 14°,
+## and with smooth-shaded tiles (MarchingBlocks 1.0) the world would show a shading seam at every tile joint.
+static func _from_importer(im: ImporterMesh) -> ArrayMesh:
+	var out := ArrayMesh.new()
+	for s in im.get_surface_count():
+		var arrays: Array = im.get_surface_arrays(s)
+		if arrays.is_empty():
+			continue
+		out.add_surface_from_arrays(im.get_surface_primitive_type(s), arrays)
+		var mat: Material = im.get_surface_material(s)
+		if mat != null:
+			out.surface_set_material(out.get_surface_count() - 1, mat)
+	return out
+
+
 ## A node is recognised by what it CARRIES, not by its class: the editor import yields
 ## ImporterMeshInstance3D, which does not inherit MeshInstance3D.
 static func _collect(node: Node, out: Dictionary) -> void:
 	var m = node.get("mesh")
 	if m is ImporterMesh:
-		m = (m as ImporterMesh).get_mesh()
+		m = _from_importer(m)
 	if m is Mesh:
 		out[str(node.name)] = m
 	for child in node.get_children():

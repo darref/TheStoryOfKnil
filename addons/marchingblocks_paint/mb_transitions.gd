@@ -14,8 +14,8 @@ extends RefCounted
 
 const Shaders := preload("res://addons/marchingblocks_paint/mb_shaders.gd")
 
-## Only layers 0 to 14 blend: a rank and a choice each fit in four bits of a byte.
-const LAYERS_MAX := 15
+## Layers 0 to 254 blend: a rank and a choice each fit in a byte of their own (two bytes per cell).
+const LAYERS_MAX := 255
 const MARGIN := 6
 const DEFAULTS := {"softness": 0.45, "reach": 0.2, "irregularity": 0.35, "grain": 1.5, "fills_hollows": 0.5}
 const BOUNDS := {"softness": [0.05, 1.0], "reach": [-0.5, 0.5], "irregularity": [0.0, 1.0], "grain": [0.25, 6.0],
@@ -196,12 +196,12 @@ static func visible(rg: Dictionary, s_c: float, h: float, n: float) -> float:
 
 # ── THE CELL TEXTURE (the recommended packing: what the shader reads) ───────────────────────────────
 
-## {origin, size, bytes}: one byte per cell over the box of `cells` ({cell: rank}) grown by MARGIN — low nibble rank
-## + 1 (0: empty, or a rank >= LAYERS_MAX), high nibble the rank chosen at that vertex + 1 (`choices` {vertex:
-## rank}; outside the box: dropped). Texel (x, y, z) is the cell origin + (x, y, z).
+## {origin, size, bytes}: TWO bytes per cell (RG8) over the box of `cells` ({cell: rank}) grown by MARGIN — R = rank
+## + 1 (0: empty, or a rank >= LAYERS_MAX), G = the rank chosen at that vertex + 1 (`choices` {vertex: rank}; outside
+## the box: dropped). Texel (x, y, z) is the cell origin + (x, y, z); its bytes are 2 i (R) and 2 i + 1 (G).
 static func cell_texture(cells: Dictionary, choices: Dictionary) -> Dictionary:
 	if cells.is_empty():
-		return {"origin": Vector3i.ZERO, "size": Vector3i.ONE, "bytes": PackedByteArray([0])}
+		return {"origin": Vector3i.ZERO, "size": Vector3i.ONE, "bytes": PackedByteArray([0, 0])}
 	var lo := Vector3i(1 << 30, 1 << 30, 1 << 30)
 	var hi := -lo
 	for c: Vector3i in cells:
@@ -210,17 +210,17 @@ static func cell_texture(cells: Dictionary, choices: Dictionary) -> Dictionary:
 	var origin := lo - Vector3i.ONE * MARGIN
 	var size := hi - lo + Vector3i.ONE * (2 * MARGIN + 1)
 	var bytes := PackedByteArray()
-	bytes.resize(size.x * size.y * size.z)
+	bytes.resize(2 * size.x * size.y * size.z)
 	for c: Vector3i in cells:
-		bytes[_index(origin, size, c)] = _nibble(int(cells[c]))
+		bytes[2 * _index(origin, size, c)] = _byte(int(cells[c]))
 	for v: Vector3i in choices:
 		var i := _index(origin, size, v)
 		if i >= 0:
-			bytes[i] = (bytes[i] & 0x0F) | (_nibble(int(choices[v])) << 4)
+			bytes[2 * i + 1] = _byte(int(choices[v]))
 	return {"origin": origin, "size": size, "bytes": bytes}
 
 
-static func _nibble(rank: int) -> int:
+static func _byte(rank: int) -> int:
 	return rank + 1 if rank >= 0 and rank < LAYERS_MAX else 0
 
 
@@ -244,43 +244,51 @@ static func new_material() -> ShaderMaterial:
 	return m
 
 
-## The cells (one R8 3D texture) into the material.
+## The cells (one RG8 3D texture) into the material.
 static func set_cells(m: ShaderMaterial, d: Dictionary) -> void:
 	var size: Vector3i = d["size"]
-	var per := size.x * size.y
+	var per := 2 * size.x * size.y
 	var slices: Array[Image] = []
 	for z in size.z:
-		slices.append(Image.create_from_data(size.x, size.y, false, Image.FORMAT_R8,
+		slices.append(Image.create_from_data(size.x, size.y, false, Image.FORMAT_RG8,
 			(d["bytes"] as PackedByteArray).slice(z * per, (z + 1) * per)))
 	var tex := ImageTexture3D.new()
-	tex.create(Image.FORMAT_R8, size.x, size.y, size.z, false, slices)
+	tex.create(Image.FORMAT_RG8, size.x, size.y, size.z, false, slices)
 	m.set_shader_parameter("cases", tex)
 	m.set_shader_parameter("origine", d["origin"])
 	m.set_shader_parameter("taille", size)
 
 
-## The table into the material (2·15 × 15 texels, floats): at (2 D, C) active, softness, reach, irregularity; at
-## (2 D + 1, C) fills_hollows, grain — when C covers D.
+## The table into the material (2 N × N texels, floats, N = the largest rank in the table + 1, at most LAYERS_MAX):
+## at (2 D, C) active, softness, reach, irregularity; at (2 D + 1, C) fills_hollows, grain — when C covers D. The
+## shader blends no rank outside it.
 static func set_table(m: ShaderMaterial, t: Dictionary) -> void:
-	var img := Image.create_empty(2 * LAYERS_MAX, LAYERS_MAX, false, Image.FORMAT_RGBAF)
+	var n := 1
+	for key in t:
+		for r in String(key).split("|"):
+			n = maxi(n, int(r) + 1)
+	n = mini(n, LAYERS_MAX)
+	var img := Image.create_empty(2 * n, n, false, Image.FORMAT_RGBAF)
 	for key in t:
 		var cd: PackedStringArray = String(key).split("|")
 		var c := int(cd[0])
 		var d := int(cd[1])
+		if c >= n or d >= n:
+			continue
 		var rg: Dictionary = t[key]
 		img.set_pixel(2 * d, c, Color(1.0, rg["softness"], rg["reach"], rg["irregularity"]))
 		img.set_pixel(2 * d + 1, c, Color(rg["fills_hollows"], rg["grain"], 0.0, 0.0))
 	m.set_shader_parameter("table", ImageTexture.create_from_image(img))
 
 
-## The representatives into the material, by layer rank: [{image: Image or null, color, scale, roughness}]. The
-## colour multiplies the image AS IS (no sRGB conversion).
-static func set_representatives(m: ShaderMaterial, reps: Array) -> void:
+## The representatives into the material, by layer rank: [{image: Image or null, color, scale, roughness}] — one
+## slice per layer (at least `count`, at most LAYERS_MAX; a 256² slice with its mipmaps is ~350 KB). The colour
+## multiplies the image AS IS (no sRGB conversion).
+static func set_representatives(m: ShaderMaterial, reps: Array, count := 0) -> void:
 	var images: Array[Image] = []
-	var colors := PackedColorArray()
-	var scales := PackedFloat32Array()
-	var roughness := PackedFloat32Array()
-	for k in LAYERS_MAX:
+	var n := clampi(maxi(reps.size(), count), 1, LAYERS_MAX)
+	var params := Image.create_empty(n, 2, false, Image.FORMAT_RGBAF)
+	for k in n:
 		var d: Dictionary = reps[k] if k < reps.size() else {}
 		var img: Image = null
 		if d.get("image") is Image:
@@ -296,12 +304,9 @@ static func set_representatives(m: ShaderMaterial, reps: Array) -> void:
 		img.generate_mipmaps()
 		images.append(img)
 		var c: Array = d.get("color", [1.0, 1.0, 1.0, 1.0])
-		colors.append(Color(c[0], c[1], c[2], c[3]))
-		scales.append(float(d.get("scale", 1.0)))
-		roughness.append(float(d.get("roughness", 0.8)))
+		params.set_pixel(k, 0, Color(c[0], c[1], c[2], c[3]))
+		params.set_pixel(k, 1, Color(float(d.get("scale", 1.0)), float(d.get("roughness", 0.8)), 0.0, 0.0))
 	var arr := Texture2DArray.new()
 	arr.create_from_images(images)
 	m.set_shader_parameter("representants", arr)
-	m.set_shader_parameter("rep_couleur", colors)
-	m.set_shader_parameter("rep_echelle", scales)
-	m.set_shader_parameter("rep_rugosite", roughness)
+	m.set_shader_parameter("rep_params", ImageTexture.create_from_image(params))

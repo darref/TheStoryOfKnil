@@ -5,7 +5,7 @@ extends Node
 ## is laid OVER the tiles' materials (`next_pass`), the MarchingBlocks tool's own shader (`mb_transitions.gd`).
 ##
 ## It follows the layers: paint a cell, hide a layer, and the blend follows. Layer i of the world (the order of the
-## siblings) is rank i of the rule; only the first 15 layers blend.
+## siblings) is rank i of the rule; the first 255 layers blend.
 ## ⚠ The layers of one world are expected to share their pose and cell size (as the import makes them).
 
 const Trans := preload("res://addons/marchingblocks_paint/mb_transitions.gd")
@@ -109,7 +109,7 @@ func refresh() -> void:
 			var d: Dictionary = (r as Dictionary).duplicate()
 			d["image"] = Anim._image(str(r["image"])) if r.get("image") is String else null
 			reps.append(d)
-		Trans.set_representatives(_material, reps)
+		Trans.set_representatives(_material, reps, ls.size())
 		_representatives_set = true
 	_material.set_shader_parameter("mb_world_to_format", Projection(ls[0].format_space()))
 	_unhook()

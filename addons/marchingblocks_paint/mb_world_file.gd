@@ -31,6 +31,8 @@ const Foliage := preload("res://addons/marchingblocks_paint/mb_foliage.gd")
 const WaterNode := preload("res://addons/marchingblocks_paint/mb_water_node.gd")
 const TransitionsNode := preload("res://addons/marchingblocks_paint/mb_transitions_node.gd")
 const FoliageNode := preload("res://addons/marchingblocks_paint/mb_foliage_node.gd")
+const Crossings := preload("res://addons/marchingblocks_paint/mb_crossings.gd")
+const CrossingsNode := preload("res://addons/marchingblocks_paint/mb_crossings_node.gd")
 
 const FORMAT := "marchingblocks-world"
 const VERSION := 1
@@ -102,12 +104,12 @@ static func read(world: Variant) -> Dictionary:
 	return {"layers": out}
 
 
-## `read`, plus the three optional keys: {"layers", "water", "transitions", "foliage"} or {"error"}.
+## `read`, plus the optional keys: {"layers", "water", "transitions", "foliage", "crossings"} or {"error"}.
 static func read_all(world: Variant) -> Dictionary:
 	var w := read(world)
 	if w.has("error"):
 		return w
-	for r in [Water.read(world), Trans.read(world), Foliage.read(world)]:
+	for r in [Water.read(world), Trans.read(world), Foliage.read(world), Crossings.read(world)]:
 		if r.has("error"):
 			return r
 		w.merge(r)
@@ -157,9 +159,9 @@ static func build(world_json_path: String, parent: Node) -> Dictionary:
 			choices[Vector3i(int(c[0]), int(c[1]), int(c[2]))] = int(c[3])
 		node.variant_choices = choices
 		nodes.append(node)
-	# The layers are ONE world: each is rebuilt once every layer holds its cells.
-	for node in nodes:
-		node.rebuild()
+	# The layers are ONE world: rebuilt together, in one pass, once every layer holds its cells.
+	if not nodes.is_empty():
+		nodes[0].rebuild_world()
 	var cell_size: float = nodes[0].cell_size if not nodes.is_empty() else 1.0
 	var extras: Array = []
 	# THE WATER: one node per water layer, its baked sheet, and the cells it was baked for (a fingerprint of the tile
@@ -175,6 +177,7 @@ static func build(world_json_path: String, parent: Node) -> Dictionary:
 		wn.visible = e["visible"]
 		wn.look = str(e["look"])
 		wn.sources = e["sources"]
+		wn.floor_kind = WaterNode.FLOORS.find(float(w.get("water_floor", 0.25)))
 		wn.mesh_path = base.path_join(str(e["mesh"])).simplify_path() if e["mesh"] is String else ""
 		wn.baked_for = WaterNode.fingerprint(all_cells)
 		parent.add_child(wn, true)
@@ -219,6 +222,26 @@ static func build(world_json_path: String, parent: Node) -> Dictionary:
 		fn.plants = flat
 		parent.add_child(fn, true)
 		extras.append(fn)
+	# THE CROSSINGS: one node, every stair and slope, with their collision.
+	var cr: Dictionary = w.get("crossings", {})
+	if not (cr.get("models", []) as Array).is_empty():
+		var cn := Node3D.new()
+		cn.set_script(CrossingsNode)
+		cn.name = "Crossings"
+		cn.scale = Vector3.ONE * cell_size
+		var ms: Array = []
+		for m in cr["models"]:
+			var d: Dictionary = (m as Dictionary).duplicate()
+			if d["mesh"] is String:
+				d["mesh"] = base.path_join(str(d["mesh"])).simplify_path()
+			ms.append(d)
+		cn.models = ms
+		var flat := PackedInt32Array()
+		for p in cr["placements"]:
+			flat.append_array(PackedInt32Array(p))
+		cn.placements = flat
+		parent.add_child(cn, true)
+		extras.append(cn)
 	return {"nodes": nodes, "without_tiles": without, "extras": extras}
 
 

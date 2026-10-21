@@ -59,7 +59,11 @@ static func read(world: Variant) -> Dictionary:
 					return {"error": "water '%s': a source coordinate is not an integer" % e["name"]}
 			sources.append([int(flat[i]), int(flat[i + 1]), int(flat[i + 2])])
 		out.append({"name": e["name"], "visible": e["visible"], "look": e["look"], "mesh": m, "sources": sources})
-	return {"water": out}
+	# THE FLOOR the water sits on (`water_floor`): 0.25, 0 or -0.25; absent (worlds exported before it): 0.25.
+	var f = (world as Dictionary).get("water_floor", 0.25)
+	if not (f is float or f is int) or not float(f) in [0.25, 0.0, -0.25]:
+		return {"error": "water_floor is not 0.25, 0 or -0.25"}
+	return {"water": out, "water_floor": float(f)}
 
 
 # ── THE BOX AND THE SEA ──────────────────────────────────────────────────────────────────────────────

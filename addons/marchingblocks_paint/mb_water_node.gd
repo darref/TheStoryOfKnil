@@ -46,6 +46,15 @@ const REBUILD_DELAY := 500
 		_dirty()
 ## Where the water was placed: [x, y, z] per source, FORMAT space.
 @export var sources: Array = []
+## Where the ground of the tiles is drawn, for the heights of the water (world.json `water_floor`): 0.25 inset, 0
+## centred, -0.25 outset (the first water layer's value).
+@export_enum("Inset:0", "Centred:1", "Outset:2") var floor_kind := 0
+const FLOORS := [0.25, 0.0, -0.25]
+
+
+## The floor r of `floor_kind`.
+func water_floor() -> float:
+	return FLOORS[clampi(floor_kind, 0, 2)]
 ## The tile cells the baked sheet was made for (a fingerprint, set at import); 0: unknown.
 @export var baked_for := 0
 ## In the editor, rebuild the sheet by itself after each stroke (all water layers of the world: any one asks for all).
@@ -312,7 +321,8 @@ func _start(threaded: bool) -> void:
 	for l in layers():
 		var grid := l.get_node_or_null("Cells") as GridMap
 		used.append(grid.get_used_cells() if grid != null else [])
-	_job = {"layers": used, "sources": src[0], "counts": src[1], "base": _base, "hash": _cells_hash()}
+	_job = {"layers": used, "sources": src[0], "counts": src[1], "base": _base, "hash": _cells_hash(),
+		"floor": leader().water_floor()}
 	_pending = false
 	if threaded:
 		_task = WorkerThreadPool.add_task(_compute.bind(_job), false, "MarchingBlocks water")
@@ -429,14 +439,16 @@ static func _compute(job: Dictionary) -> void:
 	for i in (job["counts"] as Array).size():
 		var n: int = job["counts"][i]
 		var bodies: Array = (w["bodies"] as Array).slice(k, k + n)
-		var reused := not base.is_empty() and i < before.size() and range(n).all(func(j: int) -> bool:
+		# Another floor: nothing is reused (the heights changed).
+		var reused := not base.is_empty() and float(base.get("floor", 0.25)) == float(job.get("floor", 0.25)) \
+				and i < before.size() and range(n).all(func(j: int) -> bool:
 			return is_same(bodies[j], base["world"]["bodies"][k + j]))
 		var m: Dictionary = memories[i] if i < memories.size() and not base.is_empty() else {}
 		if reused:
 			arrays.append(before[i])
 			kept += 1
 		else:
-			arrays.append(WaterMesh.arrays(bodies, cells, w["box"], m))
+			arrays.append(WaterMesh.arrays(bodies, cells, w["box"], m, float(job.get("floor", 0.25))))
 		new_memories.append(m)
 		k += n
 	var t_sheets := Time.get_ticks_usec()
@@ -445,7 +457,7 @@ static func _compute(job: Dictionary) -> void:
 		for j in (w["bodies"] as Array).size():
 			if j < (base["world"]["bodies"] as Array).size() and is_same(w["bodies"][j], base["world"]["bodies"][j]):
 				bodies_kept += 1
-	job["out"] = {"cells": cells, "used": got["used"], "box": got["box"], "sum": got["sum"],
+	job["out"] = {"floor": float(job.get("floor", 0.25)), "cells": cells, "used": got["used"], "box": got["box"], "sum": got["sum"],
 		"world": w, "memories": new_memories, "arrays": arrays, "fingerprint": _fingerprint_of(got["sum"], cells.size())}
 	job["seconds"] = (Time.get_ticks_usec() - t) / 1e6
 	job["detail"] = "cells %d ms, rule %d ms, sheets %d ms" % [(t_diff - t) / 1000, (t_rule - t_diff) / 1000,
